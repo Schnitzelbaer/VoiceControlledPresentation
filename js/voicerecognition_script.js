@@ -10,8 +10,18 @@ function startRec() {
     responsiveVoice.speak("What's up bro?");
     $( ".status" ).fadeTo( "slow" , 1);
 
+    showSlideNames();
 
 }
+
+// function showSlideNames() {
+//     var slideClassNames = document.querySelectorAll('.step box');
+
+//     for (i = 0; i < slideClassNames.length; i++) {
+//         document.getElementsByClassName("wrapper")[0].innerHTML = slideClassNames;
+//         console.log(slideClassNames);
+//     }
+// }
 
 artyom.ArtyomVoicesIdentifiers["en-US"].unshift('Google US English', 'Alex');
 
