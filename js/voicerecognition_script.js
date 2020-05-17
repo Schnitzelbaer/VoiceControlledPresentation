@@ -7,7 +7,7 @@ function startRec() {
     elem.style.color = 'red';
 
     startContinuousArtyom();
-    responsiveVoice.speak("I'm listening!");
+    responsiveVoice.speak("What's up bro?");
     $( ".status" ).fadeTo( "slow" , 1);
 
 
@@ -60,7 +60,7 @@ var myGroup = [
         indexes: ["back to start", "start from the beginning"],
         action: function() {
             $(".intro").html("You entered: " + recognizedVoiceInput);
-          responsiveVoice.speak("You entered " + recognizedVoiceInput);
+          responsiveVoice.speak(recognizedVoiceInput + " Oh no, not again!");
           var api = impress();
           api.init();
           api.goto(0);
@@ -71,7 +71,7 @@ var myGroup = [
         indexes: ["go to the next slide", "next slide please","next slide", "next please", "show me the next"],
         action: function() {
             $(".intro").html("You entered: " + recognizedVoiceInput);
-          responsiveVoice.speak("You entered " + recognizedVoiceInput);
+          responsiveVoice.speak(recognizedVoiceInput + " Fresh choice Bro");
           var api = impress();
           api.init();
           api.next();
@@ -82,7 +82,7 @@ var myGroup = [
         indexes: ["go back","go one back", "backt to the last slide", "back to the last", "one back", "last slide please"],
         action: function() {
             $(".intro").html("You entered: " + recognizedVoiceInput);
-          responsiveVoice.speak("You entered " + recognizedVoiceInput);
+          responsiveVoice.speak(recognizedVoiceInput + " Fresh choice Bro");
           var api = impress();
           api.init();
           api.prev();
