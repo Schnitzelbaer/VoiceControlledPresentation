@@ -32,6 +32,14 @@
 
       <div class="currentResult" style="margin: 4%; opacity: 0;">Recognized: </div>
 
+      <p><b>Keywords:</b></p><br>
+      <label for="inputBackHome">Show First Slide</label><br>
+      <input type=text id="inputBackHome" oninput="updateBackHome()"/><br><br>
+      <label for="inputNextSlide">Show Next Slide</label><br>
+      <input type=text id="inputNextSlide" oninput="updateNextSlide()"/><br><br>
+      <label for="inputPreviousSlide">Show Previous Slide</label><br>
+      <input type=text id="inputPreviousSlide" oninput="updatePreviousSlide()"/>
+
       <input id="call2action" type="button" class="button" value="start " onclick="startRec()">
 
     </div>
@@ -66,6 +74,7 @@
 
   <script>
     impress().init();
+    setStartValues();
   </script>
 
 </body>

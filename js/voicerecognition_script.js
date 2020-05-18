@@ -7,21 +7,39 @@ function startRec() {
     elem.style.color = 'red';
 
     startContinuousArtyom();
-    responsiveVoice.speak("What's up bro?");
+    responsiveVoice.speak("The stage is yours!");
     $( ".status" ).fadeTo( "slow" , 1);
-
-    showSlideNames();
-
 }
 
-// function showSlideNames() {
-//     var slideClassNames = document.querySelectorAll('.step box');
+setStartValues = function(){
+    document.getElementById('inputBackHome').value = backHome.indexes;
+    document.getElementById('inputNextSlide').value = nextSlide.indexes;
+    document.getElementById('inputPreviousSlide').value = previousSlide.indexes;
+}
 
-//     for (i = 0; i < slideClassNames.length; i++) {
-//         document.getElementsByClassName("wrapper")[0].innerHTML = slideClassNames;
-//         console.log(slideClassNames);
-//     }
-// }
+updateBackHome = function(){
+    var myInput = document.getElementById('inputBackHome');
+    var myData = myInput.value;    
+    var result = myData.split(',');
+
+    backHome.indexes = result;
+}
+
+updateNextSlide = function(){
+    var myInput = document.getElementById('inputNextSlide');
+    var myData = myInput.value;    
+    var result = myData.split(',');
+
+    nextSlide.indexes = result;
+}
+
+updatePreviousSlide = function(){
+    var myInput = document.getElementById('inputPreviousSlide');
+    var myData = myInput.value;    
+    var result = myData.split(',');
+
+    previousSlide.indexes = result;
+}
 
 artyom.ArtyomVoicesIdentifiers["en-US"].unshift('Google US English', 'Alex');
 
@@ -70,7 +88,8 @@ var myGroup = [
         indexes: ["back to start", "start from the beginning"],
         action: function() {
             $(".intro").html("You entered: " + recognizedVoiceInput);
-          responsiveVoice.speak(recognizedVoiceInput + " Oh no, not again!");
+        //   responsiveVoice.speak(recognizedVoiceInput + " Oh no, not again!");
+        responsiveVoice.speak("Let's do it again");
           var api = impress();
           api.init();
           api.goto(0);
@@ -81,7 +100,7 @@ var myGroup = [
         indexes: ["go to the next slide", "next slide please","next slide", "next please", "show me the next"],
         action: function() {
             $(".intro").html("You entered: " + recognizedVoiceInput);
-          responsiveVoice.speak(recognizedVoiceInput + " Fresh choice Bro");
+          responsiveVoice.speak("Next slide");
           var api = impress();
           api.init();
           api.next();
@@ -89,10 +108,10 @@ var myGroup = [
     },
 
     previousSlide = {
-        indexes: ["go back","go one back", "backt to the last slide", "back to the last", "one back", "last slide please"],
+        indexes: ["go back", "go one back", "backt to the last slide", "back to the last", "one back", "last slide please"],
         action: function() {
             $(".intro").html("You entered: " + recognizedVoiceInput);
-          responsiveVoice.speak(recognizedVoiceInput + " Fresh choice Bro");
+          responsiveVoice.speak("Last slide again");
           var api = impress();
           api.init();
           api.prev();
