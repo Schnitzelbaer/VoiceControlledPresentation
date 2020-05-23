@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <link rel="stylesheet" type="text/css" href="big.css" />
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <title>Real Presentation</title>
+
+  <script src="lib/artyom.window.min.js"></script>
+  <script src="lib/responsivevoice.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="big.js"></script>
+
+  <script src="js/voicerecognition_script.js"></script>
+  <script src="lib/emojis.json"></script>
+</head>
+
+<!-- css style -->
+
+<body class="light">
+
+  <div class="main">
+    <div class="wrapper">
+      <div class="intro">
+        Try to navigate through the presentation with your voice.
+      </div>
+      <div class="currentResult" style="margin: 4%; opacity: 0;">Recognized: </div>
+      <input id="call2action" type="button" class="button" value="start " onclick="startRec()">
+    </div>
+  </div>
+
+  <!-- div = slide, inhalte vom slide reguläres html -->
+  <div>
+    <img src="img/hilfe.jpeg" />
+  </div>
+
+  <div class='layout' style='grid-template-rows:75% 25%;'>
+    <img src='img/App icon.png' />
+    <div>
+      <h2>App redesign</h2>
+    </div>
+    <div>
+      Volksbank mobile banking
+    </div>
+  </div>
+
+  <div class='layout' style='grid-template-columns: 1fr;grid-template-rows:25% 75%;'>
+    <div>
+      Problems of the current App
+    </div>
+    <img src='img/key.png' />
+  </div>
+
+  <div class='layout' style='grid-template-columns: 1fr;grid-template-rows:50% 50%;'>
+    <img src='img/design-principes.png' />
+    <div>
+      <b>Design Principels</b><br />
+      Based on the knowledge from the user test,<br />
+      we created statements, which we used as a guideline<br />
+      during the course of the project and which we ultimately realised in our product.
+    </div>
+  </div>
+
+  <div>
+    <h3>1. New structure</h3>
+  </div>
+
+  <div>
+    <img src="img/structure.png" />
+  </div>
+
+  <div class=layout style='grid-template-columns: 50% 50%;grid-template-rows:repeat(3, 50%);'>
+    <img src='img/pasted-image.png' />
+    <div>
+      -Reorganizing the important menu items <br />
+      -Adding new functions to meet user requirements<br />
+      -Implementing the user test onto the new hierarchy simplify the menu navigation<br />
+    </div>
+  </div>
+
+  <div>
+    <h3>2. New style</h3>
+  </div>
+
+  <div class='layout' style='grid-template-columns: 1fr;grid-template-rows:75% 25%;'>
+    <img src="img/style.png" />
+    <div>
+      -setting apart important items form more unimportant <br />
+      -colour scheme consiting of the typical Volksbank colors: blue and orange.<br />
+    </div>
+  </div>
+
+  <div>
+    <h3>3. New ui components</h3>
+  </div>
+
+  <div>
+    <img src="img/components.png" />
+  </div>
+  <div>
+    -We tried to fuse aesthetics and meaningful components <br />
+    to accomplish a clean atmosphere for the product look and feel.<br />
+    -Clickable elements are displayed in white boxes, with a slight shadow. <br />
+    This creates a three-dimensionality, which tempts the user to "push" the boxes in.
+  </div>
+
+  <div>
+    <h3>Old vs New</h3>
+  </div>
+
+  <div>
+    <img src="img/screens.png" />
+  </div>
+
+  <div>
+    <img src="img/others.png" />
+  </div>
+
+  <div>
+    Thanks for your <br />
+    attention
+  </div>
+
+
+</body>
+
+</html>
