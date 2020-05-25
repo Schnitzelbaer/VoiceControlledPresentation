@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VUI Presentation</title>
+
+  <script src="lib/artyom.window.min.js"></script>
+  <script src="lib/responsivevoice.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- Koordiniert die Sprachbefehle -->
+  <script src="js/voicerecognition_script.js"></script>
+  <!-- Emoji Library für Ausgaben -->
+  <script src="lib/emojis.json"></script>
+
+  <!-- ml5 -->
+  <script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
+  <script src="js/sketch.js"></script>
+
+
+</head>
+
+<body>
+
+  <script>
+    // Your code will go here
+     // open up your console - if everything loaded properly you should see 0.4.1
+     console.log('ml5 version:', ml5.version);
+   </script>
+
+  <div class="main">
+
+    <div class="wrapper">
+
+      <div class="intro">
+        Try to navigate through the presentation with your voice.
+      </div>
+
+      <div class="currentResult" style="margin: 4%; opacity: 0;">Recognized: </div>
+
+      <input id="call2action" type="button" class="button" value="start " onclick="startRec()">
+
+    </div>
+  </div>
+
+  <div id="impress">
+
+    <div class="step box" data-x="0" data-y="0">
+      <p>Welcome to my first Presentation!</p></br>
+      <p>The MobileNet model labeled this as <span id="result">...</span> with a confidence of <span id="probability">...</span>.</p>
+      <img src='img/kitten.jpg' id="image" width="400" />
+      <script src="sketch.js"></script>
+
+    </div>
+
+    <div class="step box" data-x="0" data-y="1000">
+      <p><b>Lemon fish</b></p>
+      <p>It is found in warm-temperate to tropical waters of the West and East Atlantic Ocean, </br>
+        throughout the Caribbean, and in the Indian Ocean off the coast of India.<p>
+    </div>
+
+    <div class="step box" data-x="2000" data-y="1000">
+      <p>This is what it looks like</p></br>
+      <p>The MobileNet model labeled this as <span id="result">...</span> with a confidence of <span id="probability">...</span>.</p>
+      <img src='img/lemon.jpg' id="image" width="400" />
+      <script src="sketch.js"></script>
+    </div>
+
+    <div class="step box" data-x="2500" data-y="1500" data-z="-1000">
+      <p>I also like lions</p>
+    </div>
+
+    <div class="step box" data-x="4000" data-y="1000">
+      <p>This is my favorite <b class="animation-rotate">lion</b>!</p></br>
+      <p>The MobileNet model labeled this as <span id="result">...</span> with a confidence of <span id="probability">...</span>.</p>
+      <img src='img/lion.jpg' id="image" width="400" />
+      <script src="sketch.js"></script>
+    </div>
+
+
+  </div>
+
+  <script src="js/impress.js" charset="utf-8"> </script>
+
+  <script>
+    impress().init();
+  </script>
+
+</body>
+
+</html>
