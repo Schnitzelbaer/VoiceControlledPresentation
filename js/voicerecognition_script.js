@@ -9,7 +9,28 @@ function startRec() {
     startContinuousArtyom();
     responsiveVoice.speak("The stage is yours!");
     $( ".status" ).fadeTo( "slow" , 1);
+
+    // slidesClassNameArray();
 }
+
+
+
+// slidesClassNameArray = function () {
+//     const slides = document.getElementsByClassName('step');
+//     const slidesArray = [];
+
+//     for (let i = 0; i < slides.length; i++) {
+//         console.log(slides[i]);
+
+//         // At this point we could also push the elements to an array
+//         slidesArray.push(slides[i]);
+//     }
+
+//     console.log(JSON.stringify(slidesArray, null, 2))
+// }
+
+
+
 
 setStartValues = function(){
     document.getElementById('inputBackHome').value = backHome.indexes;
@@ -72,7 +93,7 @@ artyom.redirectRecognizedTextOutput(function(recognized, isFinal) {
         // abziehen des hotkeys
         recognizedVoiceInput = recognized.replace('show me', '')
         recognizedVoiceInput = recognizedVoiceInput.trim();
-        console.log("search term is: " + recognizedVoiceInput);
+        console.log("understood term: " + recognizedVoiceInput);
 
 
     } else {
@@ -118,6 +139,59 @@ var myGroup = [
         }
     },
 
+    searchSlides = {
+        indexes: ["search for"],
+        action: function() {
+            $(".intro").html("You entered: " + recognizedVoiceInput);
+
+            // abziehen des hotkeys
+            recognizedVoiceInput = recognizedVoiceInput.replace('search for', '')
+            recognizedVoiceInput = recognizedVoiceInput.trim();
+            console.log("final search term is: " + recognizedVoiceInput);
+            responsiveVoice.speak("searching for: " + recognizedVoiceInput);
+
+            const options = {
+                // isCaseSensitive: false,
+                // includeScore: false,
+                // shouldSort: true,
+                // includeMatches: false,
+                // findAllMatches: false,
+                // minMatchCharLength: 1,
+                // location: 0,
+                // threshold: 0.6,
+                // distance: 100,
+                // useExtendedSearch: false,
+                keys: [
+                  "slide",
+                  "content.pTags"
+                ]
+              };
+              
+              const fuse = new Fuse(slideList, options);
+              
+              // Change the pattern
+              const pattern = recognizedVoiceInput
+
+              const searchResults = fuse.search(pattern);
+              
+            console.log(searchResults);
+
+            const indexNumber = searchResults.refIndex;
+            console.log(indexNumber);
+
+            // const key = Object.keys(searchResults)[0];
+            // value = searchResults[key]
+            // console.log(key,value);
+
+            // alert(value);
+
+            // var api = impress();
+            // api.init();
+            // api.goto(value);
+
+        }
+    },
+
 
     newCommand = {
     indexes: ["home", "bring me home", "back to start", "start from the beginning"],
@@ -127,5 +201,36 @@ var myGroup = [
 }
 
 ];
+
+
+const slideList = [
+    { "slide": "step box 1",
+        "content": {
+            "pTags": ["Welcome to my first shared Presentation!", "Apple", "Kiwi"],
+        }
+    },
+    { "slide": "step box 2",
+        "content": {
+            "pTags": ["This is the first slide!"],
+        }
+    },
+    { "slide": "step box 3",
+        "content": {
+            "pTags": ["This slide moves from right to left!", "Apple"],
+        }
+    },
+    { "slide": "step box 4",
+        "content": {
+            "pTags": ["This slide is in the background!"],
+        }
+    },
+    { "slide": "step box 5",
+        "content": {
+            "pTags": ["This slide has animation !"],
+        }
+    },
+]
+
+
 
 artyom.addCommands(myGroup);
