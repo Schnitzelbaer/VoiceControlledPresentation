@@ -24,45 +24,47 @@ html { font-family: 'Inter UI', sans-serif; }
 
 .wrapper{
     position: absolute;
-    padding: 2%;
-    max-width: 200px;
-    min-height: 200px;
-    height: 80%;
-    margin: auto;
+		top: 5px;
+		left: 5px;
+		width: 100px;
+		height: auto;
     border: 2px solid #0000ff;
-}
-.main{
-	position: absolute;
-	top: 10px;
-	left: 10px;
-  width: 200px;
-  height: 200px;
-  padding: 4%;
-  border: 2px solid #fff;
-}
+		background-color: #fff;
 
-
+}
 
 .button {
     color: #0008ff;
     font-family: 'Inter UI', sans-serif;
     position: center;
-    padding: 4% 4% 4% 4%;
+    padding: 5px 5px 5px 5px;
+		margin: 5px;
     text-align: center;
-    text-decoration: none;
     font-size: 14px;
     cursor: pointer;
-    border: 2px solid #0000ff; /* Green */
-    transition: 0.6s ease-out ;
-    /* background-color: #efefef; */
+    border: 2px solid #0000ff;
+
+
+		/* position: absolute;
+		top: 5px;
+		right: 5px;
+		width: 50px;
+		height: 50px;
+		color: #0008ff;
+		border: 2px solid #0000ff;
+		cursor: pointer; */
+
   }
-  .button:hover{
+
+
+
+  /* .button:hover{
     /* text-decoration: underline; */
     transform:translate(0,-2px);
     -webkit-box-shadow:  0px 3px 8px -1px rgba(140,140,140,0.4);
 -moz-box-shadow:  0px 3px 8px -1px rgba(140,140,140,0.4);
 box-shadow:  0px 3px 8px -1px rgba(140,140,140,0.4);
-  }
+  } */
 
   .status{
     opacity: 0;
@@ -76,7 +78,6 @@ box-shadow:  0px 3px 8px -1px rgba(140,140,140,0.4);
 
 
   .intro{
-    font-weight: 600;
     font-size: 15px;
     margin-bottom: 4%;
     padding: 1% 4% 4% 4%;
@@ -91,34 +92,6 @@ h1{
   font-size: 2.7em;
 }
 
-
-.footi_wrap {
-  position: fixed;
-
-  left: 2%;
-  bottom: 0;
-  width: 100%;
-  background-color: #fff;
-}
-  .footi {
-    float: left;
-
-    z-index: 200;
-    position: relative;
-    width: fit-content;
-    padding-bottom: 2%;
-    color: #c4c4c4;
-    text-align: left;
-    font-size: 1em;
-    z-index: 100;
-    background-color: #fff;
-    padding-top:2%;
-    margin-right: 6%;
-  }
-  .footi:hover{
-    color: #0008ff;
-    cursor: pointer;
-  }
 
   a{
     font-size: 1em;
@@ -197,6 +170,28 @@ h1{
 	transition-delay: 0.25s;
 }
 
+#CommandsIndex {
+	position: absolute;
+	top: 50px;
+ 	right: 5px;
+	width: 300px;
+  padding: 100px 0;
+  text-align: left;
+  background-color: #0000ff;
+  margin-top: 20px;
+	color: white;
+}
+
+#CommandsButton {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	width: 50px;
+	height: 50px;
+	color: #0008ff;
+	border: 2px solid #0000ff;
+  cursor: pointer;
+}
 
 @media only screen and (max-width: 720px) {
   .about {
