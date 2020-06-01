@@ -49,7 +49,7 @@ function formToJson(){
 pushHtmlToArray = function() {
     // let arrayName = []
     // var slideListString = "";
-    $(".step").children("p").each(function(){slideList.push(this.outerHTML + this.parentNode.id)});
+    $(".step").children("p").each(function(){slideList.push(this.parentNode.id.replace("step-", "") + this.outerHTML)});
     // document.getElementById("impress").innerHTML = slideListString;
 
 
@@ -61,12 +61,16 @@ pushHtmlToArray = function() {
 
 
 
-    var literal = {};
+    // var literal = {};
 
-    for (var i = 0, l = slideList.length; i < l; ++i ) {
-        console.log(slideList[i]);
-        literal[slideList[i]] = slideList[i];
-    }
+    // for (var i = 0, l = slideList.length; i < l; ++i ) {
+    //     console.log(slideList[i]);
+    //     literal[slideList[i]] = slideList[i];
+    // }
+
+
+
+
 
     // slideList = slideList.split(" ");
 
@@ -83,7 +87,7 @@ pushHtmlToArray = function() {
     //   console.log(helper('body'));
 
     console.log(slideList);
-    console.log(literal);
+    // console.log(literal);
 }
 
 
@@ -206,33 +210,57 @@ var myGroup = [
             responsiveVoice.speak("searching for: " + recognizedVoiceInput);
 
 
+            // const options = {
+            //     // isCaseSensitive: false,
+            //     // includeScore: false,
+            //     // shouldSort: true,
+            //     // includeMatches: false,
+            //     // findAllMatches: false,
+            //     // minMatchCharLength: 1,
+            //     // location: 0,
+            //     // threshold: 0.6,
+            //     // distance: 100,
+            //     // useExtendedSearch: false,
+            //     keys: [
+            //       "Slide Content "
+            //     ]
+            //   };
+              
+            //   const fuse = new Fuse(slideList, options);
+              
+            //   // Change the pattern
+            //   const pattern = recognizedVoiceInput
+
+            //   const searchResults = fuse.search(pattern);
+              
+            // // console.log(slideList);
+
+            // const indexNumber = searchResults.refIndex;
+            // console.log(indexNumber);
+
+
+
             const options = {
-                // isCaseSensitive: false,
-                // includeScore: false,
-                // shouldSort: true,
-                // includeMatches: false,
-                // findAllMatches: false,
-                // minMatchCharLength: 1,
-                // location: 0,
-                // threshold: 0.6,
-                // distance: 100,
-                // useExtendedSearch: false,
-                keys: [
-                  "Slide Content "
-                ]
-              };
-              
-              const fuse = new Fuse(slideList, options);
-              
-              // Change the pattern
-              const pattern = recognizedVoiceInput
+                includeScore: true
+            }
 
-              const searchResults = fuse.search(pattern);
-              
-            // console.log(slideList);
+            const fuse = new Fuse(slideList, options)
 
-            const indexNumber = searchResults.refIndex;
-            console.log(indexNumber);
+            const result = fuse.search(recognizedVoiceInput)
+
+            console.log(result);
+
+            var firstSearchResult = 0;
+            var slideNumber = result[firstSearchResult].item;
+            // var slideNumber = slideList[firstSearchResult - 1][firstSearchResult].item;
+
+            console.log(slideNumber);
+            console.log(slideNumber.charAt(0));
+
+            var api = impress();
+            api.init();
+            api.goto(slideNumber.charAt(0)-1);
+
 
             // const key = Object.keys(searchResults)[0];
             // value = searchResults[key]
@@ -259,7 +287,31 @@ var myGroup = [
 
 
 const slideList = [
-
+    // { "slide": "step box 1",
+    //     "content": {
+    //         "pTags": ["Welcome to my first shared Presentation!", "Apple", "Kiwi"],
+    //     }
+    // },
+    // { "slide": "step box 2",
+    //     "content": {
+    //         "pTags": ["This is the first slide!"],
+    //     }
+    // },
+    // { "slide": "step box 3",
+    //     "content": {
+    //         "pTags": ["This slide moves from right to left!", "Apple"],
+    //     }
+    // },
+    // { "slide": "step box 4",
+    //     "content": {
+    //         "pTags": ["This slide is in the background!"],
+    //     }
+    // },
+    // { "slide": "step box 5",
+    //     "content": {
+    //         "pTags": ["This slide has animation !"],
+    //     }
+    // },
 ]
 
 
