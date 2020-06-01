@@ -11,7 +11,13 @@ function startRec() {
   artyom.say("I'm listening!");
   $(".status").fadeTo("slow", 1);
 
+  pushHtmlToArray();
+}
 
+pushHtmlToArray = function() {
+    const slideList = [...document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
+
+    console.log(slideList);
 }
 
 artyom.ArtyomVoicesIdentifiers["en-US"].unshift('Google US English', 'Alex');
@@ -204,6 +210,15 @@ var myGroup = [
       artyom.say("searching for: " + recognizedVoiceInput);
 
 
+      const options = {
+        includeScore: true
+      }
+  
+      const fuse = new Fuse(arr, options);
+  
+      const result = fuse.search('hallo');
+  
+      console.log(result);
 
 
       // const options = {
@@ -258,10 +273,7 @@ var myGroup = [
 
 ];
 
-//gesamte <div id="impress"> ins array
-const slideList = [document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
 
-console.log(slideList);
 
 
 artyom.addCommands(myGroup);
