@@ -1,4 +1,5 @@
 const artyom = new Artyom();
+const slideList = []
 
 
 function startRec() {
@@ -11,11 +12,16 @@ function startRec() {
   artyom.say("I'm listening!");
   $(".status").fadeTo("slow", 1);
 
-  pushHtmlToArray();
+  // pushHtmlToArray();
 }
 
 pushHtmlToArray = function() {
     const slideList = [...document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
+
+    var regex = /(<([^>]+)>)/ig;
+    for(x = 0; x < slideList.length; x++) {
+        slideList[x] = slideList[x].replace(regex, "");
+    }
 
     console.log(slideList);
 }
@@ -202,12 +208,15 @@ var myGroup = [
   },
 
   searchSlides = {
-    smart: true,
-    indexes: ["search for *"],
+    indexes: ["search for"],
     action: function() {
-      $(".intro").html("You entered: " + recognizedVoiceInput);
+        $(".intro").html("You entered: " + recognizedVoiceInput);
 
-      artyom.say("searching for: " + recognizedVoiceInput);
+        // abziehen des hotkeys
+        recognizedVoiceInput = recognizedVoiceInput.replace('search for', '')
+        recognizedVoiceInput = recognizedVoiceInput.trim();
+        console.log("final search term is: " + recognizedVoiceInput);
+        responsiveVoice.speak("searching for: " + recognizedVoiceInput);
 
 
       const options = {
@@ -216,7 +225,7 @@ var myGroup = [
 
       const fuse = new Fuse(slideList, options);
 
-      const result = fuse.search('recognizedVoiceInput');
+      const result = fuse.search(recognizedVoiceInput);
 
       console.log(result);
 
@@ -274,6 +283,6 @@ var myGroup = [
 ];
 
 
-
+// const slideList = []
 
 artyom.addCommands(myGroup);
