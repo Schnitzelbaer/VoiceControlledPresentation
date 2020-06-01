@@ -1,4 +1,5 @@
 const artyom = new Artyom();
+const slideList = []
 
 
 function startRec() {
@@ -11,7 +12,18 @@ function startRec() {
   artyom.say("I'm listening!");
   $(".status").fadeTo("slow", 1);
 
+  // pushHtmlToArray();
+}
 
+pushHtmlToArray = function() {
+    const slideList = [...document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
+
+    var regex = /(<([^>]+)>)/ig;
+    for(x = 0; x < slideList.length; x++) {
+        slideList[x] = slideList[x].replace(regex, "");
+    }
+
+    console.log(slideList);
 }
 
 artyom.ArtyomVoicesIdentifiers["en-US"].unshift('Google US English', 'Alex');
@@ -195,79 +207,70 @@ var myGroup = [
     }
   },
 
-  // searchSlides = {
-  //   smart: true,
-  //   indexes: ["search for *"],
-  //   action: function() {
-  //     $(".intro").html("You entered: " + recognizedVoiceInput);
-
-  //     artyom.say("searching for: " + recognizedVoiceInput);
-
-
-
-
-  //     const options = {
-  //       // isCaseSensitive: false,
-  //       // includeScore: false,
-  //       // shouldSort: true,
-  //       // includeMatches: false,
-  //       // findAllMatches: false,
-  //       // minMatchCharLength: 1,
-  //       // location: 0,
-  //       // threshold: 0.6,
-  //       // distance: 100,
-  //       // useExtendedSearch: false,
-  //       keys: [
-  //         "slide",
-  //         "content.pTags"
-  //       ]
-  //     };
-
-  //     const fuse = new Fuse(slideList, options);
-
-  //     // Change the pattern
-  //     const pattern = recognizedVoiceInput
-
-  //     const searchResults = fuse.search(pattern);
-
-  //     console.log(searchResults);
-
-  //     const indexNumber = searchResults.refIndex;
-  //     console.log(indexNumber);
-
-  //     const key = Object.keys(searchResults)[0];
-  //     value = searchResults[key]
-  //     console.log(key, value);
-
-  //     alert(value);
-
-  //     var api = impress();
-  //     api.init();
-  //     api.goto(value);
-
-  //   }
-  // },
-
-  fuseSearch = {
-      smart: true,
-      indexes: ["search for *"],
-      action: function() {
+  searchSlides = {
+    indexes: ["search for"],
+    action: function() {
         $(".intro").html("You entered: " + recognizedVoiceInput);
 
-        artyom.say("searching for: " + recognizedVoiceInput);
+        // abziehen des hotkeys
+        recognizedVoiceInput = recognizedVoiceInput.replace('search for', '')
+        recognizedVoiceInput = recognizedVoiceInput.trim();
+        console.log("final search term is: " + recognizedVoiceInput);
+        responsiveVoice.speak("searching for: " + recognizedVoiceInput);
 
-        const options = {
-          includeScore: true
-        }
 
-        const fuse = new Fuse(arr, options);
-
-        const result = fuse.search('recognizedVoiceInput');
-
-        console.log(result);
-
+      const options = {
+        includeScore: true
       }
-    },
+
+      const fuse = new Fuse(slideList, options);
+
+      const result = fuse.search(recognizedVoiceInput);
+
+      console.log(result);
+
+
+      // const options = {
+      //   // isCaseSensitive: false,
+      //   // includeScore: false,
+      //   // shouldSort: true,
+      //   // includeMatches: false,
+      //   // findAllMatches: false,
+      //   // minMatchCharLength: 1,
+      //   // location: 0,
+      //   // threshold: 0.6,
+      //   // distance: 100,
+      //   // useExtendedSearch: false,
+      //   keys: [
+      //     "slide",
+      //     "content.pTags"
+      //   ]
+      // };
+
+      // const fuse = new Fuse(slideList, options);
+
+      // // Change the pattern
+      // const pattern = recognizedVoiceInput
+
+      // const searchResults = fuse.search(pattern);
+
+      // console.log(searchResults);
+
+      // const indexNumber = searchResults.refIndex;
+      // console.log(indexNumber);
+
+      // const key = Object.keys(searchResults)[0];
+      // value = searchResults[key]
+      // console.log(key, value);
+
+      // alert(value);
+
+      // var api = impress();
+      // api.init();
+      // api.goto(value);
+
+    }
+  },
 
 
   newCommand = {
@@ -279,10 +282,7 @@ var myGroup = [
 
 ];
 
-// //gesamte <div id="impress"> ins array
-// const slideList = [document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
 
-// console.log(slideList);
-
+// const slideList = []
 
 artyom.addCommands(myGroup);
