@@ -18,6 +18,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
 
   <!-- Koordiniert die Sprachbefehle -->
   <script src="js/voicerecognition_script.js"></script>
@@ -27,10 +28,6 @@
 <body>
   <!-- <script src="js/ml5sketch.js"></script> -->
 
-  <div id="parent">
-    <div>child 1</div>
-    <div>child 2</div>
-  </div>
 
   <div id="impress">
 
@@ -157,6 +154,24 @@
     ... next please</br>
 
   </div>
+
+  <script>
+const arr = [...document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
+
+console.log(arr);
+
+
+const options = {
+  includeScore: true
+}
+
+const fuse = new Fuse(arr, options);
+
+const result = fuse.search('hallo');
+
+console.log(result);
+
+</script>
 
 </body>
 

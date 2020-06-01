@@ -213,11 +213,11 @@ var myGroup = [
       const options = {
         includeScore: true
       }
-  
-      const fuse = new Fuse(arr, options);
-  
-      const result = fuse.search('hallo');
-  
+
+      const fuse = new Fuse(slideList, options);
+
+      const result = fuse.search('recognizedVoiceInput');
+
       console.log(result);
 
 

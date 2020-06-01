@@ -28,65 +28,96 @@
   <!-- <script src="js/ml5sketch.js"></script> -->
 
 
-    <div id="impress">
-      <div class="step box" data-x="-1000" data-y="0">
-        <p>Voice User Interfaces</p>
-        <p>PRESENTATION</p>
-        </br>
-        <img id="foo" src="images/VUI_Image.png" width="700px">
-      </div>
+  <div id="impress">
 
-      <div class="step box" data-x="0" data-y="0">
-        <p id="Ideas">Name some Ideas</p>
-        <ul id="myList"> </ul>
-      </div>
-
-      <div class="step box" data-x="1000" data-y="0">
-        <p id="questionQuote">Don’t ask a question if you won’t be able to understand the answer. </p>
-        <p> Margaret Urban | Voice User Interface Designer – Google </p>
-      </div>
-
-      <div class="step box" data-x="2000" data-y="0">
-        <p>Definition: VUI</p>
-        </br>
-        <p>A Voice User Interface (VUI) enables communication between man and machine through speech-based interactions.</p>
-        <img src="images/VUI.png" width="200px">
-      </div>
-
-      <div class="step box" data-x="3000" data-y="0">
-        <p>Definition: VCD</p>
-        </br>
-        <p>A Voice Command Device (VCD) is a device that is controlled via a Voice User Interface.</p>
-        <img src="images/VCD.png" width="200px">
-      </div>
-
-      <div class="step box" data-x="4000" data-y="0">
-        <p>Definition: Smart Speaker</p>
-        </br>
-        <p>A Smart Speaker is a speaker connected to the Internet that integrates the functions of an Intelligent Personal Assistant (IPA) via non-intrusive voice control and speech recognition.</p>
-        <img src="images/IPA.png" width="200px">
-      </div>
-
-
-      <div class="step box" data-x="-1000" data-y="1000" background-image:"images/VUI_Image.png"> <p>History of VUI</p>
-        </br>
-        <li>1952: Automatic number recognition Audrey | Bell Labs</li>
-        <li>Shoebox was able to understand 16 words | IBM</li>
-        <li>Hidden Markov Model (HMM), with the help of which speech recognition switched from literal agreement to prediction.</li>
-      </div>
-
-      <div class="step box" data-x="0" data-y="1000">
-        <p>What's in this picture?</p>
-        <img src="images/alexa.jpg" width="700px">
-      </div>
-
-      <div class="step box" data-x="4000" data-y="1000">
-        <p><b class="animation-rotate">Thank you</b> for your attention.</p>
-      </div>
-
-      <div class="step" data-x="1500" data-y="500" data-scale=5>
-      </div>
+    <div class="step box" data-x="-1000" data-y="0">
+      <p>Voice User Interfaces</p>
+      <p>PRESENTATION</p>
+      </br>
+       <img id="foo" src="images/VUI_Image.png" width="700px">
     </div>
+
+    <div class="step box" data-x="0" data-y="0">
+      <p id="Ideas">Name some Ideas</p>
+      <ul id="myList"> </ul>
+    </div>
+
+    <div class="step box" data-x="1000" data-y="0">
+      <p id="questionQuote">Don’t ask a question if you won’t be able to understand the answer. </p>
+      <p> Margaret Urban | Voice User Interface Designer – Google </p>
+    </div>
+
+    <div class="step box"  data-x="2000" data-y="0">
+      <p>Definition: VUI</p>
+      </br>
+      <p>A Voice User Interface (VUI) enables communication between man and machine through speech-based interactions.</p>
+      <img src="images/VUI.png" width="200px">
+    </div>
+
+    <div class="step box" data-x="3000" data-y="0">
+      <p>Definition: VCD</p>
+      </br>
+      <p>A Voice Command Device (VCD) is a device that is controlled via a Voice User Interface.</p>
+      <img src="images/VCD.png" width="200px">
+    </div>
+
+    <div class="step box" data-x="4000" data-y="0">
+      <p>Definition: Smart Speaker</p>
+      </br>
+      <p>A Smart Speaker is a speaker connected to the Internet that integrates the functions of an Intelligent Personal Assistant (IPA) via non-intrusive voice control and speech recognition.</p>
+      <img src="images/IPA.png" width="200px">
+    </div>
+
+
+
+    <div class="step box" data-x="-1000" data-y="1000" background-image:"images/VUI_Image.png">
+      <p>History of VUI</p>
+      </br>
+      <li>1952: Automatic number recognition Audrey | Bell Labs</li>
+      <li>Shoebox was able to understand 16 words | IBM</li>
+      <li>Hidden Markov Model (HMM), with the help of which speech recognition switched from literal agreement to prediction.</li>
+    </div>
+
+    <div  class="step box" data-x="0" data-y="1000">
+      <p>What's in this picture?</p>
+      <img src="images/alexa.jpg" width="700px">
+
+    </div>
+
+
+    <div class="step box" data-x="4000" data-y="1000">
+      <p><b class="animation-rotate">Thank you</b> for your attention.</p>
+    </div>
+
+
+
+
+    <div class="step" data-x="1500" data-y="500" data-scale=5>
+    </div>
+
+
+  </div>
+
+
+
+
+  <!-- <script>
+  const arr = [...document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
+
+  console.log(arr);
+
+
+  const options = {
+    includeScore: true
+  }
+
+  const fuse = new Fuse(arr, options);
+
+  const result = fuse.search('Smart');
+
+  console.log(result);
+
+  </script> -->
 
 
 
@@ -116,6 +147,7 @@
 
 
   <script>
+    pushHtmlToArray();
     impress().init();
   </script>
 
