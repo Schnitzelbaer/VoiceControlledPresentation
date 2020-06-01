@@ -12,7 +12,7 @@ function startRec() {
     
     pushHtmlToArray();
 
-    formToJson();
+    // formToJson();
 }
 
 
@@ -32,24 +32,24 @@ function formToJson(){
 
 
 
-    var nm1 = document.getElementById('impress'),
-    i, o = {
-        Tags: []
-    };
-    for (i = 0; i < nm1.length; ++i) {
-        // if (nm1[i].textContent && nm2[i].textContent)
-            o.employees.push({
-                dude: nm1[i].innerHTML
-            });
-    }
+    // var nm1 = document.getElementById('impress'),
+    // i, o = {
+    //     Tags: []
+    // };
+    // for (i = 0; i < nm1.length; ++i) {
+    //     // if (nm1[i].textContent && nm2[i].textContent)
+    //         o.employees.push({
+    //             dude: nm1[i].innerHTML
+    //         });
+    // }
 
-    console.log(JSON.stringify(o));
+    // console.log(JSON.stringify(o));
 }
 
 pushHtmlToArray = function() {
     // let arrayName = []
     // var slideListString = "";
-    $(".step").children("p").each(function(){slideList.push(this.outerHTML)});
+    $(".step").children("p").each(function(){slideList.push(this.outerHTML + this.parentNode.id)});
     // document.getElementById("impress").innerHTML = slideListString;
 
 
@@ -259,31 +259,7 @@ var myGroup = [
 
 
 const slideList = [
-    // { "slide": "step box 1",
-    //     "content": {
-    //         "pTags": ["Welcome to my first shared Presentation!", "Apple", "Kiwi"],
-    //     }
-    // },
-    // { "slide": "step box 2",
-    //     "content": {
-    //         "pTags": ["This is the first slide!"],
-    //     }
-    // },
-    // { "slide": "step box 3",
-    //     "content": {
-    //         "pTags": ["This slide moves from right to left!", "Apple"],
-    //     }
-    // },
-    // { "slide": "step box 4",
-    //     "content": {
-    //         "pTags": ["This slide is in the background!"],
-    //     }
-    // },
-    // { "slide": "step box 5",
-    //     "content": {
-    //         "pTags": ["This slide has animation !"],
-    //     }
-    // },
+
 ]
 
 
