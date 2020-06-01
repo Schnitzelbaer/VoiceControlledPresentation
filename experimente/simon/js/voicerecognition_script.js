@@ -9,27 +9,82 @@ function startRec() {
     startContinuousArtyom();
     responsiveVoice.speak("The stage is yours!");
     $( ".status" ).fadeTo( "slow" , 1);
+    
+    pushHtmlToArray();
 
-    // slidesClassNameArray();
+    // formToJson();
 }
 
 
+function formToJson(){
+    // var formElement = document.getElementById("impress"),
+    //     inputElements = formElement.getElementsByTagName("p"),
+    //     jsonObject = {};
+    // for(var i = 0; i < inputElements.length; i++){
+    //     var inputElement = inputElements[i];
+    //     jsonObject[inputElement.name] = inputElement.value;
 
-// slidesClassNameArray = function () {
-//     const slides = document.getElementsByClassName('step');
-//     const slidesArray = [];
+    // }
+    // return JSON.stringify(jsonObject);
 
-//     for (let i = 0; i < slides.length; i++) {
-//         console.log(slides[i]);
-
-//         // At this point we could also push the elements to an array
-//         slidesArray.push(slides[i]);
-//     }
-
-//     console.log(JSON.stringify(slidesArray, null, 2))
-// }
+    // // console.log(jsonObject);
 
 
+
+
+    // var nm1 = document.getElementById('impress'),
+    // i, o = {
+    //     Tags: []
+    // };
+    // for (i = 0; i < nm1.length; ++i) {
+    //     // if (nm1[i].textContent && nm2[i].textContent)
+    //         o.employees.push({
+    //             dude: nm1[i].innerHTML
+    //         });
+    // }
+
+    // console.log(JSON.stringify(o));
+}
+
+pushHtmlToArray = function() {
+    // let arrayName = []
+    // var slideListString = "";
+    $(".step").children("p").each(function(){slideList.push(this.outerHTML + this.parentNode.id)});
+    // document.getElementById("impress").innerHTML = slideListString;
+
+
+
+    var regex = /(<([^>]+)>)/ig;
+    for(x = 0; x < slideList.length; x++) {
+        slideList[x] = slideList[x].replace(regex, "");
+    }
+
+
+
+    var literal = {};
+
+    for (var i = 0, l = slideList.length; i < l; ++i ) {
+        console.log(slideList[i]);
+        literal[slideList[i]] = slideList[i];
+    }
+
+    // slideList = slideList.split(" ");
+
+    // function helper(root) {
+    //     var result = {};
+               
+    //     $('> .impress', root).each(function () {
+    //       result[$(this).text()] = $(this).hasClass('step') ? helper($(this).parent()) : $(this).next('p').text();
+    //     });
+      
+    //     return result;
+    //   }
+      
+    //   console.log(helper('body'));
+
+    console.log(slideList);
+    console.log(literal);
+}
 
 
 setStartValues = function(){
@@ -150,6 +205,7 @@ var myGroup = [
             console.log("final search term is: " + recognizedVoiceInput);
             responsiveVoice.speak("searching for: " + recognizedVoiceInput);
 
+
             const options = {
                 // isCaseSensitive: false,
                 // includeScore: false,
@@ -162,8 +218,7 @@ var myGroup = [
                 // distance: 100,
                 // useExtendedSearch: false,
                 keys: [
-                  "slide",
-                  "content.pTags"
+                  "Slide Content "
                 ]
               };
               
@@ -174,7 +229,7 @@ var myGroup = [
 
               const searchResults = fuse.search(pattern);
               
-            console.log(searchResults);
+            // console.log(slideList);
 
             const indexNumber = searchResults.refIndex;
             console.log(indexNumber);
@@ -204,31 +259,7 @@ var myGroup = [
 
 
 const slideList = [
-    { "slide": "step box 1",
-        "content": {
-            "pTags": ["Welcome to my first shared Presentation!", "Apple", "Kiwi"],
-        }
-    },
-    { "slide": "step box 2",
-        "content": {
-            "pTags": ["This is the first slide!"],
-        }
-    },
-    { "slide": "step box 3",
-        "content": {
-            "pTags": ["This slide moves from right to left!", "Apple"],
-        }
-    },
-    { "slide": "step box 4",
-        "content": {
-            "pTags": ["This slide is in the background!"],
-        }
-    },
-    { "slide": "step box 5",
-        "content": {
-            "pTags": ["This slide has animation !"],
-        }
-    },
+
 ]
 
 
