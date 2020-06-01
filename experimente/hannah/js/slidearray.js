@@ -6,11 +6,3 @@
 // const arr = [...document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
 // console.log(arr);
 //
-
-let arr = [];
-
-$("#impress div").each(function() {
-  arr.push($(this).html());
-});
-
-console.log(arr);
