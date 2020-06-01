@@ -206,44 +206,44 @@ var myGroup = [
 
 
 
-      const options = {
-        // isCaseSensitive: false,
-        // includeScore: false,
-        // shouldSort: true,
-        // includeMatches: false,
-        // findAllMatches: false,
-        // minMatchCharLength: 1,
-        // location: 0,
-        // threshold: 0.6,
-        // distance: 100,
-        // useExtendedSearch: false,
-        keys: [
-          "slide",
-          "content.pTags"
-        ]
-      };
+      // const options = {
+      //   // isCaseSensitive: false,
+      //   // includeScore: false,
+      //   // shouldSort: true,
+      //   // includeMatches: false,
+      //   // findAllMatches: false,
+      //   // minMatchCharLength: 1,
+      //   // location: 0,
+      //   // threshold: 0.6,
+      //   // distance: 100,
+      //   // useExtendedSearch: false,
+      //   keys: [
+      //     "slide",
+      //     "content.pTags"
+      //   ]
+      // };
 
-      const fuse = new Fuse(slideList, options);
+      // const fuse = new Fuse(slideList, options);
 
-      // Change the pattern
-      const pattern = recognizedVoiceInput
+      // // Change the pattern
+      // const pattern = recognizedVoiceInput
 
-      const searchResults = fuse.search(pattern);
+      // const searchResults = fuse.search(pattern);
 
-      console.log(searchResults);
+      // console.log(searchResults);
 
-      const indexNumber = searchResults.refIndex;
-      console.log(indexNumber);
+      // const indexNumber = searchResults.refIndex;
+      // console.log(indexNumber);
 
-      const key = Object.keys(searchResults)[0];
-      value = searchResults[key]
-      console.log(key, value);
+      // const key = Object.keys(searchResults)[0];
+      // value = searchResults[key]
+      // console.log(key, value);
 
-      alert(value);
+      // alert(value);
 
-      var api = impress();
-      api.init();
-      api.goto(value);
+      // var api = impress();
+      // api.init();
+      // api.goto(value);
 
     }
   },
