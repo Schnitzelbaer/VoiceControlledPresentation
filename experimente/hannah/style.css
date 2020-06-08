@@ -1,203 +1,247 @@
 *,
 *::before,
 *::after {
-	padding: 0;
-	margin: 0;
-	box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-
 
 @import url('https://rsms.me/inter/inter-ui.css');
-html { font-family: 'Inter UI', sans-serif; }
-@supports (font-variation-settings: normal) {
-  html { font-family: 'Inter UI var alt', sans-serif; }
+
+html {
+  font-family: 'Inter UI', sans-serif;
 }
 
-  ::-moz-selection { background: #0008ff; }
-  ::selection { background: #0008ff; }
+@supports (font-variation-settings: normal) {
+  html {
+    font-family: 'Inter UI var alt', sans-serif;
+  }
+}
+
+::-moz-selection {
+  background: #0008ff;
+}
+
+::selection {
+  background: #0008ff;
+  color: white;
+}
 
 .topleft {
-	  position: absolute;
-	  top: 80px;
-	  left: 16px;
-	}
+  position: absolute;
+  top: 80px;
+  left: 16px;
+}
 
-.wrapper{
-    position: absolute;
-		top: 5px;
-		left: 5px;
-		width: 100px;
-		height: auto;
-    border: 2px solid #0000ff;
-		background-color: #fff;
-
+.wrapper {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 220px;
+  height: auto;
+  background-color: white;
+  -webkit-box-shadow: 0px 3px 8px -1px rgba(140, 140, 140, 0.4);
+  -moz-box-shadow: 0px 3px 8px -1px rgba(140, 140, 140, 0.4);
+  box-shadow: 0px 3px 8px -1px rgba(140, 140, 140, 0.4);
+  border-radius: 5px;
+  color: black;
 }
 
 .button {
-    color: #0008ff;
-    font-family: 'Inter UI', sans-serif;
-    position: center;
-    padding: 5px 5px 5px 5px;
-		margin: 5px;
-    text-align: center;
-    font-size: 14px;
-    cursor: pointer;
-    border: 2px solid #0000ff;
+  width: 200px;
+  height: 30px;
+  align-self: auto;
+  color: black;
+  background: white;
+  font-family: 'Inter UI', sans-serif;
+  font-weight: lighter;
+  position: center;
+  padding: 5px 5px 5px 5px;
+  margin: 10px;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 5px;
+}
 
+.button:hover {
+  color: #0008ff;
+  border: 1px solid #0000ff;
+  transform: scale(10%);
+  transition: 0.1s ease-in;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 3px 8px -1px rgba(140, 140, 140, 0.4);
+  -moz-box-shadow: 0px 3px 8px -1px rgba(140, 140, 140, 0.4);
+  box-shadow: 0px 3px 8px -1px rgba(140, 140, 140, 0.4);
+}
 
-		/* position: absolute;
-		top: 5px;
-		right: 5px;
-		width: 50px;
-		height: 50px;
-		color: #0008ff;
-		border: 2px solid #0000ff;
-		cursor: pointer; */
+.button:active {
+  color: #0008ff;
+  border: 2px solid #0000ff;
+  border-radius: 5px;
+}
 
-  }
+.status {
+  opacity: 0;
+  font-family: 'Inter UI', sans-serif;
+  position: relative;
+  font-size: 1em;
+  margin: auto;
+  padding: 0% 1.5% 0% 1.5%;
+  text-align: center;
+}
 
+.intro {
+  font-size: 15px;
+  margin-bottom: 4%;
+  padding: 1% 4% 4% 4%;
+  transition: 0.6s ease-out;
+  text-align: left;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
 
-
-  /* .button:hover{
-    /* text-decoration: underline; */
-    transform:translate(0,-2px);
-    -webkit-box-shadow:  0px 3px 8px -1px rgba(140,140,140,0.4);
--moz-box-shadow:  0px 3px 8px -1px rgba(140,140,140,0.4);
-box-shadow:  0px 3px 8px -1px rgba(140,140,140,0.4);
-  } */
-
-  .status{
-    opacity: 0;
-    font-family: 'Inter UI', sans-serif;
-    position: relative;
-    font-size: 1em;
-    margin: auto;
-    padding: 0% 1.5% 0% 1.5%;
-    text-align: center;
-  }
-
-
-  .intro{
-    font-size: 15px;
-    margin-bottom: 4%;
-    padding: 1% 4% 4% 4%;
-    transition: 0.6s ease-out ;
-    text-align: left;
-    -webkit-transition: all 0.4s ease;
-    transition: all 0.4s ease;
-  }
-
-h1{
+h1 {
   font-weight: 600;
   font-size: 2.7em;
 }
 
+a {
+  font-size: 1em;
+  margin: 2%;
+  font-weight: 400;
+  color: #c4c4c4;
+  -webkit-transition: all .3s ease-out;
+  -moz-transition: all .3s ease-out;
+  -ms-transition: all .3s ease-out;
+  -o-transition: all .3s ease-out;
+  transition: all .3s ease-out;
+}
 
-  a{
-    font-size: 1em;
-    margin: 2%;
-    font-weight: 400;
-    color: #c4c4c4;
-    -webkit-transition:all .3s ease-out;
-    -moz-transition:all .3s ease-out;
-    -ms-transition:all .3s ease-out;
-    -o-transition:all .3s ease-out;
-    transition:all .3s ease-out;
-  }
-
-  a:hover{color: #0008ff;}
-
-
-.blue{
+a:hover {
   color: #0008ff;
 }
 
+.blue {
+  color: #0008ff;
+}
 
-.about{
+.about {
   position: fixed;
   bottom: -40%;
   max-width: 40%;
   font-size: 0.8em;
   margin: 2% 2% 0% 14.5%;
-
   font-weight: 400;
   color: #000000;
   padding: 1.5%;
   z-index: -100;
-  -webkit-transition:all .3s ease-out;
-  -moz-transition:all .3s ease-out;
-  -ms-transition:all .3s ease-out;
-  -o-transition:all .3s ease-out;
-  transition:all .3s ease-out;
+  -webkit-transition: all .3s ease-out;
+  -moz-transition: all .3s ease-out;
+  -ms-transition: all .3s ease-out;
+  -o-transition: all .3s ease-out;
+  transition: all .3s ease-out;
 }
-.commands{
-  position: fixed;
-  bottom: -40%;
-  max-width: 40%;
-  font-size: 0.8em;
-  margin: 2% 2% 0% 1.7%;
 
-  line-height: 2em;
-  font-weight: 400;
-  color: #000000;
-  padding: 1.5%;
-  z-index: -100;
-  -webkit-transition:all .3s ease-out;
-  -moz-transition:all .3s ease-out;
-  -ms-transition:all .3s ease-out;
-  -o-transition:all .3s ease-out;
-  transition:all .3s ease-out;
+.commands {
+  position: absolute;
+  background: #0008ff;
+  margin-top: 5px;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  list-style: none;
+  border-radius: 5px;
+  color: white;
+  text-decoration: none;
 }
 
 .box {
-	display: block;
-	width: 800px;
-	height: 600px;
-	padding: 30px 50px;
-	background-color: #FFFFFF;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
-	border: 1px solid rgba(0, 0, 0, .1);
-	border-radius: 20px;
-	font-family: Roboto, sans-serif;
-	font-size: 40px;
-	color: rgb(102, 102, 102);
+  display: block;
+  width: 800px;
+  height: 600px;
+  padding: 30px 50px;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 20px;
+  font-family: Roboto, sans-serif;
+  font-size: 40px;
+  color: rgb(102, 102, 102);
 }
 
 .box.present .animation-rotate {
-	display: inline-block;
-	transform: rotate(-5deg);
-	transition: 0.5s;
-	transition-delay: 0.25s;
-}
-
-#CommandsIndex {
-	position: absolute;
-	top: 50px;
- 	right: 5px;
-	width: 300px;
-  padding: 100px 0;
-  text-align: left;
-  background-color: #0000ff;
-  margin-top: 20px;
-	color: white;
+  display: inline-block;
+  transform: rotate(-5deg);
+  transition: 0.5s;
+  transition-delay: 0.25s;
 }
 
 #CommandsButton {
-	position: absolute;
-	top: 5px;
-	right: 5px;
-	width: 50px;
-	height: 50px;
-	color: #0008ff;
-	border: 2px solid #0000ff;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 180px;
+  height: 30px;
+  align-self: auto;
+  color: black;
+  background: white;
+  font-family: 'Inter UI', sans-serif;
+  position: center;
+  padding: 5px 5px 5px 5px;
+  margin: 10px;
+  text-align: center;
+  font-size: 14px;
   cursor: pointer;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+#CommandsButton:hover {
+  color: #0008ff;
+  border: 2px solid #0000ff;
+  border-radius: 5px;
+}
+
+#CommandsButton:active {
+  background: #0008ff;
+  color: white;
+  border: 2px solid #0000ff;
+  border-radius: 5px;
+  font:
+}
+
+#CommandsIndex {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  width: 180px;
+  height: 300px;
+  padding: 20px;
+  margin-top: 45px;
+  color: black;
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  line-height: 3vh;
+  list-style: none;
+  -webkit-box-shadow: 0px 3px 8px -1px rgba(140, 140, 140, 0.4);
+  -moz-box-shadow: 0px 3px 8px -1px rgba(140, 140, 140, 0.4);
+  box-shadow: 0px 3px 8px -1px rgba(140, 140, 140, 0.4);
 }
 
 @media only screen and (max-width: 720px) {
   .about {
     max-width: 100%;
   }
-  .footi{
+
+  .footi {
     margin-bottom: 4%;
   }
 }

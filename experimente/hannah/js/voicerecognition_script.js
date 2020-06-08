@@ -53,6 +53,9 @@ artyom.redirectRecognizedTextOutput(function(recognized, isFinal) {
     recognizedWildcard = recognized.replace('Tom go to the', '')
     recognizedWildcard = recognizedWildcard.trim();
 
+    recognizedSearch = recognized.replace('Tom show me the slide with', '')
+    recognizedSearch = recognizedSearch.trim();
+
     recognizedContent = recognized.replace('Tom please write down', '')
     recognizedContent = recognizedContent.trim();
 
@@ -145,6 +148,40 @@ var myGroup = [
   },
 
 
+  navigateToSearch = {
+    smart:true,
+    indexes: ["show me the slide with *"],
+    action: function(i, wildcard){
+            // Speak alterable value
+            $(".intro").html("You entered: " + recognizedVoiceInput);
+            artyom.say("I will show you the" + wildcard);
+            // console.log("Hello:"+ String(wildcard));
+            // console.log("this ist the recognizedWildcard " + recognizedWildcard);
+            // console.log("this ist the recognizedVoiceInput " + recognizedVoiceInput);
+            console.log("this ist the FuseSearch" + recognizedSearch);
+
+
+            const options = {
+            includeScore: true
+            }
+
+            const fuse = new Fuse(arr, options);
+
+            const result = fuse.search(recognizedSearch);
+            console.log(result);
+
+            // for(var i = 0; i < result.length; i += 1) {
+            //     return result[i].refIndex;
+            // }
+
+            console.log(result[0].refIndex);
+
+            // var api = impress();
+            // api.init();
+            // api.goto(result[0].refIndex);
+    }
+  },
+
   navigateToDestinations = {
     smart:true,
     indexes: ["go to the *"],
@@ -162,6 +199,7 @@ var myGroup = [
             api.goto( calledDestination );
     }
   },
+
 
   addBulletpoints = {
     smart:true,
@@ -189,7 +227,6 @@ var myGroup = [
             document.getElementById(recognizedDelete).remove();
     }
   }
-
 ];
 
 artyom.addCommands(myGroup);
