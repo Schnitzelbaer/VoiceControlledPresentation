@@ -151,7 +151,18 @@
   </script>
 
   <script>
+<<<<<<< HEAD
     const arr = [...document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
+=======
+  const arr = [...document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
+
+  var regex = /(<([^>]+)>)/ig;
+    for(x = 0; x < arr.length; x++) {
+      arr[x] = arr[x].replace(regex, "");
+  }
+
+  console.log(arr);
+>>>>>>> 1328de74502a4c1a1ddd9af7190787b1e14e0b50
 
     console.log(arr);
   </script>
