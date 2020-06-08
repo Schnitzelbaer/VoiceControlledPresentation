@@ -75,7 +75,7 @@ var myGroup = [
       // Try to execute the say hi command, nothing will happen
       // but in 10 seconds, the command recognition will be available again
       setTimeout(function() {
-      artyom.obey();
+        artyom.obey();
         // execute the say hi command and then it will work !
       }, 10000);
     }
@@ -84,14 +84,14 @@ var myGroup = [
   stopTalking = {
     indexes: ["stop talking", "please stop talking", "shut up", "be quiet"],
     action: function() {
-    artyom.shutUp();
+      artyom.shutUp();
     }
   },
 
   tellMeSomething = {
     indexes: ["tell me something"],
     action: function() {
-    // responsiveVoice.speak("Voice user interfaces have been added to automobiles, home automation systems, computer operating systems, home appliances like washing machines and microwave ovens, but not yet in presentations.");
+      // responsiveVoice.speak("Voice user interfaces have been added to automobiles, home automation systems, computer operating systems, home appliances like washing machines and microwave ovens, but not yet in presentations.");
       artyom.say("Voice user interfaces have been added to automobiles, home automation systems, computer operating systems, home appliances like washing machines and microwave ovens, but not yet in presentations.");
     }
   },
@@ -164,48 +164,61 @@ var myGroup = [
   // },
 
   navigateToDestinations = {
-    smart:true,
+    smart: true,
     indexes: ["go to the *"],
-    action: function(i, wildcard){
-            // Speak alterable value
-            $(".intro").html("You entered: " + recognizedVoiceInput);
-            artyom.say("I will show you the" + wildcard);
-            // console.log("Hello:"+ String(wildcard));
-            // console.log("this ist the recognizedWildcard " + recognizedWildcard);
-            // console.log("this ist the recognizedVoiceInput " + recognizedVoiceInput);
-            console.log("this ist the Input" + recognizedWildcard);
-            var calledDestination = document.getElementById(recognizedWildcard);
-            var api = impress();
-            api.init();
-            api.goto( calledDestination );
+    action: function(i, wildcard) {
+      // Speak alterable value
+      $(".intro").html("You entered: " + recognizedVoiceInput);
+      artyom.say("I will show you the" + wildcard);
+      // console.log("Hello:"+ String(wildcard));
+      // console.log("this ist the recognizedWildcard " + recognizedWildcard);
+      // console.log("this ist the recognizedVoiceInput " + recognizedVoiceInput);
+      console.log("this ist the Input" + recognizedWildcard);
+      var calledDestination = document.getElementById(recognizedWildcard);
+      var api = impress();
+      api.init();
+      api.goto(calledDestination);
     }
   },
 
 
   addBulletpoints = {
-    smart:true,
+    smart: true,
     indexes: ["please write down *"],
-    action: function(i, wildcard){
-            // Speak alterable value
-            artyom.say("I will add" + wildcard + "to the slide");
-            var node = document.createElement("LI");
-            var textnode = document.createTextNode(String(recognizedContent));
-            node.appendChild(textnode);
-            node.id = String(recognizedContent);
-            document.getElementById("Ideas").appendChild(node);
+    action: function(i, wildcard) {
+      // Speak alterable value
+      artyom.say("I will add" + wildcard + "to the slide");
+      var node = document.createElement("LI");
+      var textnode = document.createTextNode(String(recognizedContent));
+      node.appendChild(textnode);
+      node.id = String(recognizedContent);
+      document.getElementById("Ideas").appendChild(node);
     }
+
+    var i = 0;
+    var textnode = document.createTextNode(String(recognizedContent));
+    var speed = 60;
+
+    function typeWriter() {
+      if (i < textnode.length) {
+        document.getElementById("type").innerHTML += textnode.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+
   },
 
   deleteBulletpoints = {
-    smart:true,
+    smart: true,
     indexes: ["delete *"],
-    action: function(i, wildcard){
-            // Speak alterable value
-            artyom.say("I will delete" + wildcard + "from the slide");
-            // var list = document.getElementById("Ideas");
-            // list.removeChild(list.childNodes[0]);
+    action: function(i, wildcard) {
+      // Speak alterable value
+      artyom.say("I will delete" + wildcard + "from the slide");
+      // var list = document.getElementById("Ideas");
+      // list.removeChild(list.childNodes[0]);
 
-            document.getElementById(recognizedDelete).remove();
+      document.getElementById(recognizedDelete).remove();
     }
   }
 
