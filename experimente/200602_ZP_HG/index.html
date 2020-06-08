@@ -142,6 +142,11 @@
   <script>
   const arr = [...document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
 
+  var regex = /(<([^>]+)>)/ig;
+    for(x = 0; x < arr.length; x++) {
+      arr[x] = arr[x].replace(regex, "");
+  }
+
   console.log(arr);
 
 </script>
