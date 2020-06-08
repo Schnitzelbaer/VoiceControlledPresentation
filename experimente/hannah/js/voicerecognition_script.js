@@ -26,7 +26,7 @@ function startContinuousArtyom() {
       listen: true, // Start recognizing
       debug: true, // Show everything in the console
       speed: 1, // talk normally
-      name: "Tom" // Analogy to "Alexa" it it is enabled > you can only give commands when you start with Anna
+      // name: "Tom" // Analogy to "Alexa" it it is enabled > you can only give commands when you start with Anna
     }).then(function() {
       console.log("Ready to work !");
     });
@@ -39,6 +39,7 @@ var userInput;
 var recognizedVoiceInput;
 var recognizedWildcard;
 var wildcardString;
+var recognizedSearch;
 
 artyom.redirectRecognizedTextOutput(function(recognized, isFinal) {
   if (isFinal) {
@@ -46,20 +47,37 @@ artyom.redirectRecognizedTextOutput(function(recognized, isFinal) {
     $(".currentResult").html("Recognized: " + recognized);
 
     // abziehen des hotkeys
-    recognizedVoiceInput = recognized.replace('Tom', '')
-    recognizedVoiceInput = recognizedVoiceInput.trim();
-    console.log("search term is: " + recognizedVoiceInput);
+    // recognizedVoiceInput = recognized.replace('Tom', '')
+    // recognizedVoiceInput = recognizedVoiceInput.trim();
+    // console.log("search term is: " + recognizedVoiceInput);
+    //
+    // recognizedWildcard = recognized.replace('Tom go to the', '')
+    // recognizedWildcard = recognizedWildcard.trim();
+    //
+    // recognizedSearch = recognized.replace('Tom search for', '')
+    // recognizedSearch = recognizedSearch.trim();
+    //
+    // recognizedContent = recognized.replace('Tom please write down', '')
+    // recognizedContent = recognizedContent.trim();
+    //
+    // recognizedDelete = recognized.replace('Tom delete', '')
+    // recognizedDelete = recognizedDelete.trim();
 
-    recognizedWildcard = recognized.replace('Tom go to the', '')
+
+
+    // abziehen des hotkeys
+    recognizedVoiceInput = recognized;
+
+    recognizedWildcard = recognized.replace('go to the', '')
     recognizedWildcard = recognizedWildcard.trim();
 
-    recognizedSearch = recognized.replace('Tom show me the slide with', '')
+    recognizedSearch = recognized.replace('search for', '')
     recognizedSearch = recognizedSearch.trim();
 
-    recognizedContent = recognized.replace('Tom please write down', '')
+    recognizedContent = recognized.replace('please write down', '')
     recognizedContent = recognizedContent.trim();
 
-    recognizedDelete = recognized.replace('Tom delete', '')
+    recognizedDelete = recognized.replace('delete', '')
     recognizedDelete = recognizedDelete.trim();
 
   } else {
@@ -94,7 +112,6 @@ var myGroup = [
   tellMeSomething = {
     indexes: ["tell me something"],
     action: function() {
-    // responsiveVoice.speak("Voice user interfaces have been added to automobiles, home automation systems, computer operating systems, home appliances like washing machines and microwave ovens, but not yet in presentations.");
       artyom.say("Voice user interfaces have been added to automobiles, home automation systems, computer operating systems, home appliances like washing machines and microwave ovens, but not yet in presentations.");
     }
   },
@@ -104,8 +121,6 @@ var myGroup = [
     indexes: ["back to start", "start from the beginning"],
     action: function() {
       $(".intro").html("You entered: " + recognizedVoiceInput);
-      // responsiveVoice.speak("You entered" + recognizedVoiceInput);
-      // artyom.say("You entered" + recognizedVoiceInput);
       var api = impress();
       api.init();
       api.goto(0);
@@ -117,8 +132,6 @@ var myGroup = [
     indexes: ["next slide", "next slide please", "next please"],
     action: function() {
       $(".intro").html("You entered: " + recognizedVoiceInput);
-      // responsiveVoice.speak("You entered " + recognizedVoiceInput);
-      // artyom.say("You entered " + recognizedVoiceInput);
       var api = impress();
       api.init();
       api.next();
@@ -129,8 +142,6 @@ var myGroup = [
     indexes: ["go back", "previous slide", "last slide", "back to the last", "one back", "last slide please"],
     action: function() {
       $(".intro").html("You entered: " + recognizedVoiceInput);
-      // responsiveVoice.speak("You entered " + recognizedVoiceInput);
-      // artyom.say("You entered " + recognizedVoiceInput);
       var api = impress();
       api.init();
       api.prev();
@@ -150,11 +161,10 @@ var myGroup = [
 
   navigateToSearch = {
     smart:true,
-    indexes: ["show me the slide with *"],
+    indexes: ["search for *"],
     action: function(i, wildcard){
             // Speak alterable value
             $(".intro").html("You entered: " + recognizedVoiceInput);
-            artyom.say("I will show you the" + wildcard);
             // console.log("Hello:"+ String(wildcard));
             // console.log("this ist the recognizedWildcard " + recognizedWildcard);
             // console.log("this ist the recognizedVoiceInput " + recognizedVoiceInput);
@@ -176,9 +186,11 @@ var myGroup = [
 
             console.log(result[0].refIndex);
 
-            // var api = impress();
-            // api.init();
-            // api.goto(result[0].refIndex);
+
+
+            var api = impress();
+            api.init();
+            api.goto(result[0].refIndex);
     }
   },
 
@@ -188,7 +200,6 @@ var myGroup = [
     action: function(i, wildcard){
             // Speak alterable value
             $(".intro").html("You entered: " + recognizedVoiceInput);
-            artyom.say("I will show you the" + wildcard);
             // console.log("Hello:"+ String(wildcard));
             // console.log("this ist the recognizedWildcard " + recognizedWildcard);
             // console.log("this ist the recognizedVoiceInput " + recognizedVoiceInput);
@@ -211,7 +222,24 @@ var myGroup = [
             var textnode = document.createTextNode(String(recognizedContent));
             node.appendChild(textnode);
             node.id = String(recognizedContent);
-            document.getElementById("Ideas").appendChild(node);
+            // document.getElementById("Ideas").appendChild(node);
+            // console.log("hello:" + recognizedContent);
+
+
+            var i = 0;
+            var speed = 50;
+
+            function typeWriter() {
+              if (i < recognizedContent.length) {
+                // document.getElementById("myList").appendChild(node) += recognizedContent.charAt(i);
+                document.getElementById("myList").innerHTML += recognizedContent.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+              }
+            }
+            typeWriter();
+
+
     }
   },
 
