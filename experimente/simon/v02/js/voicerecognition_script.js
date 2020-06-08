@@ -14,6 +14,8 @@ function startRec() {
 
 }
 
+
+
 artyom.ArtyomVoicesIdentifiers["en-US"].unshift('Google US English', 'Alex');
 
 function startContinuousArtyom() {
@@ -145,6 +147,24 @@ var myGroup = [
   },
 
 
+  // navigateToDestinations = {
+  //   smart:true,
+  //   indexes: ["go to the *"],
+  //   action: function(i, wildcard){
+  //           // Speak alterable value
+  //           $(".intro").html("You entered: " + recognizedVoiceInput);
+  //           artyom.say("I will show you the" + wildcard);
+  //           // console.log("Hello:"+ String(wildcard));
+  //           // console.log("this ist the recognizedWildcard " + recognizedWildcard);
+  //           // console.log("this ist the recognizedVoiceInput " + recognizedVoiceInput);
+  //           console.log("this ist the Input" + recognizedWildcard);
+  //           var calledDestination = document.getElementById(recognizedWildcard);
+  //           var api = impress();
+  //           api.init();
+  //           api.goto( calledDestination );
+  //   }
+  // },
+
   navigateToDestinations = {
     smart:true,
     indexes: ["go to the *"],
@@ -162,6 +182,7 @@ var myGroup = [
             api.goto( calledDestination );
     }
   },
+
 
   addBulletpoints = {
     smart:true,
@@ -188,8 +209,71 @@ var myGroup = [
 
             document.getElementById(recognizedDelete).remove();
     }
-  }
+  },
+
+  searchSlides = {
+    indexes: ["search for"],
+    action: function() {
+        $(".intro").html("You entered: " + recognizedVoiceInput);
+
+        // abziehen des hotkeys
+        recognizedVoiceInput = recognizedVoiceInput.replace('search for', '')
+        recognizedVoiceInput = recognizedVoiceInput.trim();
+        console.log("final search term is: " + recognizedVoiceInput);
+        responsiveVoice.speak("searching for: " + recognizedVoiceInput);
+
+
+
+        const options = {
+          includeScore: true
+          }
+          
+          const fuse = new Fuse(arr, options);
+          
+          const result = fuse.search(recognizedVoiceInput);
+          console.log(result);
+
+
+
+        // const options = {
+        //     includeScore: true
+        // }
+
+        // const fuse = new Fuse(slideList, options)
+
+        // const result = fuse.search(recognizedVoiceInput)
+
+        // console.log(result);
+
+        // var firstSearchResult = 0;
+        // var slideNumber = result[firstSearchResult].item;
+        // // var slideNumber = slideList[firstSearchResult - 1][firstSearchResult].item;
+
+        // console.log(slideNumber);
+        // console.log(slideNumber.charAt(0));
+
+        // var api = impress();
+        // api.init();
+        // api.goto(slideNumber.charAt(0)-1);
+
+    }
+}
+
+
 
 ];
+
+const arr = [];
+
+function pushHtmlToArray() {
+  const arr = [...document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
+  
+    var regex = /(<([^>]+)>)/ig;
+      for(x = 0; x < arr.length; x++) {
+        arr[x] = arr[x].replace(regex, "");
+    }
+  
+    console.log(arr);
+  }
 
 artyom.addCommands(myGroup);

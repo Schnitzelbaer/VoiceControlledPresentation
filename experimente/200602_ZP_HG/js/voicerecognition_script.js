@@ -53,6 +53,9 @@ artyom.redirectRecognizedTextOutput(function(recognized, isFinal) {
     recognizedWildcard = recognized.replace('Tom go to the', '')
     recognizedWildcard = recognizedWildcard.trim();
 
+    recognizedSearch = recognized.replace('Tom show me the slide with', '')
+    recognizedSearch = recognizedSearch.trim();
+
     recognizedContent = recognized.replace('Tom please write down', '')
     recognizedContent = recognizedContent.trim();
 
@@ -145,23 +148,23 @@ var myGroup = [
   },
 
 
-  // navigateToDestinations = {
-  //   smart:true,
-  //   indexes: ["go to the *"],
-  //   action: function(i, wildcard){
-  //           // Speak alterable value
-  //           $(".intro").html("You entered: " + recognizedVoiceInput);
-  //           artyom.say("I will show you the" + wildcard);
-  //           // console.log("Hello:"+ String(wildcard));
-  //           // console.log("this ist the recognizedWildcard " + recognizedWildcard);
-  //           // console.log("this ist the recognizedVoiceInput " + recognizedVoiceInput);
-  //           console.log("this ist the Input" + recognizedWildcard);
-  //           var calledDestination = document.getElementById(recognizedWildcard);
-  //           var api = impress();
-  //           api.init();
-  //           api.goto( calledDestination );
-  //   }
-  // },
+  navigateToDestinations = {
+    smart:true,
+    indexes: ["show me the slide with *"],
+    action: function(i, wildcard){
+            // Speak alterable value
+            $(".intro").html("You entered: " + recognizedVoiceInput);
+            artyom.say("I will show you the" + wildcard);
+            // console.log("Hello:"+ String(wildcard));
+            // console.log("this ist the recognizedWildcard " + recognizedWildcard);
+            // console.log("this ist the recognizedVoiceInput " + recognizedVoiceInput);
+            console.log("this ist the Input" + recognizedSearch);
+
+            // var api = impress();
+            // api.init();
+            // api.goto( calledDestination );
+    }
+  },
 
   navigateToDestinations = {
     smart: true,
@@ -221,8 +224,6 @@ var myGroup = [
       document.getElementById(recognizedDelete).remove();
     }
   }
-
-
 ];
 
 artyom.addCommands(myGroup);
