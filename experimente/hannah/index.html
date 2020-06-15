@@ -22,6 +22,7 @@
   <!-- Koordiniert die Sprachbefehle -->
   <script src="js/voicerecognition_script.js"></script>
   <script src="js/slidearray.js"></script>
+  <!-- <script src="js/classifier.js"></script> -->
 </head>
 
 <body>
@@ -34,7 +35,7 @@
       <p>Voice User Interfaces</p>
       <p>PRESENTATION</p>
       </br>
-       <img id="foo" src="images/VUI_Image.png" width="700px">
+      <img id="foo" src="images/ballon.jpg" width="200px">
     </div>
 
     <div id="brainstorming" class="step box" data-x="0" data-y="0">
@@ -47,53 +48,40 @@
       <p> Margaret Urban | Voice User Interface Designer – Google </p>
     </div>
 
-    <div id="first_definition" class="step box"  data-x="2000" data-y="0">
+    <div id="first_definition" class="step box" data-x="2000" data-y="0">
       <p>Definition: VUI</p>
       </br>
       <p>A Voice User Interface (VUI) enables communication between man and machine through speech-based interactions.</p>
-      <img src="images/VUI.png" width="200px">
+      <img src="images/dog.jpg" width="200px">
     </div>
 
     <div id="second_definition" class="step box" data-x="3000" data-y="0">
       <p>Definition: VCD</p>
       </br>
       <p>A Voice Command Device (VCD) is a device that is controlled via a Voice User Interface.</p>
-      <img src="images/VCD.png" width="200px">
+      <img src="images/kitten.jpg" width="200px">
     </div>
 
     <div id="third_definition" class="step box" data-x="4000" data-y="0">
       <p>Definition: Smart Speaker</p>
       </br>
       <p>A Smart Speaker is a speaker connected to the Internet that integrates the functions of an Intelligent Personal Assistant (IPA) via non-intrusive voice control and speech recognition.</p>
-      <img src="images/IPA.png" width="200px">
+      <img src="images/bird.jpg" width="200px">
     </div>
 
 
-    <div id="history" class="step box" data-x="-1000" data-y="1000" background-image:"images/VUI_Image.png">
-      <p>History of VUI</p>
+    <div id="history" class="step box" data-x="-1000" data-y="1000" background-image:"images/VUI_Image.png"> <p>History of VUI</p>
       </br>
       <li>1952: Automatic number recognition Audrey | Bell Labs</li>
       <li>Shoebox was able to understand 16 words | IBM</li>
       <li>Hidden Markov Model (HMM), with the help of which speech recognition switched from literal agreement to prediction.</li>
     </div>
 
-    <div  class="step box" data-x="0" data-y="1000">
+    <div class="step box" data-x="0" data-y="1000">
       <p>What's in this picture?</p>
-      <img src="images/alexa.jpg" width="700px">
+      <img src="images/lightbulb.jpg" width="200px">
 
     </div>
-
-    <!-- <div class="step box" data-x="1000" data-y="1000">
-      <p>Slide</p>
-    </div>
-
-    <div class="step box"  data-x="2000" data-y="1000">
-      <p>Slide</p>
-    </div>
-
-    <div class="step box" data-x="3000" data-y="1000">
-      <p>Slide</p>
-    </div> -->
 
     <div id="last_slide" class="step box" data-x="4000" data-y="1000">
       <p><b class="animation-rotate">Thank you</b> for your attention.</p>
@@ -108,17 +96,15 @@
 
   </div>
 
-    <div class="wrapper">
+  <div class="wrapper">
 
-      <div class="intro">
-        Try to navigate through the presentation with your voice. Use "Tom" as a wakeword.
-      </div>
-
-      <div class="currentResult" style="margin: 5px; opacity: 0;">Recognized: </div>
-
-      <input id="call2action" type="button" class="button" value="start " onclick="startRec()">
-
+    <div class="intro">
+      <div class="currentResult" style="margin: 5px; opacity: 100;"> </div>
     </div>
+
+    <input id="call2action" type="button" class="button" value="start " onclick="startRec()">
+
+  </div>
 
   <script src="js/impress.js" charset="utf-8"> </script>
 
@@ -135,23 +121,62 @@
         x.style.display = "none";
       }
     }
-
   </script>
 
   <script>
-  // const arr = [...document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
+    // const arr = [...document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
 
-  const $slideDivs = $('#impress > div');
-  const slidesInfos = $slideDivs.map(function(el, i) {
-    return {
-      paragraphs: $(i).find( "p" ).text()
-      //paragraphs: $(el).find("p")
+    const $slideDivs = $('#impress > div');
+
+    const slidesInfos = $slideDivs.map(function(el, i) {
+      return {
+        paragraphs: $(i).find("p").text(),
+        imgSource: $(i).find("img").attr("src")
+        //paragraphs: $(el).find("p")
+      }
+    });
+
+    console.log(slidesInfos);
+    console.log(slidesInfos[0].imgSource);
+    // console.log(arr);
+
+    // Initialize the Image Classifier method with MobileNet
+    const classifier = ml5.imageClassifier('MobileNet', modelLoaded);
+
+    // When the model is loaded
+    function modelLoaded() {
+      console.log('Model Loaded!');
     }
-  });
-      console.log(slidesInfos);
-  // console.log(arr);
 
-</script>
+
+    $('#impress').children('div').each(function(index, element) {
+      // var sourceForClassifier;
+      // if($(element).find("img").length <= 1) {
+        // var sourceForClassifier;
+        // sourceForClassifier = $("img")[index].outerHTML;
+
+        console.log(this.getElementsByTagName('img')[0]);
+        classifier.predict(this.getElementsByTagName('img')[0], function(err, results) {
+        // classifier.predict(document.getElementById('foo'), function(err, results) {
+          console.log(results);
+        });
+
+      // } else {
+      //   console.log("nope");
+      // }
+
+    //   if (sourceForClassifier === 'undefined') {
+    //     console.log("undefined");
+    //   } else {
+    //   classifier.predict(sourceForClassifier, function(err, results) {
+    //   // classifier.predict(document.getElementById('foo'), function(err, results) {
+    //     console.log(results);
+    //   });
+    // }
+
+    });
+
+  </script>
 
 
   <script>
