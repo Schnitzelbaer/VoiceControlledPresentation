@@ -139,8 +139,20 @@
   </script>
 
   <script>
-  const arr = [...document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
-  console.log(arr);
+  // const arr = [...document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
+
+  const $slideDivs = $('#impress > div');
+  const slidesInfos = $slideDivs.map(function(el, i) {
+    return {
+      paragraphs: $(i).find( "p" ).text()
+      // paragraphs: $(el).find("p")
+      // paragraphs: el.find('p')
+    }
+  });
+
+      console.log(slidesInfos);
+  // console.log(arr);
+
 </script>
 
 
