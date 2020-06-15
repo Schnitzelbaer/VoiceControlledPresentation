@@ -25,7 +25,35 @@
 </head>
 
 <body>
-  <!-- <script src="js/ml5sketch.js"></script> -->
+  <div class="header">Navigate with your voice</div>
+  <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
+  <label for="openSidebarMenu" class="sidebarIconToggle">
+    <div class="spinner diagonal part-1"></div>
+    <div class="spinner horizontal"></div>
+    <div class="spinner diagonal part-2"></div>
+  </label>
+  <div id="sidebarMenu">
+    <ul class="sidebarMenuInner">
+      <li><b>Some things you can ask me:</b></li>
+      <li>Navigation <span>“Next slide please”</span>
+        <span>“Previous slide”</span>
+        <span>“Overview”</span>
+        <span>“Show me the first slide”</span>
+        <span>“Go to the end”</span>
+        <span>“Go to the slide with *content*”</span>
+        <span>...</span></li>
+      <li>Description <span>“Read the quote”</span>
+        <span>“Spell the bulletpoint”</span>
+      </li>
+      <li>Assist<span>“Delete _ from the slide”</span>
+        <span>“Add _ to the slide”</span>
+        <span>“Write down_”</span>
+      </li>
+      <li>Find<span>“Search presentation for _”</span>
+        <span>“Look for slides with _”</span>
+      </li>
+    </ul>
+  </div>
 
 
   <div id="impress">
@@ -106,34 +134,8 @@
 
   </div>
 
-  <div class="wrapper">
-
-    <div class="intro">
-      Try to navigate through the presentation with your voice. Use "Tom" as a wakeword.
-    </div>
-
-    <div class="currentResult" style="margin: 5px; opacity: 0;">Recognized: </div>
-
-    <input id="call2action" type="button" class="button" value="start " onclick="startRec()">
-
-  </div>
-
   <script src="js/impress.js" charset="utf-8"> </script>
 
-  <button id="CommandsButton" onclick="myFunction()">Index</button>
-
-
-
-  <script>
-    function myFunction() {
-      var x = document.getElementById("CommandsIndex");
-      if (x.style.display === "none") {
-        x.style.display = "block";
-      } else {
-        x.style.display = "none";
-      }
-    }
-  </script>
 
   <script>
     << << << < HEAD
@@ -168,16 +170,33 @@
     impress().init();
   </script>
 
-  <div id="CommandsIndex">
-    ... go to the * (slidename e.g. overview, quote) </br>
-    ... please write down * (any bulletpoint) </br>
-    ... delete * (written bulletpoint) </br>
-    ... read the quote</br>
-    ... go back</br>
-    ... next please</br>
 
-  </div>
 
 </body>
+
+<footer>
+  <div class="footer">
+    <div class="currentResult" style="opacity: 1;">Recognized: </div>
+    <input id="call2action" type="button" class="button" value="start " onclick="startRec()">
+    <canvas id="output" class="output"></canvas>  
+    <script src="https://cdn.jsdelivr.net/gh/PiethonCoder/wave.js/wave.js"></script> 
+    <script>
+      var wave = new Wave();
+
+      navigator.mediaDevices.getUserMedia({
+          audio: true
+        })
+        .then(function(stream) {
+          wave.fromStream(stream, "output", {
+            dualbars_blocks: true,
+            colors: ["#3FF9A0"]
+          });
+        })
+        .catch(function(err) {
+          console.log(err.message)
+        });
+    </script> 
+  </div>
+</footer>
 
 </html>
