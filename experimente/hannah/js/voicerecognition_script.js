@@ -1,5 +1,5 @@
 const artyom = new Artyom();
-
+console.log("hello its working"):
 
 function startRec() {
   var elem = document.getElementById("call2action");
