@@ -1,5 +1,5 @@
 const artyom = new Artyom();
-console.log("hello its working"):
+console.log("hello its working");
 
 function startRec() {
   var elem = document.getElementById("call2action");
@@ -163,13 +163,9 @@ var myGroup = [
     smart:true,
     indexes: ["search for *"],
     action: function(i, wildcard){
-            // Speak alterable value
             $(".intro").html("You entered: " + recognizedVoiceInput);
-            // console.log("Hello:"+ String(wildcard));
-            // console.log("this ist the recognizedWildcard " + recognizedWildcard);
-            // console.log("this ist the recognizedVoiceInput " + recognizedVoiceInput);
-            console.log("this ist the FuseSearch" + recognizedSearch);
 
+            console.log("this ist the FuseSearch" + recognizedSearch);
 
             const options = {
             includeScore: true
@@ -178,15 +174,6 @@ var myGroup = [
             const fuse = new Fuse(arr, options);
 
             const result = fuse.search(recognizedSearch);
-            console.log(result);
-
-            // for(var i = 0; i < result.length; i += 1) {
-            //     return result[i].refIndex;
-            // }
-
-            console.log(result[0].refIndex);
-
-
 
             var api = impress();
             api.init();
@@ -198,11 +185,6 @@ var myGroup = [
     smart:true,
     indexes: ["go to the *"],
     action: function(i, wildcard){
-            // Speak alterable value
-            $(".intro").html("You entered: " + recognizedVoiceInput);
-            // console.log("Hello:"+ String(wildcard));
-            // console.log("this ist the recognizedWildcard " + recognizedWildcard);
-            // console.log("this ist the recognizedVoiceInput " + recognizedVoiceInput);
             console.log("this ist the Input" + recognizedWildcard);
             var calledDestination = document.getElementById(recognizedWildcard);
             var api = impress();
@@ -216,30 +198,11 @@ var myGroup = [
     smart:true,
     indexes: ["please write down *"],
     action: function(i, wildcard){
-            // Speak alterable value
-            artyom.say("I will add" + wildcard + "to the slide");
             var node = document.createElement("LI");
             var textnode = document.createTextNode(String(recognizedContent));
             node.appendChild(textnode);
             node.id = String(recognizedContent);
-            // document.getElementById("Ideas").appendChild(node);
-            // console.log("hello:" + recognizedContent);
-
-
-            var i = 0;
-            var speed = 50;
-
-            function typeWriter() {
-              if (i < recognizedContent.length) {
-                // document.getElementById("myList").appendChild(node) += recognizedContent.charAt(i);
-                document.getElementById("myList").innerHTML += recognizedContent.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
-              }
-            }
-            typeWriter();
-
-
+            document.getElementById("Ideas").appendChild(node);
     }
   },
 
@@ -247,11 +210,6 @@ var myGroup = [
     smart:true,
     indexes: ["delete *"],
     action: function(i, wildcard){
-            // Speak alterable value
-            artyom.say("I will delete" + wildcard + "from the slide");
-            // var list = document.getElementById("Ideas");
-            // list.removeChild(list.childNodes[0]);
-
             document.getElementById(recognizedDelete).remove();
     }
   }

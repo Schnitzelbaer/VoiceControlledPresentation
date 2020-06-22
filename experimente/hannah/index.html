@@ -19,6 +19,7 @@
   <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
+
   <!-- Koordiniert die Sprachbefehle -->
   <script src="js/voicerecognition_script.js"></script>
   <script src="js/slidearray.js"></script>
@@ -150,29 +151,17 @@
 
 
     $('#impress').children('div').each(function(index, element) {
-      // var sourceForClassifier;
-      // if($(element).find("img").length <= 1) {
-        // var sourceForClassifier;
-        // sourceForClassifier = $("img")[index].outerHTML;
+        var pixelSource;
+        pixelSource = this.getElementsByTagName('img')[0];
 
+        if (pixelSource == undefined) {
+          console.log('this is undefined');
+        } else {
         console.log(this.getElementsByTagName('img')[0]);
         classifier.predict(this.getElementsByTagName('img')[0], function(err, results) {
-        // classifier.predict(document.getElementById('foo'), function(err, results) {
           console.log(results);
         });
-
-      // } else {
-      //   console.log("nope");
-      // }
-
-    //   if (sourceForClassifier === 'undefined') {
-    //     console.log("undefined");
-    //   } else {
-    //   classifier.predict(sourceForClassifier, function(err, results) {
-    //   // classifier.predict(document.getElementById('foo'), function(err, results) {
-    //     console.log(results);
-    //   });
-    // }
+      }
 
     });
 
