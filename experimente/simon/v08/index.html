@@ -19,9 +19,11 @@
   <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
+
   <!-- Koordiniert die Sprachbefehle -->
   <script src="js/voicerecognition_script.js"></script>
   <script src="js/slidearray.js"></script>
+  <!-- <script src="js/classifier.js"></script> -->
 </head>
 
 <body>
@@ -34,7 +36,7 @@
       <p>Voice User Interfaces</p>
       <p>PRESENTATION</p>
       </br>
-       <img id="foo" src="images/VUI_Image.png" width="700px">
+      <img id="foo" src="images/ballon.jpg" width="200px">
     </div>
 
     <div id="brainstorming" class="step box" data-x="0" data-y="0">
@@ -47,53 +49,40 @@
       <p> Margaret Urban | Voice User Interface Designer – Google </p>
     </div>
 
-    <div id="first_definition" class="step box"  data-x="2000" data-y="0">
+    <div id="first_definition" class="step box" data-x="2000" data-y="0">
       <p>Definition: VUI</p>
       </br>
       <p>A Voice User Interface (VUI) enables communication between man and machine through speech-based interactions.</p>
-      <img src="images/VUI.png" width="200px">
+      <img src="images/dog.jpg" width="200px">
     </div>
 
     <div id="second_definition" class="step box" data-x="3000" data-y="0">
       <p>Definition: VCD</p>
       </br>
       <p>A Voice Command Device (VCD) is a device that is controlled via a Voice User Interface.</p>
-      <img src="images/VCD.png" width="200px">
+      <img src="images/kitten.jpg" width="200px">
     </div>
 
     <div id="third_definition" class="step box" data-x="4000" data-y="0">
       <p>Definition: Smart Speaker</p>
       </br>
       <p>A Smart Speaker is a speaker connected to the Internet that integrates the functions of an Intelligent Personal Assistant (IPA) via non-intrusive voice control and speech recognition.</p>
-      <img src="images/IPA.png" width="200px">
+      <img src="images/bird.jpg" width="200px">
     </div>
 
 
-    <div id="history" class="step box" data-x="-1000" data-y="1000" background-image:"images/VUI_Image.png">
-      <p>History of VUI</p>
+    <div id="history" class="step box" data-x="-1000" data-y="1000" background-image:"images/VUI_Image.png"> <p>History of VUI</p>
       </br>
       <li>1952: Automatic number recognition Audrey | Bell Labs</li>
       <li>Shoebox was able to understand 16 words | IBM</li>
       <li>Hidden Markov Model (HMM), with the help of which speech recognition switched from literal agreement to prediction.</li>
     </div>
 
-    <div  class="step_box" data-x="0" data-y="1000">
+    <div class="step box" data-x="0" data-y="1000">
       <p>What's in this picture?</p>
-      <img src="images/alexa.jpg" width="700px">
+      <img src="images/lightbulb.jpg" width="200px">
 
     </div>
-
-    <!-- <div class="step box" data-x="1000" data-y="1000">
-      <p>Slide</p>
-    </div>
-
-    <div class="step box"  data-x="2000" data-y="1000">
-      <p>Slide</p>
-    </div>
-
-    <div class="step box" data-x="3000" data-y="1000">
-      <p>Slide</p>
-    </div> -->
 
     <div id="last_slide" class="step box" data-x="4000" data-y="1000">
       <p><b class="animation-rotate">Thank you</b> for your attention.</p>
@@ -108,79 +97,20 @@
 
   </div>
 
-    <div class="wrapper">
+  <div class="wrapper">
 
-      <div class="intro">
-        Try to navigate through the presentation with your voice. Use "Tom" as a wakeword.
-      </div>
-
-      <div class="currentResult" style="margin: 5px; opacity: 0;">Recognized: </div>
-
-      <input id="call2action" type="button" class="button" value="start " onclick="startRec()">
-
+    <div class="intro">
+      <div class="currentResult" style="margin: 5px; opacity: 100;"> </div>
     </div>
+
+    <input id="call2action" type="button" class="button" value="start " onclick="startRec()">
+
+  </div>
 
   <script src="js/impress.js" charset="utf-8"> </script>
 
-  <button id="CommandsButton" onclick="myFunction()">Index</button>
+  <button id="CommandsButton" onclick="showHidecommandsIndex()">Index</button>
 
-
-
-  <script>
-    function myFunction() {
-      var x = document.getElementById("CommandsIndex");
-      if (x.style.display === "none") {
-        x.style.display = "block";
-      } else {
-        x.style.display = "none";
-      }
-    }
-
-  </script>
-
-  <script>
-
-  // const arr = [...document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
-  const $slideDivs = $('#impress > div');
-  const $slidesInfos = $slideDivs.map(function($el, i) {
-    var htmlInput = $(i).find("p").parent().html();
-    console.log(htmlInput);
-    var splitResult = htmlInput.split('p');
-	  return {
-		  ref_div: $el,
-		  innerHTML: $el.innerHTML,
-      index: i,
-      // paragraphs: $(i).find( "p" ).text()
-      paragraphs: $(i).find("p").parent().html()
-      // paragraphs: $(i).find("p").text()
-		  // paragraphs: $el.find('p')
-		  // imgs: $el.find('img')
-	  }
-  });
-
-  // const arr = [...document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
-
-  // var regex = /(<([^>]+)>)/ig;
-  //   for(x = 0; x < $slidesInfos.length; x++) {
-  //     $slidesInfos[x].paragraphs = $slidesInfos[x].paragraphs.replace(regex, "");
-  // }
-
-  // $slidesInfos[0].paragraphs.split(" ");
-
-//  console.log($slideDivs);
-  console.log($slidesInfos);
-
-</script>
-
-
-  <script>
-    impress().init();
-  </script>
-
-<div id="SearchIndex" style= "width: 500px; position: absolute; left: 0; right: 0; margin: auto; text-align: center; display: none; border: 5px solid #0000ff; top: 5px; padding: 5px;">
-<p><b>Searching for:</b></p>
-<div class="SearchTerm"></div>
-</div>
 
   <div id="CommandsIndex">
     ... go to the * (slidename e.g. overview, quote) </br>
@@ -188,13 +118,7 @@
     ... delete * (written bulletpoint) </br>
     ... read the quote</br>
     ... go back</br>
-    ... next please</br></br>
-    <b>Search</b>
-    ... search for *</br>
-    ... next result</br>
-    ... previous result</br>
-    ... select result</br>
-    
+    ... next please</br>
 
   </div>
 
