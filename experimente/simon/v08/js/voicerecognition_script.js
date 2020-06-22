@@ -1,8 +1,8 @@
-let slidesInfos = [];
+var slidesInfos = [];
 
 $(document).ready(function() {
 
-  let $slideDivs = $('#impress > div');
+  var $slideDivs = $('#impress > div');
     slidesInfos = $slideDivs.map(function(i, el) {
 
       var htmlInput = $(el).find("p").parent().html();
@@ -10,7 +10,7 @@ $(document).ready(function() {
       if (htmlInput == undefined) {
           console.log('this is undefined');
         } else {
-  
+
       var splitResult = htmlInput.split(/\r?\n|\r/);
 
       var regex = /(<([^>]+)>)/ig;
@@ -24,7 +24,6 @@ $(document).ready(function() {
       return {
         paragraphs: splitResult,
         imgSource: $(el).find("img").attr("src")
-        //paragraphs: $(el).find("p")
       }
     });
 
@@ -47,7 +46,6 @@ $(document).ready(function() {
         if (pixelSource == undefined) {
           console.log('this is undefined');
         } else {
-        // console.log(this.getElementsByTagName('img')[0]);
         classifier.predict(this.getElementsByTagName('img')[0], function(err, results) {
           // var names = items.map(function(item) {
           //   return item['name'];
@@ -60,7 +58,7 @@ $(document).ready(function() {
 
 
     impress().init();
-// documentreadyfunction end    
+// documentreadyfunction end
 });
 
 
@@ -83,7 +81,6 @@ function startRec() {
   elem.style.color = 'red';
 
   startContinuousArtyom();
-  // responsiveVoice.speak("I'm listening!");
   artyom.say("I'm listening!");
   $(".status").fadeTo("slow", 1);
 
@@ -220,9 +217,6 @@ var myGroup = [
     action: function(i, wildcard){
             // Speak alterable value
             $(".intro").html("You entered: " + recognizedVoiceInput);
-            // console.log("Hello:"+ String(wildcard));
-            // console.log("this ist the recognizedWildcard " + recognizedWildcard);
-            // console.log("this ist the recognizedVoiceInput " + recognizedVoiceInput);
             console.log("this ist the FuseSearch: " + recognizedSearch);
 
             var div = document.getElementsByTagName('div'),
@@ -234,7 +228,7 @@ var myGroup = [
             refIndexCycle = 0;
             indexNumbers.length = 0;
 
-            
+
             const options = {
             includeScore: true,
             keys: ['0.paragraphs']
@@ -250,15 +244,11 @@ var myGroup = [
             document.getElementsByClassName("SearchTerm")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + result.length;
 
 
-            // refIndexes.concat(result.refIndex);
-            for (let index = 0; index < result.length; index++) {
-              // console.log(result[index].refIndex);
+            for (var index = 0; index < result.length; index++) {
               indexNumbers.push(result[index].refIndex);
             }
 
             console.log(indexNumbers);
-
-            // var arrLength = result.length;
 
             console.log(result[0].refIndex);
 
@@ -274,7 +264,7 @@ var myGroup = [
 
       if(refIndexCycle < indexNumbers.length-1) {
         refIndexCycle++;
-      
+
         var api = impress();
         api.init();
         api.goto(indexNumbers[refIndexCycle]);
@@ -296,7 +286,7 @@ var myGroup = [
 
       if(refIndexCycle <= indexNumbers.length-1 && refIndexCycle > 0) {
         refIndexCycle--;
-      
+
         var api = impress();
         api.init();
         api.goto(indexNumbers[refIndexCycle]);
