@@ -149,20 +149,20 @@ var myGroup = [
 
 
   navigateToDestinations = {
-    smart:true,
+    smart: true,
     indexes: ["show me the slide with *"],
-    action: function(i, wildcard){
-            // Speak alterable value
-            $(".intro").html("You entered: " + recognizedVoiceInput);
-            artyom.say("I will show you the" + wildcard);
-            // console.log("Hello:"+ String(wildcard));
-            // console.log("this ist the recognizedWildcard " + recognizedWildcard);
-            // console.log("this ist the recognizedVoiceInput " + recognizedVoiceInput);
-            console.log("this ist the Input" + recognizedSearch);
+    action: function(i, wildcard) {
+      // Speak alterable value
+      $(".intro").html("You entered: " + recognizedVoiceInput);
+      artyom.say("I will show you the" + wildcard);
+      // console.log("Hello:"+ String(wildcard));
+      // console.log("this ist the recognizedWildcard " + recognizedWildcard);
+      // console.log("this ist the recognizedVoiceInput " + recognizedVoiceInput);
+      console.log("this ist the Input" + recognizedSearch);
 
-            // var api = impress();
-            // api.init();
-            // api.goto( calledDestination );
+      // var api = impress();
+      // api.init();
+      // api.goto( calledDestination );
     }
   },
 
@@ -196,20 +196,11 @@ var myGroup = [
       node.appendChild(textnode);
       node.id = String(recognizedContent);
       document.getElementById("Ideas").appendChild(node);
+      $("#myList").animate({
+        opacity: ".5",
+        textIndent: "20px"
+      })
     }
-
-    var i = 0;
-    var textnode = document.createTextNode(String(recognizedContent));
-    var speed = 60;
-
-    function typeWriter() {
-      if (i < textnode.length) {
-        document.getElementById("type").innerHTML += textnode.charAt(i);
-        i++;
-        setTimeout(typeWriter, speed);
-      }
-    }
-
   },
 
   deleteBulletpoints = {
