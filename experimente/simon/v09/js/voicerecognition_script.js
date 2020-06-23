@@ -1,8 +1,5 @@
 var slidesInfos = [];
 
-
-
-// Füllen des Arrays & Bilderkennung
 $(document).ready(function() {
 
   var $slideDivs = $('#impress > div');
@@ -31,6 +28,7 @@ $(document).ready(function() {
     });
 
     console.log(slidesInfos);
+    console.log(Object.keys(slidesInfos));
 
     // Initialize the Image Classifier method with MobileNet
     const classifier = ml5.imageClassifier('MobileNet', modelLoaded);
@@ -48,7 +46,10 @@ $(document).ready(function() {
         if (pixelSource == undefined) {
           console.log('this is undefined');
         } else {
-        classifier.predict(pixelSource, function(err, results) {
+        classifier.predict(this.getElementsByTagName('img')[0], function(err, results) {
+          // var names = items.map(function(item) {
+          //   return item['name'];
+          // });
           console.log(results);
         });
       }
@@ -61,7 +62,16 @@ $(document).ready(function() {
 });
 
 
-// Artyom Magic
+// Show Hide commands Index
+function showHidecommandsIndex() {
+  var x = document.getElementById("CommandsIndex");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
 const artyom = new Artyom();
 console.log("hello its working");
 
@@ -131,10 +141,76 @@ artyom.redirectRecognizedTextOutput(function(recognized, isFinal) {
 });
 
 
-// Keywords Definition
 var myGroup = [
+  stopListening = {
+    indexes: ["stop listening"],
+    action: function() {
+      $(".intro").html("You entered: " + recognizedVoiceInput);
+      artyom.dontObey();
+      // Try to execute the say hi command, nothing will happen
+      // but in 10 seconds, the command recognition will be available again
+      setTimeout(function() {
+      artyom.obey();
+        // execute the say hi command and then it will work !
+      }, 10000);
+    }
+  },
 
-  // Fuse Search
+  stopTalking = {
+    indexes: ["stop talking", "please stop talking", "shut up", "be quiet"],
+    action: function() {
+    artyom.shutUp();
+    }
+  },
+
+  tellMeSomething = {
+    indexes: ["tell me something"],
+    action: function() {
+      artyom.say("Voice user interfaces have been added to automobiles, home automation systems, computer operating systems, home appliances like washing machines and microwave ovens, but not yet in presentations.");
+    }
+  },
+
+  backHome = {
+    indexes: ["back to start", "start from the beginning"],
+    action: function() {
+      $(".intro").html("You entered: " + recognizedVoiceInput);
+      var api = impress();
+      api.init();
+      api.goto(0);
+    }
+  },
+
+  nextSlide = {
+    indexes: ["next slide", "next slide please", "next please"],
+    action: function() {
+      $(".intro").html("You entered: " + recognizedVoiceInput);
+      var api = impress();
+      api.init();
+      api.next();
+    }
+  },
+
+  previousSlide = {
+    indexes: ["go back", "previous slide", "last slide", "back to the last", "one back", "last slide please"],
+    action: function() {
+      $(".intro").html("You entered: " + recognizedVoiceInput);
+      var api = impress();
+      api.init();
+      api.prev();
+    }
+  },
+
+  readContent = {
+    indexes: ["read the quote", "read to me"],
+    action: function() {
+      $(".intro").html("You entered: " + recognizedVoiceInput);
+      var quoteWritten = document.getElementById("questionQuote").textContent;
+      artyom.say(quoteWritten);
+      console.log("this is the text: " + quoteWritten);
+    }
+  },
+
+
   navigateToSearch = {
     smart:true,
     indexes: ["search for *"],
@@ -155,7 +231,7 @@ var myGroup = [
 
             const options = {
             includeScore: true,
-            keys: ['paragraphs']
+            keys: ['0.paragraphs']
             }
 
             const fuse = new Fuse(slidesInfos, options);
@@ -236,6 +312,39 @@ var myGroup = [
       refIndexCycle = 0;
       indexNumbers.length = 0;
     }
+  },
+
+  navigateToDestinations = {
+    smart:true,
+    indexes: ["go to the *"],
+    action: function(i, wildcard){
+            console.log("this ist the Input" + recognizedWildcard);
+            var calledDestination = document.getElementById(recognizedWildcard);
+            var api = impress();
+            api.init();
+            api.goto( calledDestination );
+    }
+  },
+
+
+  addBulletpoints = {
+    smart:true,
+    indexes: ["please write down *"],
+    action: function(i, wildcard){
+            var node = document.createElement("LI");
+            var textnode = document.createTextNode(String(recognizedContent));
+            node.appendChild(textnode);
+            node.id = String(recognizedContent);
+            document.getElementById("Ideas").appendChild(node);
+    }
+  },
+
+  deleteBulletpoints = {
+    smart:true,
+    indexes: ["delete *"],
+    action: function(i, wildcard){
+            document.getElementById(recognizedDelete).remove();
+    }
   }
 ];
 
@@ -246,3 +355,88 @@ const indexNumbers = [];
 var refIndexCycle = 0;
 
 artyom.addCommands(myGroup);
+
+
+// Soundvisualisierung
+window.onload = function() {
+  "use strict";
+  var paths = document.getElementsByTagName('path');
+  var visualizer = document.getElementById('visualizer');
+  var mask = visualizer.getElementById('mask');
+  var h = document.getElementsByTagName('h1')[0];
+  var hSub = document.getElementsByTagName('h1')[1];
+  var AudioContext;
+  var audioContent;
+  var start = false;
+  var permission = false;
+  var path;
+  var seconds = 0;
+  var loud_volume_threshold = 30;
+
+  var soundAllowed = function(stream) {
+    permission = true;
+    var audioStream = audioContent.createMediaStreamSource(stream);
+    var analyser = audioContent.createAnalyser();
+    var fftSize = 1024;
+
+    analyser.fftSize = fftSize;
+    audioStream.connect(analyser);
+
+    var bufferLength = analyser.frequencyBinCount;
+    var frequencyArray = new Uint8Array(bufferLength);
+
+    visualizer.setAttribute('viewBox', '0 0 255 255');
+
+    for (var i = 0; i < 255; i++) {
+      path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('stroke-dasharray', '4,1');
+      mask.appendChild(path);
+    }
+    var doDraw = function() {
+      requestAnimationFrame(doDraw);
+      if (start) {
+        analyser.getByteFrequencyData(frequencyArray);
+        var adjustedLength;
+        for (var i = 0; i < 255; i++) {
+          adjustedLength = Math.floor(frequencyArray[i]) - (Math.floor(frequencyArray[i]) % 5);
+          paths[i].setAttribute('d', 'M ' + (i) + ',255 l 0,-' + adjustedLength);
+        }
+      } else {
+        for (var i = 0; i < 255; i++) {
+          paths[i].setAttribute('d', 'M ' + (i) + ',255 l 0,-' + 0);
+        }
+      }
+    }
+
+
+    doDraw();
+  }
+
+  var soundNotAllowed = function(error) {
+    h.innerHTML = "You must allow your microphone.";
+    console.log(error);
+  }
+
+
+  document.getElementById('button').onclick = function() {
+    if (start) {
+      start = false;
+      this.innerHTML = "Start Listen";
+      this.className = "green-button";
+    } else {
+      if (!permission) {
+        navigator.mediaDevices.getUserMedia({
+            audio: true
+          })
+          .then(soundAllowed)
+          .catch(soundNotAllowed);
+
+        AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioContent = new AudioContext();
+      }
+      start = true;
+      this.innerHTML = "Stop Listen";
+      this.className = "red-button";
+    }
+  };
+};
