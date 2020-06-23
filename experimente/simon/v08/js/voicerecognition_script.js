@@ -1,3 +1,77 @@
+var slidesInfos = [];
+
+$(document).ready(function() {
+
+  var $slideDivs = $('#impress > div');
+    slidesInfos = $slideDivs.map(function(i, el) {
+
+      var htmlInput = $(el).find("p").parent().html();
+
+      if (htmlInput == undefined) {
+          console.log('this is undefined');
+        } else {
+
+      var splitResult = htmlInput.split(/\r?\n|\r/);
+
+      var regex = /(<([^>]+)>)/ig;
+      for(x = 0; x < splitResult.length; x++) {
+        splitResult[x] = splitResult[x].replace(regex, "").trim();
+      }
+
+      splitResult = splitResult.filter(item => item);
+    }
+
+      return {
+        paragraphs: splitResult,
+        imgSource: $(el).find("img").attr("src")
+      }
+    });
+
+    console.log(slidesInfos);
+    console.log(Object.keys(slidesInfos));
+
+    // Initialize the Image Classifier method with MobileNet
+    const classifier = ml5.imageClassifier('MobileNet', modelLoaded);
+
+    // When the model is loaded
+    function modelLoaded() {
+      console.log('Model Loaded!');
+    }
+
+
+    $('#impress').children('div').each(function(index, element) {
+        var pixelSource;
+        pixelSource = this.getElementsByTagName('img')[0];
+
+        if (pixelSource == undefined) {
+          console.log('this is undefined');
+        } else {
+        classifier.predict(this.getElementsByTagName('img')[0], function(err, results) {
+          // var names = items.map(function(item) {
+          //   return item['name'];
+          // });
+          console.log(results);
+        });
+      }
+
+    });
+
+
+    impress().init();
+// documentreadyfunction end
+});
+
+
+// Show Hide commands Index
+function showHidecommandsIndex() {
+  var x = document.getElementById("CommandsIndex");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
 const artyom = new Artyom();
 console.log("hello its working");
 
@@ -7,7 +81,6 @@ function startRec() {
   elem.style.color = 'red';
 
   startContinuousArtyom();
-  // responsiveVoice.speak("I'm listening!");
   artyom.say("I'm listening!");
   $(".status").fadeTo("slow", 1);
 
@@ -34,7 +107,6 @@ function startContinuousArtyom() {
 
 }
 
-
 var userInput;
 var recognizedVoiceInput;
 var recognizedWildcard;
@@ -45,24 +117,6 @@ artyom.redirectRecognizedTextOutput(function(recognized, isFinal) {
   if (isFinal) {
     console.log("Final recognized text: " + recognized);
     $(".currentResult").html("Recognized: " + recognized);
-
-    // abziehen des hotkeys
-    // recognizedVoiceInput = recognized.replace('Tom', '')
-    // recognizedVoiceInput = recognizedVoiceInput.trim();
-    // console.log("search term is: " + recognizedVoiceInput);
-    //
-    // recognizedWildcard = recognized.replace('Tom go to the', '')
-    // recognizedWildcard = recognizedWildcard.trim();
-    //
-    // recognizedSearch = recognized.replace('Tom search for', '')
-    // recognizedSearch = recognizedSearch.trim();
-    //
-    // recognizedContent = recognized.replace('Tom please write down', '')
-    // recognizedContent = recognizedContent.trim();
-    //
-    // recognizedDelete = recognized.replace('Tom delete', '')
-    // recognizedDelete = recognizedDelete.trim();
-
 
 
     // abziehen des hotkeys
@@ -116,7 +170,6 @@ var myGroup = [
     }
   },
 
-
   backHome = {
     indexes: ["back to start", "start from the beginning"],
     action: function() {
@@ -126,7 +179,6 @@ var myGroup = [
       api.goto(0);
     }
   },
-
 
   nextSlide = {
     indexes: ["next slide", "next slide please", "next please"],
@@ -163,21 +215,102 @@ var myGroup = [
     smart:true,
     indexes: ["search for *"],
     action: function(i, wildcard){
+            // Speak alterable value
             $(".intro").html("You entered: " + recognizedVoiceInput);
+            console.log("this ist the FuseSearch: " + recognizedSearch);
 
-            console.log("this ist the FuseSearch" + recognizedSearch);
+            var div = document.getElementsByTagName('div'),
+            p = document.createElement("p");
+            p.innerHTML = 'I am p Tag';
+            div[0].append(p);
+
+            // Clear Variables from previous searches
+            refIndexCycle = 0;
+            indexNumbers.length = 0;
+
 
             const options = {
-            includeScore: true
+            includeScore: true,
+            keys: ['0.paragraphs']
             }
 
-            const fuse = new Fuse(arr, options);
+            const fuse = new Fuse(slidesInfos, options);
 
             const result = fuse.search(recognizedSearch);
+            console.log(result);
+
+            searchTerm = recognizedSearch;
+            document.getElementById("SearchIndex").style.display = "block";
+            document.getElementsByClassName("SearchTerm")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + result.length;
+
+
+            for (var index = 0; index < result.length; index++) {
+              indexNumbers.push(result[index].refIndex);
+            }
+
+            console.log(indexNumbers);
+
+            console.log(result[0].refIndex);
 
             var api = impress();
             api.init();
             api.goto(result[0].refIndex);
+    }
+  },
+
+  navigateToNextResult = {
+    indexes: ["next result"],
+    action: function(){
+
+      if(refIndexCycle < indexNumbers.length-1) {
+        refIndexCycle++;
+
+        var api = impress();
+        api.init();
+        api.goto(indexNumbers[refIndexCycle]);
+      } else {
+        refIndexCycle = 0;
+
+        var api = impress();
+        api.init();
+        api.goto(indexNumbers[refIndexCycle]);
+      }
+
+      document.getElementsByClassName("SearchTerm")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
+    }
+  },
+
+  navigateToPreviousResult = {
+    indexes: ["previous result"],
+    action: function(){
+
+      if(refIndexCycle <= indexNumbers.length-1 && refIndexCycle > 0) {
+        refIndexCycle--;
+
+        var api = impress();
+        api.init();
+        api.goto(indexNumbers[refIndexCycle]);
+      } else {
+        refIndexCycle = indexNumbers.length-1;
+
+        var api = impress();
+        api.init();
+        api.goto(indexNumbers[refIndexCycle]);
+      }
+
+      document.getElementsByClassName("SearchTerm")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
+    }
+  },
+
+  navigateToNextResult = {
+    indexes: ["that's it", "stop search", "select slide", "select result"],
+    action: function(){
+
+      document.getElementById("SearchIndex").style.display = "none";
+
+      // Clear Variables from previous searches
+      refIndexCycle = 0;
+      indexNumbers.length = 0;
     }
   },
 
@@ -214,5 +347,11 @@ var myGroup = [
     }
   }
 ];
+
+const result = [];
+
+const indexNumbers = [];
+
+var refIndexCycle = 0;
 
 artyom.addCommands(myGroup);
