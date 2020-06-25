@@ -1,5 +1,81 @@
-const artyom = new Artyom();
+var slidesInfos = [];
 
+var result = [];
+
+var indexNumbers = [];
+
+var refIndexCycle = 0;
+
+
+
+// Füllen des Arrays & Bilderkennung
+$(document).ready(function() {
+
+  var $slideDivs = $('#impress > div');
+  slidesInfos = $slideDivs.map(function(i, el) {
+
+    var htmlInput = $(el).find("p").parent().html();
+
+    if (htmlInput == undefined) {
+      console.log('this p is undefined');
+    } else {
+
+      var splitResult = htmlInput.split(/\r?\n|\r/);
+
+      var regex = /(<([^>]+)>)/ig;
+      for (x = 0; x < splitResult.length; x++) {
+        splitResult[x] = splitResult[x].replace(regex, "").trim();
+      }
+
+      splitResult = splitResult.filter(item => item);
+    }
+
+    var imgUrl = $(el).find("img").attr("src");
+    var imgFilename;
+    if (imgUrl) {
+      imgFilename = imgUrl.substring(imgUrl.lastIndexOf('/')+1);
+    }
+    return {
+      refIndex: i,
+      paragraphs: splitResult,
+      imgSource: imgFilename
+    }
+  });
+
+  slidesInfos = slidesInfos.toArray();
+  console.log("slidesInfos = ", slidesInfos);
+
+  // Initialize the Image Classifier method with MobileNet
+  var classifier = ml5.imageClassifier('MobileNet', modelLoaded);
+
+  // When the model is loaded
+  function modelLoaded() {
+    console.log('Model Loaded!');
+  }
+
+
+  $('#impress').children('div').each(function(index, element) {
+    var pixelSource = this.getElementsByTagName('img')[0];
+    if (pixelSource) {
+      var imgUrl = pixelSource.src;
+      var imgFilename = imgUrl.substring(imgUrl.lastIndexOf('/')+1);
+      console.log("imgFilename:", imgFilename);
+      classifier.predict(pixelSource, function(err, results) {
+        var filteredResults = _.filter(results, function(o) { return o.confidence > 0.3});
+        var slidesWithThatImg = _.find(slidesInfos, function(o) { return o.imgSource === imgFilename; });
+        slidesWithThatImg['classifier'] = filteredResults;
+      });
+    }
+  });
+
+  impress().init();
+  // documentreadyfunction end
+});
+
+
+// Artyom Magic
+var artyom = new Artyom();
+console.log("hello its working");
 
 function startRec() {
   var elem = document.getElementById("call2action");
@@ -7,11 +83,8 @@ function startRec() {
   elem.style.color = 'red';
 
   startContinuousArtyom();
-  // responsiveVoice.speak("I'm listening!");
   artyom.say("I'm listening!");
   $(".status").fadeTo("slow", 1);
-
-
 }
 
 artyom.ArtyomVoicesIdentifiers["en-US"].unshift('Google US English', 'Alex');
@@ -26,7 +99,7 @@ function startContinuousArtyom() {
       listen: true, // Start recognizing
       debug: true, // Show everything in the console
       speed: 1, // talk normally
-      name: "Tom" // Analogy to "Alexa" it it is enabled > you can only give commands when you start with Anna
+      // name: "Tom" // Analogy to "Alexa" it it is enabled > you can only give commands when you start with Anna
     }).then(function() {
       console.log("Ready to work !");
     });
@@ -34,255 +107,187 @@ function startContinuousArtyom() {
 
 }
 
-
 var userInput;
 var recognizedVoiceInput;
 var recognizedWildcard;
 var wildcardString;
+var recognizedSearch;
 
 artyom.redirectRecognizedTextOutput(function(recognized, isFinal) {
   if (isFinal) {
     console.log("Final recognized text: " + recognized);
     $(".currentResult").html("Recognized: " + recognized);
 
-    // abziehen des hotkeys
-    recognizedVoiceInput = recognized.replace('Tom', '')
-    recognizedVoiceInput = recognizedVoiceInput.trim();
-    console.log("search term is: " + recognizedVoiceInput);
 
-    recognizedWildcard = recognized.replace('Tom go to the', '')
+    // abziehen des hotkeys
+    recognizedVoiceInput = recognized;
+
+    recognizedWildcard = recognized.replace('go to the', '')
     recognizedWildcard = recognizedWildcard.trim();
 
-    recognizedContent = recognized.replace('Tom please write down', '')
+    recognizedSearch = recognized.replace('search for', '')
+    recognizedSearch = recognizedSearch.trim();
+
+    recognizedContent = recognized.replace('please write down', '')
     recognizedContent = recognizedContent.trim();
 
-    recognizedDelete = recognized.replace('Tom delete', '')
+    recognizedDelete = recognized.replace('delete', '')
     recognizedDelete = recognizedDelete.trim();
-
-    recognizedVoiceInput = recognizedVoiceInput.replace('search for', '')
-    recognizedVoiceInput = recognizedVoiceInput.trim();
-    console.log("final search term is: " + recognizedVoiceInput);
-
 
   } else {
     console.log(recognized);
 
   }
+  // Artyom Magic end
 });
 
 
+
+// Versuch unser Array zu reproduzieren
+var slidesInfosTest = [{
+    imgSource: "images/ballon.jpg",
+    paragraphs: ['Voice User Interfaces', 'PRESENTATION'],
+    refIndex: 0,
+  },
+  {
+    imgSource: undefined,
+    paragraphs: ["Name some Ideas"],
+    refIndex: 1,
+  }
+]
+
+
+// Test-Array von Fuse.js-Website
+var list = [{
+    title: "Old Man's War",
+    refIndex: 0,
+    author: {
+      name: 'John Scalzi',
+      tags: [{
+        value: 'American'
+      }]
+    }
+  },
+  {
+    title: 'The Lock Artist',
+    refIndex: 1,
+    author: {
+      name: 'Steve Hamilton',
+      tags: [{
+        value: 'English'
+      }]
+    }
+  }
+]
+
+// Keywords Definition
 var myGroup = [
-  stopListening = {
-    indexes: ["stop listening"],
-    action: function() {
-      $(".intro").html("You entered: " + recognizedVoiceInput);
-      artyom.dontObey();
-      // Try to execute the say hi command, nothing will happen
-      // but in 10 seconds, the command recognition will be available again
-      setTimeout(function() {
-        artyom.obey();
-        // execute the say hi command and then it will work !
-      }, 10000);
-    }
-  },
 
-  stopTalking = {
-    indexes: ["stop talking", "please stop talking", "shut up", "be quiet"],
-    action: function() {
-      artyom.shutUp();
-    }
-  },
-
-  tellMeSomething = {
-    indexes: ["tell me something"],
-    action: function() {
-      // responsiveVoice.speak("Voice user interfaces have been added to automobiles, home automation systems, computer operating systems, home appliances like washing machines and microwave ovens, but not yet in presentations.");
-      artyom.say("Voice user interfaces have been added to automobiles, home automation systems, computer operating systems, home appliances like washing machines and microwave ovens, but not yet in presentations.");
-    }
-  },
-
-
-  backHome = {
-    indexes: ["back to start", "start from the beginning"],
-    action: function() {
-      $(".intro").html("You entered: " + recognizedVoiceInput);
-      // responsiveVoice.speak("You entered" + recognizedVoiceInput);
-      // artyom.say("You entered" + recognizedVoiceInput);
-      var api = impress();
-      api.init();
-      api.goto();
-    }
-  },
-
-
-  nextSlide = {
-    indexes: ["next slide", "next slide please", "next please", "next"],
-    action: function() {
-      $(".intro").html("You entered: " + recognizedVoiceInput);
-      // responsiveVoice.speak("You entered " + recognizedVoiceInput);
-      // artyom.say("You entered " + recognizedVoiceInput);
-      var api = impress();
-      api.init();
-      api.next();
-    }
-  },
-
-  previousSlide = {
-    indexes: ["go back", "previous slide", "last slide", "back to the last", "one back", "last slide please"],
-    action: function() {
-      $(".intro").html("You entered: " + recognizedVoiceInput);
-      // responsiveVoice.speak("You entered " + recognizedVoiceInput);
-      // artyom.say("You entered " + recognizedVoiceInput);
-      var api = impress();
-      api.init();
-      api.prev();
-    }
-  },
-
-  readContent = {
-    indexes: ["read the quote", "read to me"],
-    action: function() {
-      $(".intro").html("You entered: " + recognizedVoiceInput);
-      var quoteWritten = document.getElementById("questionQuote").textContent;
-      artyom.say(quoteWritten);
-      console.log("this is the text: " + quoteWritten);
-    }
-  },
-
-
-  navigateToDestinations = {
+  // Fuse Search
+  navigateToSearch = {
     smart: true,
-    indexes: ["go to the *"],
+    indexes: ["search for *"],
     action: function(i, wildcard) {
       // Speak alterable value
       $(".intro").html("You entered: " + recognizedVoiceInput);
-      artyom.say("I will show you the" + wildcard);
-      // console.log("Hello:"+ String(wildcard));
-      // console.log("this ist the recognizedWildcard " + recognizedWildcard);
-      // console.log("this ist the recognizedVoiceInput " + recognizedVoiceInput);
-      console.log("this ist the Input" + recognizedWildcard);
-      var calledDestination = document.getElementById(recognizedWildcard);
-      var api = impress();
-      api.init();
-      api.goto(calledDestination);
-    }
-  },
+      console.log("this ist the FuseSearch: " + recognizedSearch);
 
-  addBulletpoints = {
-    smart: true,
-    indexes: ["please write down *"],
-    action: function(i, wildcard) {
-      // Speak alterable value
-      artyom.say("I will add" + wildcard + "to the slide");
-      var node = document.createElement("LI");
-      var textnode = document.createTextNode(String(recognizedContent));
-      node.appendChild(textnode);
-      node.id = String(recognizedContent);
-      document.getElementById("Ideas").appendChild(node);
-    }
-  },
+      var div = document.getElementsByTagName('div'),
+        p = document.createElement("p");
+      p.innerHTML = 'I am p Tag';
+      div[0].append(p);
 
-  deleteBulletpoints = {
-    smart: true,
-    indexes: ["delete *"],
-    action: function(i, wildcard) {
-      // Speak alterable value
-      artyom.say("I will delete" + wildcard + "from the slide");
-      // var list = document.getElementById("Ideas");
-      // list.removeChild(list.childNodes[0]);
-
-      document.getElementById(recognizedDelete).remove();
-    }
-  },
-
-  // searchSlides = {
-  //   smart: true,
-  //   indexes: ["search for *"],
-  //   action: function() {
-  //     $(".intro").html("You entered: " + recognizedVoiceInput);
-
-  //     artyom.say("searching for: " + recognizedVoiceInput);
+      // Clear Variables from previous searches
+      refIndexCycle = 0;
+      indexNumbers.length = 0;
 
 
-
-
-  //     const options = {
-  //       // isCaseSensitive: false,
-  //       // includeScore: false,
-  //       // shouldSort: true,
-  //       // includeMatches: false,
-  //       // findAllMatches: false,
-  //       // minMatchCharLength: 1,
-  //       // location: 0,
-  //       // threshold: 0.6,
-  //       // distance: 100,
-  //       // useExtendedSearch: false,
-  //       keys: [
-  //         "slide",
-  //         "content.pTags"
-  //       ]
-  //     };
-
-  //     const fuse = new Fuse(slideList, options);
-
-  //     // Change the pattern
-  //     const pattern = recognizedVoiceInput
-
-  //     const searchResults = fuse.search(pattern);
-
-  //     console.log(searchResults);
-
-  //     const indexNumber = searchResults.refIndex;
-  //     console.log(indexNumber);
-
-  //     const key = Object.keys(searchResults)[0];
-  //     value = searchResults[key]
-  //     console.log(key, value);
-
-  //     alert(value);
-
-  //     var api = impress();
-  //     api.init();
-  //     api.goto(value);
-
-  //   }
-  // },
-
-  fuseSearch = {
-      smart: true,
-      indexes: ["search for *"],
-      action: function() {
-        $(".intro").html("You entered: " + recognizedVoiceInput);
-
-        artyom.say("searching for: " + recognizedVoiceInput);
-
-        const options = {
-          includeScore: true
-        }
-
-        const fuse = new Fuse(arr, options);
-
-        const result = fuse.search('recognizedVoiceInput');
-
-        console.log(result);
-
+      var options = {
+        includeScore: true,
+        keys: ['paragraphs']
       }
-    },
+
+      var fuse = new Fuse(slidesInfos, options);
+
+      var result = fuse.search(recognizedSearch);
+      console.log(result);
+
+      // searchTerm = recognizedSearch;
+      // document.getElementById("SearchIndex").style.display = "block";
+      // document.getElementsByClassName("SearchTerm")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + result.length;
 
 
-  newCommand = {
-    indexes: ["home", "bring me home", "back to start", "start from the beginning"],
-    action: function() {
-      $(".intro").html("Give it a try. Tell me which Animal you want to see?" + " <br> <br> Use " + "<span class='blue'>search for …</span>" + " to start.");
+      // for (var index = 0; index < result.length; index++) {
+      //   indexNumbers.push(result[index].refIndex);
+      // }
+      //
+      // console.log(indexNumbers);
+      //
+      // console.log(result[0].refIndex);
+      //
+      // var api = impress();
+      // api.init();
+      // api.goto(result[0].refIndex);
     }
   }
 
+  // navigateToNextResult = {
+  //   indexes: ["next result"],
+  //   action: function(){
+  //
+  //     if(refIndexCycle < indexNumbers.length-1) {
+  //       refIndexCycle++;
+  //
+  //       var api = impress();
+  //       api.init();
+  //       api.goto(indexNumbers[refIndexCycle]);
+  //     } else {
+  //       refIndexCycle = 0;
+  //
+  //       var api = impress();
+  //       api.init();
+  //       api.goto(indexNumbers[refIndexCycle]);
+  //     }
+  //
+  //     document.getElementsByClassName("SearchTerm")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
+  //   }
+  // },
+  //
+  // navigateToPreviousResult = {
+  //   indexes: ["previous result"],
+  //   action: function(){
+  //
+  //     if(refIndexCycle <= indexNumbers.length-1 && refIndexCycle > 0) {
+  //       refIndexCycle--;
+  //
+  //       var api = impress();
+  //       api.init();
+  //       api.goto(indexNumbers[refIndexCycle]);
+  //     } else {
+  //       refIndexCycle = indexNumbers.length-1;
+  //
+  //       var api = impress();
+  //       api.init();
+  //       api.goto(indexNumbers[refIndexCycle]);
+  //     }
+  //
+  //     document.getElementsByClassName("SearchTerm")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
+  //   }
+  // },
+  //
+  // exitResult = {
+  //   indexes: ["that's it", "stop search", "select slide", "select result"],
+  //   action: function(){
+  //
+  //     document.getElementById("SearchIndex").style.display = "none";
+  //
+  //     // Clear Variables from previous searches
+  //     refIndexCycle = 0;
+  //     indexNumbers.length = 0;
+  //   }
+  // }
+
+  // Keywords Definition end
 ];
-
-// //gesamte <div id="impress"> ins array
-// const slideList = [document.querySelectorAll('#impress > div')].map(el => el.innerHTML);
-
-// console.log(slideList);
-
 
 artyom.addCommands(myGroup);
