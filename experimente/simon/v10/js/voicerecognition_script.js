@@ -298,19 +298,32 @@ var myGroup = [
 
       var result = fuse.search(recognizedSearch);
       console.log(result);
-
+      
       for (var index = 0; index < result.length; index++) {
-        indexNumbers.push(result[index].refIndex);
+        // Floats in Strings umwandeln und die ersten 4 Digits rausfiltern
+        var resultString = result[index].score.toString();
+        resultString = resultString.substring(0, 4);
+        resultString = parseFloat(resultString);
+
+        // if (resultString > 1) {
+          indexNumbers.push(result[index].refIndex);
+        // }
       }
 
       console.log("indexNumbers = " + indexNumbers);
 
-      searchTerm = recognizedSearch;
-      document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
+      if(indexNumbers.length > 0) {
+        searchTerm = recognizedSearch;
+        document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
 
-      var api = impress();
-      api.init();
-      api.goto(result[0].refIndex);
+        var api = impress();
+        api.init();
+        api.goto(indexNumbers[0]);
+      } else {
+        document.getElementsByClassName("header")[0].innerHTML = "Sorry, no Search Results found :(";
+        artyom.say("Sorry, no Search Results found");
+      }
+      
 
     }
   },
@@ -320,45 +333,48 @@ var myGroup = [
     indexes: ["next result"],
     action: function(){
   
-      if(refIndexCycle < indexNumbers.length-1) {
-        refIndexCycle++;
-
-        var api = impress();
-        api.init();
-        api.goto(indexNumbers[refIndexCycle]);
-      } else {
-        refIndexCycle = 0;
-
-        var api = impress();
-        api.init();
-        api.goto(indexNumbers[refIndexCycle]);
-      }
-
-      document.getElementsByClassName("header")[0].style.display = "block";
-      document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
+      if (indexNumbers.length > 0) {
+        if(refIndexCycle < indexNumbers.length-1) {
+          refIndexCycle++;
+  
+          var api = impress();
+          api.init();
+          api.goto(indexNumbers[refIndexCycle]);
+        } else {
+          refIndexCycle = 0;
+  
+          var api = impress();
+          api.init();
+          api.goto(indexNumbers[refIndexCycle]);
+        }
+  
+        document.getElementsByClassName("header")[0].style.display = "block";
+        document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
+      } 
     }
   },
   
   navigateToPreviousResult = {
     indexes: ["previous result"],
     action: function(){
-  
-      if(refIndexCycle <= indexNumbers.length-1 && refIndexCycle > 0) {
-        refIndexCycle--;
-  
-        var api = impress();
-        api.init();
-        api.goto(indexNumbers[refIndexCycle]);
-      } else {
-        refIndexCycle = indexNumbers.length-1;
-  
-        var api = impress();
-        api.init();
-        api.goto(indexNumbers[refIndexCycle]);
+      if (indexNumbers.length > 0) {
+        if(refIndexCycle <= indexNumbers.length-1 && refIndexCycle > 0) {
+          refIndexCycle--;
+        
+          var api = impress();
+          api.init();
+          api.goto(indexNumbers[refIndexCycle]);
+        } else {
+          refIndexCycle = indexNumbers.length-1;
+        
+          var api = impress();
+          api.init();
+          api.goto(indexNumbers[refIndexCycle]);
+        }
+      
+        document.getElementsByClassName("header")[0].style.display = "block";
+        document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
       }
-  
-      document.getElementsByClassName("header")[0].style.display = "block";
-      document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
     }
   },
   
