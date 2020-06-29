@@ -271,7 +271,7 @@ input[type=checkbox] {
 
 .button-container {
   position: absolute;
-  width: 100%;
+  width: 50%;
   text-align: center;
   top: 25%;
 }

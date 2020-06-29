@@ -129,17 +129,6 @@
   <script src="js/impress.js" charset="utf-8"> </script>
 
 
-  <script>
-    const options = {
-      includeScore: true
-    };
-var recognizedVoiceInput;
-    const fuse = new Fuse(arr, options);
-
-    const result = fuse.search('you');
-    console.log("this is" + recognizedVoiceInput);
-    console.log(result);
-  </script>
 
   <script>
     impress().init();
@@ -161,7 +150,7 @@ var recognizedVoiceInput;
           <stop offset="100%" style="stop-color:#000B19;stop-opacity:1" />
         </linearGradient>
       </defs>
-      <rect x="10" y="10" width="30%" height="30%" fill="url(#gradient)" mask="url(#mask)"></rect>
+      <rect x="0" y="0" width="30%" height="30%" fill="url(#gradient)" mask="url(#mask)"></rect>
     </svg>
     <div class="currentResult" style="opacity: 1;">Recognized: </div>
     <input id="call2action" type="button" class="button" value="start " onclick="startRec()">

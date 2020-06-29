@@ -279,7 +279,7 @@ window.onload = function() {
   }
 
 
-  document.getElementById('call2action').onclick = function() {
+  document.getElementById("button").onclick = function() {
     if (start) {
       start = false;
       this.innerHTML = "Start Listen";
