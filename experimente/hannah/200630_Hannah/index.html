@@ -10,7 +10,7 @@
 
   <script src="lib/artyom.window.min.js"></script>
   <script src="lib/responsivevoice.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
@@ -25,17 +25,24 @@
 </head>
 
 <body>
+
   <div id="SearchTerm"></div>
-  <div class="header">Voice User Interface Presentation</div>
+  <div class="header">Voice User Interface Presentation <i class="fa fa-angle-down"></i></div>
+
+
   <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
   <label for="openSidebarMenu" class="sidebarIconToggle">
     <div class="spinner diagonal part-1"></div>
     <div class="spinner horizontal"></div>
     <div class="spinner diagonal part-2"></div>
+    <div>
+      <button id="call2action" class="button" value="start " onclick="startRec();"><i class="fa fa-play"></i></button>
+
+    </div>
   </label>
   <div id="sidebarMenu">
     <ul class="sidebarMenuInner">
-      <li><b>Hi my name is Tom! Here are some things you can ask me:</b></li>
+      <li><img src="images/illu.png" width="150px"><b>Hi my name is Tom! Here are some things you can ask me:</b></li>
       <li>Navigation <span>“Next slide please”</span>
         <span>“Previous slide”</span>
         <span>“Overview”</span>
@@ -53,7 +60,48 @@
       <li>Find<span>“Search presentation for _”</span>
         <span>“Look for slides with _”</span>
       </li>
+      <li>
+        <span></span>
+      </li>
+      <li>
+        <span></span>
+      </li>
+      <li>
+        <span></span>
+      </li>
+      <li>
+        <span></span>
+      </li>
+      <li>
+        <span></span>
+      </li>
     </ul>
+  </div>
+  <div class="vertical-menu">
+    <p> 1</p>
+    <img src="images/1.png" width="200px">
+    <p>2</p>
+    <img src="images/2.png" width="200px">
+    <p>3</p>
+    <img src="images/3.png" width="200px">
+    <p>4</p>
+    <img src="images/4.png" width="200px">
+    <p>5</p>
+    <img src="images/5.png" width="200px">
+    <p>6</p>
+    <img src="images/6.png" width="200px">
+    <p>7</p>
+    <img src="images/7.png" width="200px">
+    <p>8</p>
+    <img src="images/8.png" width="200px">
+    <p>9</p>
+    <img src="images/9.png" width="200px">
+    <a href="#"></a>
+    <a href="#"></a>
+    <a href="#"></a>
+    <a href="#"></a>
+    <a href="#"></a>
+    <a href="#"></a>
   </div>
 
   <!-- <div id="impress">
@@ -124,74 +172,74 @@
   </div> -->
   <div id="impress">
 
-      <div id="firstslide" class="step box" data-x="-1000" data-y="0">
-        <p>PRESENTATION</p>
-        <p style="font-family:'Taviraj', serif;font-size: 80px;"><b>Voice User Interfaces</b></p>
-        <img id="foo" src="images/VUI_Image.png" width="900px" style="opacity: 0;">
-
-
-      </div>
-
-      <div id="brainstorming" class="step box" data-x="0" data-y="0">
-        <p id="type"></p>
-        <p id="Ideas">Name some Ideas</p>
-        <ul id="myList"> </ul>
-      </div>
-
-      <div id="quote" class="step box" data-x="1000" data-y="0">
-        <p id="questionQuote">"Don’t ask a question if you won’t be able to understand the answer." </p>
-        </br></br> </br>
-        <p> Margaret Urban | Voice User Interface Designer – Google </p>
-      </div>
-
-      <div id="firstdefinition" class="step box" data-x="2000" data-y="0">
-        <p style="font-family:'Taviraj', serif;font-size: 50px;"><b>Definition: VUI</b></p>
-        </br>
-        <p>A Voice User Interface (VUI) enables communication between man and machine through speech-based interactions.</p>
-        <img src="images/VUI.png" width="200px">
-      </div>
-
-      <div id="seconddefinition" class="step box" data-x="3000" data-y="0">
-        <p style="font-family:'Taviraj', serif;font-size: 50px;"><b>Definition: VCD</b></p>
-        </br>
-        <p>A Voice Command Device (VCD) is a device that is controlled via a Voice User Interface.</p>
-        <img src="images/VCD.png" width="200px">
-      </div>
-
-      <div id="thirddefinition" class="step box" data-x="4000" data-y="0">
-        <p style="font-family:'Taviraj', serif;font-size: 50px;"><b>Definition: Smart Speaker</b></p>
-        </br>
-        <p>A Smart Speaker is a speaker connected to the Internet that integrates the functions of an Intelligent Personal Assistant (IPA) via non-intrusive voice control and speech recognition.</p>
-        <img src="images/IPA.png" width="200px">
-      </div>
-
-
-      <div id="history" class="step box" data-x="-1000" data-y="1000">
-        <p style="font-family:'Taviraj', serif;font-size: 50px;"><b>History of VUI</b>
-          </br></br></br></br>
-          <li><b>*</b>1952: Automatic number recognition Audrey | Bell Labs</li></br>
-          <hr></br>
-          <li><b>*</b>Shoebox was able to understand 16 words | IBM</li></br>
-          <hr></br>
-          <li><b>*</b>Hidden Markov Model (HMM), with the help of which speech recognition switched from literal agreement to prediction.</li>
-      </div>
-
-      <div id="whatsthis" class="step box" data-x="0" data-y="1000">
-        <p>What's in this picture?</p></br>
-        <!-- <img src="images/alexa.jpg" width="700px"> -->
-        <img src="images/kitten.jpg" width="500px">
-
-      </div>
-
-      <div id="lastslide" class="step box" data-x="4000" data-y="1000">
-        <p><b class="animation-rotate">Thank you</b></br> for your attention!</p>
-      </div>
-
-      <div id="overview" class="step" data-x="1500" data-y="500" data-scale=5>
-      </div>
+    <div id="firstslide" class="step box" data-x="-1000" data-y="0">
+      <p>PRESENTATION</p>
+      <p style="font-family:'Taviraj', serif;font-size: 80px;"><b>Voice User Interfaces</b></p>
+      <img id="foo" src="images/VUI_Image.png" width="900px" style="opacity: 0;">
 
 
     </div>
+
+    <div id="brainstorming" class="step box" data-x="0" data-y="0">
+      <p id="type"></p>
+      <p id="Ideas">Name some Ideas</p>
+      <ul id="myList"> </ul>
+    </div>
+
+    <div id="quote" class="step box" data-x="1000" data-y="0">
+      <p id="questionQuote">"Don’t ask a question if you won’t be able to understand the answer." </p>
+      </br></br> </br>
+      <p> Margaret Urban | Voice User Interface Designer – Google </p>
+    </div>
+
+    <div id="firstdefinition" class="step box" data-x="2000" data-y="0">
+      <p style="font-family:'Taviraj', serif;font-size: 50px;"><b>Definition: VUI</b></p>
+      </br>
+      <p>A Voice User Interface (VUI) enables communication between man and machine through speech-based interactions.</p>
+      <img src="images/VUI.png" width="200px">
+    </div>
+
+    <div id="seconddefinition" class="step box" data-x="3000" data-y="0">
+      <p style="font-family:'Taviraj', serif;font-size: 50px;"><b>Definition: VCD</b></p>
+      </br>
+      <p>A Voice Command Device (VCD) is a device that is controlled via a Voice User Interface.</p>
+      <img src="images/VCD.png" width="200px">
+    </div>
+
+    <div id="thirddefinition" class="step box" data-x="4000" data-y="0">
+      <p style="font-family:'Taviraj', serif;font-size: 50px;"><b>Definition: Smart Speaker</b></p>
+      </br>
+      <p>A Smart Speaker is a speaker connected to the Internet that integrates the functions of an Intelligent Personal Assistant (IPA) via non-intrusive voice control and speech recognition.</p>
+      <img src="images/IPA.png" width="200px">
+    </div>
+
+
+    <div id="history" class="step box" data-x="-1000" data-y="1000">
+      <p style="font-family:'Taviraj', serif;font-size: 50px;"><b>History of VUI</b>
+        </br></br></br></br>
+        <li><b>*</b>1952: Automatic number recognition Audrey | Bell Labs</li></br>
+        <hr></br>
+        <li><b>*</b>Shoebox was able to understand 16 words | IBM</li></br>
+        <hr></br>
+        <li><b>*</b>Hidden Markov Model (HMM), with the help of which speech recognition switched from literal agreement to prediction.</li>
+    </div>
+
+    <div id="whatsthis" class="step box" data-x="0" data-y="1000">
+      <p>What's in this picture?</p></br>
+      <!-- <img src="images/alexa.jpg" width="700px"> -->
+      <img src="images/kitten.jpg" width="500px">
+
+    </div>
+
+    <div id="lastslide" class="step box" data-x="4000" data-y="1000">
+      <p><b class="animation-rotate">Thank you</b></br> for your attention!</p>
+    </div>
+
+    <div id="overview" class="step" data-x="1500" data-y="500" data-scale=5>
+    </div>
+
+
+  </div>
 
   <script src="js/impress.js" charset="utf-8"> </script>
 
@@ -218,7 +266,7 @@
     </svg>
 
     <div class="currentResult" style="opacity: 1;">Try to navigate with your voice</div>
-    <input id="call2action" type="button" class="button" value="start " onclick="startRec()">
+
   </div>
 
   <!-- <div class="button-container"><button id="button" class="green-button"> Start Visuals</button></div> -->

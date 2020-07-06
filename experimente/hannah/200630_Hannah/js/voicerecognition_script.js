@@ -33,7 +33,7 @@ $(document).ready(function() {
     var imgUrl = $(el).find("img").attr("src");
     var imgFilename;
     if (imgUrl) {
-      imgFilename = imgUrl.substring(imgUrl.lastIndexOf('/')+1);
+      imgFilename = imgUrl.substring(imgUrl.lastIndexOf('/') + 1);
     }
     return {
       refIndex: i,
@@ -58,11 +58,15 @@ $(document).ready(function() {
     var pixelSource = this.getElementsByTagName('img')[0];
     if (pixelSource) {
       var imgUrl = pixelSource.src;
-      var imgFilename = imgUrl.substring(imgUrl.lastIndexOf('/')+1);
+      var imgFilename = imgUrl.substring(imgUrl.lastIndexOf('/') + 1);
       console.log("imgFilename:", imgFilename);
       classifier.predict(pixelSource, function(err, results) {
-        var filteredResults = _.filter(results, function(o) { return o.confidence > 0.1});
-        var slidesWithThatImg = _.find(slidesInfos, function(o) { return o.imgSource === imgFilename; });
+        var filteredResults = _.filter(results, function(o) {
+          return o.confidence > 0.1
+        });
+        var slidesWithThatImg = _.find(slidesInfos, function(o) {
+          return o.imgSource === imgFilename;
+        });
         slidesWithThatImg['classifier'] = filteredResults;
       });
     }
@@ -80,6 +84,7 @@ console.log("hello its working");
 function startRec() {
   var elem = document.getElementById("call2action");
   elem.value = 'listening!';
+  openFullscreen();
   // elem.style.color = 'red';
 
   startContinuousArtyom();
@@ -95,46 +100,48 @@ function startRec() {
   var path;
   var report = 0;
 
-  var soundAllowed = function (stream) {
-      //Audio stops listening in FF without // window.persistAudioStream = stream;
-      //https://bugzilla.mozilla.org/show_bug.cgi?id=965483
-      //https://support.mozilla.org/en-US/questions/984179
-      window.persistAudioStream = stream;
-      // h.innerHTML = "Thanks";
-      // h.setAttribute('style', 'opacity: 0;');
-      var audioContent = new AudioContext();
-      var audioStream = audioContent.createMediaStreamSource( stream );
-      var analyser = audioContent.createAnalyser();
-      audioStream.connect(analyser);
-      analyser.fftSize = 1024;
+  var soundAllowed = function(stream) {
+    //Audio stops listening in FF without // window.persistAudioStream = stream;
+    //https://bugzilla.mozilla.org/show_bug.cgi?id=965483
+    //https://support.mozilla.org/en-US/questions/984179
+    window.persistAudioStream = stream;
+    // h.innerHTML = "Thanks";
+    // h.setAttribute('style', 'opacity: 0;');
+    var audioContent = new AudioContext();
+    var audioStream = audioContent.createMediaStreamSource(stream);
+    var analyser = audioContent.createAnalyser();
+    audioStream.connect(analyser);
+    analyser.fftSize = 1024;
 
-      var frequencyArray = new Uint8Array(analyser.frequencyBinCount);
-      visualizer.setAttribute('viewBox', '0 0 255 255');
+    var frequencyArray = new Uint8Array(analyser.frequencyBinCount);
+    visualizer.setAttribute('viewBox', '0 0 255 255');
 
-      //Through the frequencyArray has a length longer than 255, there seems to be no
-      //significant data after this point. Not worth visualizing.
-      for (var i = 0 ; i < 255; i++) {
-          path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-          path.setAttribute('stroke-dasharray', '4,1');
-          mask.appendChild(path);
+    //Through the frequencyArray has a length longer than 255, there seems to be no
+    //significant data after this point. Not worth visualizing.
+    for (var i = 0; i < 255; i++) {
+      path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('stroke-dasharray', '4,1');
+      mask.appendChild(path);
+    }
+    var doDraw = function() {
+      requestAnimationFrame(doDraw);
+      analyser.getByteFrequencyData(frequencyArray);
+      var adjustedLength;
+      for (var i = 0; i < 255; i++) {
+        adjustedLength = Math.floor(frequencyArray[i]) - (Math.floor(frequencyArray[i]) % 5);
+        paths[i].setAttribute('d', 'M ' + (i) + ',255 l 0,-' + adjustedLength);
       }
-      var doDraw = function () {
-          requestAnimationFrame(doDraw);
-          analyser.getByteFrequencyData(frequencyArray);
-          var adjustedLength;
-          for (var i = 0 ; i < 255; i++) {
-              adjustedLength = Math.floor(frequencyArray[i]) - (Math.floor(frequencyArray[i]) % 5);
-              paths[i].setAttribute('d', 'M '+ (i) +',255 l 0,-' + adjustedLength);
-          }
-      }
-      doDraw();
+    }
+    doDraw();
   }
 
-  var soundNotAllowed = function (error) {
-      // h.innerHTML = "You must allow your microphone.";
-      console.log(error);
+  var soundNotAllowed = function(error) {
+    // h.innerHTML = "You must allow your microphone.";
+    console.log(error);
   }
-  navigator.getUserMedia({audio:true}, soundAllowed, soundNotAllowed);
+  navigator.getUserMedia({
+    audio: true
+  }, soundAllowed, soundNotAllowed);
 
 }
 
@@ -205,7 +212,7 @@ var myGroup = [
       // Try to execute the say hi command, nothing will happen
       // but in 10 seconds, the command recognition will be available again
       setTimeout(function() {
-      artyom.obey();
+        artyom.obey();
         // execute the say hi command and then it will work !
       }, 10000);
     }
@@ -214,7 +221,7 @@ var myGroup = [
   stopTalking = {
     indexes: ["stop talking", "please stop talking", "shut up", "be quiet"],
     action: function() {
-    artyom.shutUp();
+      artyom.shutUp();
     }
   },
 
@@ -302,7 +309,7 @@ var myGroup = [
       console.log("indexNumbers = " + indexNumbers);
 
       searchTerm = recognizedSearch;
-      document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
+      document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle + 1) + "/" + indexNumbers.length;
 
       var api = impress();
       api.init();
@@ -314,9 +321,9 @@ var myGroup = [
   // Browse Search Results
   navigateToNextResult = {
     indexes: ["next result"],
-    action: function(){
+    action: function() {
 
-      if(refIndexCycle < indexNumbers.length-1) {
+      if (refIndexCycle < indexNumbers.length - 1) {
         refIndexCycle++;
 
         var api = impress();
@@ -331,22 +338,22 @@ var myGroup = [
       }
 
       document.getElementsByClassName("header")[0].style.display = "block";
-      document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
+      document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle + 1) + "/" + indexNumbers.length;
     }
   },
 
   navigateToPreviousResult = {
     indexes: ["previous result"],
-    action: function(){
+    action: function() {
 
-      if(refIndexCycle <= indexNumbers.length-1 && refIndexCycle > 0) {
+      if (refIndexCycle <= indexNumbers.length - 1 && refIndexCycle > 0) {
         refIndexCycle--;
 
         var api = impress();
         api.init();
         api.goto(indexNumbers[refIndexCycle]);
       } else {
-        refIndexCycle = indexNumbers.length-1;
+        refIndexCycle = indexNumbers.length - 1;
 
         var api = impress();
         api.init();
@@ -354,13 +361,13 @@ var myGroup = [
       }
 
       document.getElementsByClassName("header")[0].style.display = "block";
-      document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
+      document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle + 1) + "/" + indexNumbers.length;
     }
   },
 
   exitResult = {
     indexes: ["that's it", "stop search", "select slide", "select result", "exit search"],
-    action: function(){
+    action: function() {
 
       document.getElementById("SearchTerm").style.display = "none";
 
@@ -375,41 +382,55 @@ var myGroup = [
 
 
   navigateToDestinations = {
-  smart:true,
-  indexes: ["go to the *"],
-  action: function(i, wildcard){
-          console.log("this ist the Input" + recognizedWildcard);
-          var calledDestination = document.getElementById(recognizedWildcard);
-          var api = impress();
-          api.init();
-          api.goto( calledDestination );
-  }
-},
+    smart: true,
+    indexes: ["go to the *"],
+    action: function(i, wildcard) {
+      console.log("this ist the Input" + recognizedWildcard);
+      var calledDestination = document.getElementById(recognizedWildcard);
+      var api = impress();
+      api.init();
+      api.goto(calledDestination);
+    }
+  },
 
 
-addBulletpoints = {
-  smart:true,
-  indexes: ["please write down *"],
-  action: function(i, wildcard){
-          var node = document.createElement("LI");
-          var textnode = document.createTextNode(String(recognizedContent));
-          node.appendChild(textnode);
-          node.id = String(recognizedContent);
-          document.getElementById("Ideas").appendChild(node);
-          $("#myList").animate({
-          opacity: ".5",
-          textIndent: "20px"
-        })
-  }
-},
+  addBulletpoints = {
+    smart: true,
+    indexes: ["please write down *"],
+    action: function(i, wildcard) {
+      var node = document.createElement("LI");
+      var textnode = document.createTextNode(String(recognizedContent));
+      node.appendChild(textnode);
+      node.id = String(recognizedContent);
+      document.getElementById("Ideas").appendChild(node);
+      $("#myList").animate({
+        opacity: ".5",
+        textIndent: "20px"
+      })
+    }
+  },
 
-deleteBulletpoints = {
-  smart:true,
-  indexes: ["delete *"],
-  action: function(i, wildcard){
-          document.getElementById(recognizedDelete).remove();
+  deleteBulletpoints = {
+    smart: true,
+    indexes: ["delete *"],
+    action: function(i, wildcard) {
+      document.getElementById(recognizedDelete).remove();
+    }
   }
-}
 ];
 
 artyom.addCommands(myGroup);
+
+var elem = document.documentElement;
+
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) { /* Firefox */
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE/Edge */
+    elem.msRequestFullscreen();
+  }
+}

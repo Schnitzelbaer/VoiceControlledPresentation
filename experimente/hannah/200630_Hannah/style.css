@@ -4,7 +4,6 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-
 }
 
 #SearchTerm {
@@ -184,10 +183,6 @@ body {
   z-index: 10;
 }
 
-/* .call2action {
-  position: center;
-} */
-
 #sidebarMenu {
   height: 100%;
   position: fixed;
@@ -238,34 +233,31 @@ input[type=checkbox] {
   display: none;
 }
 
+.call2action {
+  color: #3FF9A0;
+}
+
 .button {
-  position: fixed;
-  bottom: 16px;
-  left: 15px;
-  width: 123px;
-  height: 38px;
-  color: white;
-  background: rgba(63, 249, 160, 0.1);
-  text-align: center;
-  font-size: 14px;
+  font-size: 25px;
+  color: #3FF9A0;
+  z-index: 30;
+  background: none;
+  padding-left: 40px;
+  padding-right: 10px;
+  margin: 10;
   cursor: pointer;
-  border-radius: 25px;
-  border: 1px solid #3FF9A0;
-  z-index: 300;
+  border: none;
+  position: absolute;
 }
 
 .button:hover {
   color: white;
-  border: 1px solid #3FF9A0;
-  background: rgba(63, 249, 160, 0.5);
   transition: 0.2s ease-in;
-  border-radius: 25px;
 }
 
 .button:active {
   color: white;
   background: : #3FF9A0;
-  border-radius: 25px;
 }
 
 .visualizer {
@@ -274,8 +266,44 @@ input[type=checkbox] {
   align-self: center;
 }
 
-.currentResult {
+.vertical-menu {
+  width: 220px;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #071629;
+  position: fixed;
+  right: 0;
+  margin-top: 60px;
+  z-index: 10;
+}
 
+.vertical-menu img {
+  display: block;
+  padding: 10px;
+  padding-left: 15px;
+  border-radius: 16px;
+}
+
+.vertical-menu a {
+  color: white;
+  font-size: 14px;
+  display: block;
+  padding: 12px;
+  padding-left: 10px;
+  text-decoration: none;
+}
+
+.vertical-menu p {
+  color: white;
+  margin-top: 120px;
+  font-size: 10px;
+  padding-left: 7px;
+  float: left;
+  z-index: 50;
+  position: relative;
+}
+
+.currentResult {
   display: block;
   margin: 0 auto;
   width: 100%;
@@ -294,29 +322,6 @@ input[type=checkbox] {
   padding-right: 200px; */
 }
 
-.button-container {
-  position: fixed;
-  bottom: 0;
-  left: 80px;
-  color: white;
-  width: 100%;
-  text-align: center;
-  top: 25%;
-}
-
-button {
-  width: 123px;
-  height: 38px;
-  color: white;
-  background: rgba(63, 249, 160, 0.1);
-  text-align: center;
-  font-size: 14px;
-  cursor: pointer;
-  border-radius: 25px;
-  border: 1px solid #3FF9A0;
-  position: fixed;
-}
-
 path {
   stroke-linecap: square;
   stroke: white;
@@ -327,7 +332,7 @@ path {
   transition: all 0.3s;
   box-sizing: border-box;
   cursor: pointer;
-  /* position: absolute; */
+  position: absolute;
   z-index: 99;
   height: 100%;
   width: 100%;
@@ -395,17 +400,16 @@ input[type=checkbox]:checked~.sidebarIconToggle>.diagonal.part-2 {
   margin-top: -9px;
 }
 
-svg{
-position: fixed;
-bottom: 10px;
-right: 15px;
-display: block;
-width: 200px;
-height: 60px;
-padding: 0;
-margin: 0;
-z-index: 100;
-
+svg {
+  position: fixed;
+  bottom: 10px;
+  right: 15px;
+  display: block;
+  width: 200px;
+  height: 60px;
+  padding: 0;
+  margin: 0;
+  z-index: 100;
 }
 
 @media only screen and (max-width: 720px) {
