@@ -87,6 +87,9 @@ function startRec() {
   openFullscreen();
   // elem.style.color = 'red';
 
+
+  removeSidebar();
+
   startContinuousArtyom();
   // artyom.say("I'm listening!");
   $(".status").fadeTo("slow", 1);
@@ -433,4 +436,13 @@ function openFullscreen() {
   } else if (elem.msRequestFullscreen) { /* IE/Edge */
     elem.msRequestFullscreen();
   }
-}
+};
+
+function removeSidebar() {
+  var verticalMenu = document.getElementById("verticalMenu");
+  if (verticalMenu.style.visibility = "hidden") {
+    verticalMenu.style.visibility = "block";
+  } else if (verticalMenu == removeSidebar.ESC) {
+    verticalMenu.style.visibility = "visible";
+  }
+};
