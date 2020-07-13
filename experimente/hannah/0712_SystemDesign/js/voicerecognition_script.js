@@ -15,7 +15,6 @@ $(document).ready(function() {
   slidesInfos = $slideDivs.map(function(i, el) {
 
     var htmlInput = $(el).find("p").parent().html();
-    var id = $(el).attr('id');
 
     if (htmlInput == undefined) {
       console.log('this p is undefined');
@@ -38,8 +37,6 @@ $(document).ready(function() {
     }
     return {
       refIndex: i,
-      id: id,
-      refSlideDiv: $(el),
       paragraphs: splitResult,
       imgSource: imgFilename
     }
@@ -75,10 +72,43 @@ $(document).ready(function() {
     }
   });
 
+
   impress().init();
+  doGrid();
+  adjustOverview();
   // documentreadyfunction end
+
 });
 
+
+
+document.addEventListener("fullscreenchange", function(event) {
+  if (document.fullscreenElement) {
+    removeSidebar();
+    fullscreenMeasurements();
+  } else {
+    showSidebar();
+    nofullscreenMeasurements();
+  }
+});
+
+function fullscreenMeasurements() {
+  var y = document.getElementsByClassName("box");
+  var i;
+  for (i = 0; i < y.length; i++) {
+    y[i].style.width = "100vw";
+    y[i].style.height = "100vh";
+  }
+}
+
+function nofullscreenMeasurements() {
+  var y = document.getElementsByClassName("box");
+  var i;
+  for (i = 0; i < y.length; i++) {
+    y[i].style.width = "80vw";
+    y[i].style.height = "80vh";
+  }
+}
 
 // Artyom Magic
 var artyom = new Artyom();
@@ -88,7 +118,7 @@ function startRec() {
   var elem = document.getElementById("call2action");
   elem.value = 'listening!';
   openFullscreen();
-  // elem.style.color = 'red';
+
 
   startContinuousArtyom();
   // artyom.say("I'm listening!");
@@ -147,6 +177,41 @@ function startRec() {
   }, soundAllowed, soundNotAllowed);
 
 }
+
+$(window).resize(function() {
+  doGrid();
+});
+
+function doGrid(){
+  var allSlides = $( "#impress" ).find( "div" );
+  allSlides.not(":first").not(":last").each(function (index, element) {
+    var id = $(this).attr('id');
+    console.log(id);
+    var slideID = "#" + id;
+    console.log(slideID);
+    // var indexB = index-1;
+    var indexA = index;
+    var widthP = $(document).width();
+    var widthS = widthP-500 / 5;
+    var heightS = widthS * 0.75;
+
+    var newX = widthS * (indexA % 5);
+    var newY = heightS * Math.floor(indexA / 5);
+
+    $(slideID).attr("data-x", newX);
+    $(slideID).attr("data-y", newY);
+
+  });
+}
+
+function adjustOverview() {
+  var widthPW = $(document).width();
+  var widthSW = widthPW-500 / 5;
+  var heightSW = widthSW * 0.75;
+  $( "#overview" ).attr("data-x", widthSW*4/2);
+  $( "#overview" ).attr("data-y", heightSW/2);
+}
+
 
 artyom.ArtyomVoicesIdentifiers["en-US"].unshift('Google US English', 'Alex');
 
@@ -307,67 +372,22 @@ var myGroup = [
       var result = fuse.search(recognizedSearch);
       console.log(result);
 
-      var filteredResults = _.filter(result, function(r){
-        return r.score < 0.2;
-      });
+      for (var index = 0; index < result.length; index++) {
+        // Floats in Strings umwandeln und die ersten 4 Digits rausfiltern
+        var resultString = result[index].score.toString();
+        resultString = resultString.substring(0, 4);
+        resultString = parseFloat(resultString);
 
-      // console.log("filteredResults = ", filteredResults)
-      filteredResults.forEach(function(r){
-        // console.log("r = ", r)
-        var idString = "#"+r.item.id;
-        // console.log("id = ", idString, "recognizedSearch = ", recognizedSearch)
-        new HR(idString, {
-          highlight: recognizedSearch,
-          backgroundColor: "red"
-        }).hr();
-      });
-
-      
-
-      // for (var index = 0; index < result.length; index++) {
-      //   // Floats in Strings umwandeln und die ersten 4 Digits rausfiltern (Kürzen der Zahlen aufgrund komischer Buchstaben in einigen Floats)
-      //   var resultString = result[index].score.toString();
-      //   resultString = resultString.substring(0, 4);
-      //   resultString = parseFloat(resultString);
-
-      //   if (resultString < 0.2) {
-      //     indexNumbers.push(result[index].refIndex);
-
-      //     // var $currentActiveDiv = $("p:nth-child(result[index].refIndex)");
-      //     // console.log("currentActiveDiv = " + $currentActiveDiv);
-
-      //     //var parentDiv = document.getElementById("impress");
-
-      //     // console.log("parentDiv" + parentDiv.innerHTML);
-
-      //     // var currentActiveDiv = document.getElementById("impress").querySelectorAll(".step");
-
-      //     // var currentActiveDiv = document.querySelectorAll(".step")[result[index].refIndex].innerHTML;
-
-
-
-      //     // var $slideDivs = $('#impress > div');
-      //     // slidesInfos = $slideDivs.map(function(i, el) {
-      //     // var htmlInput = $(el).find("p").parent().html();
-
-      //     // var currentActiveDiv = $('#impress > div').find("div").html();
-
-      //     // var currentActiveDiv = $("#impress :nth-child(0)").find("div").html();
-
-      //     // console.log("currentActiveDiv = " + currentActiveDiv)
-
-      //     new HR("#"+result[index].id, {
-      //       highlight: recognizedSearch,
-      //       backgroundColor: "red"
-      //     }).hr();
-      //   }
-      // }
+        if (resultString < 0.2) {
+          indexNumbers.push(result[index].refIndex);
+        }
+      }
 
       console.log("indexNumbers = " + indexNumbers);
 
-      if(indexNumbers.length > 0) {
+      if (indexNumbers.length > 0) {
         searchTerm = recognizedSearch;
-        document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
+        document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle + 1) + "/" + indexNumbers.length;
 
         var api = impress();
         api.init();
@@ -383,50 +403,50 @@ var myGroup = [
   // Browse Search Results
   navigateToNextResult = {
     indexes: ["next result"],
-    action: function(){
-  
+    action: function() {
+
       if (indexNumbers.length > 0) {
-        if(refIndexCycle < indexNumbers.length-1) {
-        refIndexCycle++;
+        if (refIndexCycle < indexNumbers.length - 1) {
+          refIndexCycle++;
 
-        var api = impress();
-        api.init();
-        api.goto(indexNumbers[refIndexCycle]);
-      } else {
-        refIndexCycle = 0;
+          var api = impress();
+          api.init();
+          api.goto(indexNumbers[refIndexCycle]);
+        } else {
+          refIndexCycle = 0;
 
-        var api = impress();
-        api.init();
-        api.goto(indexNumbers[refIndexCycle]);
+          var api = impress();
+          api.init();
+          api.goto(indexNumbers[refIndexCycle]);
+        }
+
+        document.getElementsByClassName("header")[0].style.display = "block";
+        document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle + 1) + "/" + indexNumbers.length;
       }
-
-      document.getElementsByClassName("header")[0].style.display = "block";
-      document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle + 1) + "/" + indexNumbers.length;
-    }
     }
   },
 
   navigateToPreviousResult = {
     indexes: ["previous result"],
-    action: function(){
+    action: function() {
       if (indexNumbers.length > 0) {
-        if(refIndexCycle <= indexNumbers.length-1 && refIndexCycle > 0) {
-        refIndexCycle--;
+        if (refIndexCycle <= indexNumbers.length - 1 && refIndexCycle > 0) {
+          refIndexCycle--;
 
-        var api = impress();
-        api.init();
-        api.goto(indexNumbers[refIndexCycle]);
-      } else {
-        refIndexCycle = indexNumbers.length - 1;
+          var api = impress();
+          api.init();
+          api.goto(indexNumbers[refIndexCycle]);
+        } else {
+          refIndexCycle = indexNumbers.length - 1;
 
-        var api = impress();
-        api.init();
-        api.goto(indexNumbers[refIndexCycle]);
+          var api = impress();
+          api.init();
+          api.goto(indexNumbers[refIndexCycle]);
+        }
+
+        document.getElementsByClassName("header")[0].style.display = "block";
+        document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle + 1) + "/" + indexNumbers.length;
       }
-
-      document.getElementsByClassName("header")[0].style.display = "block";
-      document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle + 1) + "/" + indexNumbers.length;
-    }
     }
   },
 
@@ -457,6 +477,8 @@ var myGroup = [
       api.goto(calledDestination);
     }
   },
+
+
 
 
   addBulletpoints = {
@@ -499,3 +521,13 @@ function openFullscreen() {
     elem.msRequestFullscreen();
   }
 }
+
+function removeSidebar() {
+  document.getElementById("verticalMenu").style.visibility = "hidden";
+  document.getElementById("header").style.visibility = "hidden";
+};
+
+function showSidebar() {
+  document.getElementById("verticalMenu").style.visibility = "visible";
+  document.getElementById("header").style.visibility = "visible";
+};

@@ -15,7 +15,6 @@ $(document).ready(function() {
   slidesInfos = $slideDivs.map(function(i, el) {
 
     var htmlInput = $(el).find("p").parent().html();
-    var id = $(el).attr('id');
 
     if (htmlInput == undefined) {
       console.log('this p is undefined');
@@ -34,12 +33,10 @@ $(document).ready(function() {
     var imgUrl = $(el).find("img").attr("src");
     var imgFilename;
     if (imgUrl) {
-      imgFilename = imgUrl.substring(imgUrl.lastIndexOf('/') + 1);
+      imgFilename = imgUrl.substring(imgUrl.lastIndexOf('/')+1);
     }
     return {
       refIndex: i,
-      id: id,
-      refSlideDiv: $(el),
       paragraphs: splitResult,
       imgSource: imgFilename
     }
@@ -61,23 +58,90 @@ $(document).ready(function() {
     var pixelSource = this.getElementsByTagName('img')[0];
     if (pixelSource) {
       var imgUrl = pixelSource.src;
-      var imgFilename = imgUrl.substring(imgUrl.lastIndexOf('/') + 1);
+      var imgFilename = imgUrl.substring(imgUrl.lastIndexOf('/')+1);
       console.log("imgFilename:", imgFilename);
       classifier.predict(pixelSource, function(err, results) {
-        var filteredResults = _.filter(results, function(o) {
-          return o.confidence > 0.1
-        });
-        var slidesWithThatImg = _.find(slidesInfos, function(o) {
-          return o.imgSource === imgFilename;
-        });
+        var filteredResults = _.filter(results, function(o) { return o.confidence > 0.1});
+        var slidesWithThatImg = _.find(slidesInfos, function(o) { return o.imgSource === imgFilename; });
         slidesWithThatImg['classifier'] = filteredResults;
       });
     }
   });
 
   impress().init();
+
+
+  function ViewPort()
+  {
+  var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
+  var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+  var viewsize = w + "," + h;
+  console.log("Your View Port Size is:", viewsize);
+  }
+
+  //
+  document.getElementsByClassName("step box")[0].setAttribute("data-y", "-1200");
+  console.log('guguck', document.getElementsByClassName("step box")[0])
+
+
   // documentreadyfunction end
 });
+
+// Audiovisualization
+
+// window.onload = function () {
+//     "use strict";
+//     var paths = document.getElementsByTagName('path');
+//     var visualizer = document.getElementById('visualizer');
+//     var mask = visualizer.getElementById('mask');
+//     var h = document.getElementsByTagName('h1')[0];
+//     var path;
+//     var report = 0;
+//
+//     var soundAllowed = function (stream) {
+//         //Audio stops listening in FF without // window.persistAudioStream = stream;
+//         //https://bugzilla.mozilla.org/show_bug.cgi?id=965483
+//         //https://support.mozilla.org/en-US/questions/984179
+//         window.persistAudioStream = stream;
+//         // h.innerHTML = "Thanks";
+//         // h.setAttribute('style', 'opacity: 0;');
+//         var audioContent = new AudioContext();
+//         var audioStream = audioContent.createMediaStreamSource( stream );
+//         var analyser = audioContent.createAnalyser();
+//         audioStream.connect(analyser);
+//         analyser.fftSize = 1024;
+//
+//         var frequencyArray = new Uint8Array(analyser.frequencyBinCount);
+//         visualizer.setAttribute('viewBox', '0 0 255 255');
+//
+// 				//Through the frequencyArray has a length longer than 255, there seems to be no
+//         //significant data after this point. Not worth visualizing.
+//         for (var i = 0 ; i < 255; i++) {
+//             path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+//             path.setAttribute('stroke-dasharray', '4,1');
+//             mask.appendChild(path);
+//         }
+//         var doDraw = function () {
+//             requestAnimationFrame(doDraw);
+//             analyser.getByteFrequencyData(frequencyArray);
+//           	var adjustedLength;
+//             for (var i = 0 ; i < 255; i++) {
+//               	adjustedLength = Math.floor(frequencyArray[i]) - (Math.floor(frequencyArray[i]) % 5);
+//                 paths[i].setAttribute('d', 'M '+ (i) +',255 l 0,-' + adjustedLength);
+//             }
+//         }
+//         doDraw();
+//     }
+//
+//     var soundNotAllowed = function (error) {
+//         // h.innerHTML = "You must allow your microphone.";
+//         console.log(error);
+//     }
+//     navigator.getUserMedia({audio:true}, soundAllowed, soundNotAllowed);
+// };
+
+
+
 
 
 // Artyom Magic
@@ -87,7 +151,6 @@ console.log("hello its working");
 function startRec() {
   var elem = document.getElementById("call2action");
   elem.value = 'listening!';
-  openFullscreen();
   // elem.style.color = 'red';
 
   startContinuousArtyom();
@@ -103,48 +166,46 @@ function startRec() {
   var path;
   var report = 0;
 
-  var soundAllowed = function(stream) {
-    //Audio stops listening in FF without // window.persistAudioStream = stream;
-    //https://bugzilla.mozilla.org/show_bug.cgi?id=965483
-    //https://support.mozilla.org/en-US/questions/984179
-    window.persistAudioStream = stream;
-    // h.innerHTML = "Thanks";
-    // h.setAttribute('style', 'opacity: 0;');
-    var audioContent = new AudioContext();
-    var audioStream = audioContent.createMediaStreamSource(stream);
-    var analyser = audioContent.createAnalyser();
-    audioStream.connect(analyser);
-    analyser.fftSize = 1024;
+  var soundAllowed = function (stream) {
+      //Audio stops listening in FF without // window.persistAudioStream = stream;
+      //https://bugzilla.mozilla.org/show_bug.cgi?id=965483
+      //https://support.mozilla.org/en-US/questions/984179
+      window.persistAudioStream = stream;
+      // h.innerHTML = "Thanks";
+      // h.setAttribute('style', 'opacity: 0;');
+      var audioContent = new AudioContext();
+      var audioStream = audioContent.createMediaStreamSource( stream );
+      var analyser = audioContent.createAnalyser();
+      audioStream.connect(analyser);
+      analyser.fftSize = 1024;
 
-    var frequencyArray = new Uint8Array(analyser.frequencyBinCount);
-    visualizer.setAttribute('viewBox', '0 0 255 255');
+      var frequencyArray = new Uint8Array(analyser.frequencyBinCount);
+      visualizer.setAttribute('viewBox', '0 0 255 255');
 
-    //Through the frequencyArray has a length longer than 255, there seems to be no
-    //significant data after this point. Not worth visualizing.
-    for (var i = 0; i < 255; i++) {
-      path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      path.setAttribute('stroke-dasharray', '4,1');
-      mask.appendChild(path);
-    }
-    var doDraw = function() {
-      requestAnimationFrame(doDraw);
-      analyser.getByteFrequencyData(frequencyArray);
-      var adjustedLength;
-      for (var i = 0; i < 255; i++) {
-        adjustedLength = Math.floor(frequencyArray[i]) - (Math.floor(frequencyArray[i]) % 5);
-        paths[i].setAttribute('d', 'M ' + (i) + ',255 l 0,-' + adjustedLength);
+      //Through the frequencyArray has a length longer than 255, there seems to be no
+      //significant data after this point. Not worth visualizing.
+      for (var i = 0 ; i < 255; i++) {
+          path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.setAttribute('stroke-dasharray', '4,1');
+          mask.appendChild(path);
       }
-    }
-    doDraw();
+      var doDraw = function () {
+          requestAnimationFrame(doDraw);
+          analyser.getByteFrequencyData(frequencyArray);
+          var adjustedLength;
+          for (var i = 0 ; i < 255; i++) {
+              adjustedLength = Math.floor(frequencyArray[i]) - (Math.floor(frequencyArray[i]) % 5);
+              paths[i].setAttribute('d', 'M '+ (i) +',255 l 0,-' + adjustedLength);
+          }
+      }
+      doDraw();
   }
 
-  var soundNotAllowed = function(error) {
-    // h.innerHTML = "You must allow your microphone.";
-    console.log(error);
+  var soundNotAllowed = function (error) {
+      // h.innerHTML = "You must allow your microphone.";
+      console.log(error);
   }
-  navigator.getUserMedia({
-    audio: true
-  }, soundAllowed, soundNotAllowed);
+  navigator.getUserMedia({audio:true}, soundAllowed, soundNotAllowed);
 
 }
 
@@ -215,7 +276,7 @@ var myGroup = [
       // Try to execute the say hi command, nothing will happen
       // but in 10 seconds, the command recognition will be available again
       setTimeout(function() {
-        artyom.obey();
+      artyom.obey();
         // execute the say hi command and then it will work !
       }, 10000);
     }
@@ -224,7 +285,7 @@ var myGroup = [
   stopTalking = {
     indexes: ["stop talking", "please stop talking", "shut up", "be quiet"],
     action: function() {
-      artyom.shutUp();
+    artyom.shutUp();
     }
   },
 
@@ -297,8 +358,6 @@ var myGroup = [
 
       var options = {
         includeScore: true,
-        includeMatches: true,
-        ignoreLocation: true,
         keys: ['paragraphs', 'classifier.label']
       }
 
@@ -307,75 +366,18 @@ var myGroup = [
       var result = fuse.search(recognizedSearch);
       console.log(result);
 
-      var filteredResults = _.filter(result, function(r){
-        return r.score < 0.2;
-      });
-
-      // console.log("filteredResults = ", filteredResults)
-      filteredResults.forEach(function(r){
-        // console.log("r = ", r)
-        var idString = "#"+r.item.id;
-        // console.log("id = ", idString, "recognizedSearch = ", recognizedSearch)
-        new HR(idString, {
-          highlight: recognizedSearch,
-          backgroundColor: "red"
-        }).hr();
-      });
-
-      
-
-      // for (var index = 0; index < result.length; index++) {
-      //   // Floats in Strings umwandeln und die ersten 4 Digits rausfiltern (Kürzen der Zahlen aufgrund komischer Buchstaben in einigen Floats)
-      //   var resultString = result[index].score.toString();
-      //   resultString = resultString.substring(0, 4);
-      //   resultString = parseFloat(resultString);
-
-      //   if (resultString < 0.2) {
-      //     indexNumbers.push(result[index].refIndex);
-
-      //     // var $currentActiveDiv = $("p:nth-child(result[index].refIndex)");
-      //     // console.log("currentActiveDiv = " + $currentActiveDiv);
-
-      //     //var parentDiv = document.getElementById("impress");
-
-      //     // console.log("parentDiv" + parentDiv.innerHTML);
-
-      //     // var currentActiveDiv = document.getElementById("impress").querySelectorAll(".step");
-
-      //     // var currentActiveDiv = document.querySelectorAll(".step")[result[index].refIndex].innerHTML;
-
-
-
-      //     // var $slideDivs = $('#impress > div');
-      //     // slidesInfos = $slideDivs.map(function(i, el) {
-      //     // var htmlInput = $(el).find("p").parent().html();
-
-      //     // var currentActiveDiv = $('#impress > div').find("div").html();
-
-      //     // var currentActiveDiv = $("#impress :nth-child(0)").find("div").html();
-
-      //     // console.log("currentActiveDiv = " + currentActiveDiv)
-
-      //     new HR("#"+result[index].id, {
-      //       highlight: recognizedSearch,
-      //       backgroundColor: "red"
-      //     }).hr();
-      //   }
-      // }
+      for (var index = 0; index < result.length; index++) {
+        indexNumbers.push(result[index].refIndex);
+      }
 
       console.log("indexNumbers = " + indexNumbers);
 
-      if(indexNumbers.length > 0) {
-        searchTerm = recognizedSearch;
-        document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
+      searchTerm = recognizedSearch;
+      document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
 
-        var api = impress();
-        api.init();
-        api.goto(indexNumbers[0]);
-      } else {
-        document.getElementsByClassName("header")[0].innerHTML = "Sorry, no Search Results found :(";
-        artyom.say("Sorry, no Search Results found");
-      }
+      var api = impress();
+      api.init();
+      api.goto(result[0].refIndex);
 
     }
   },
@@ -384,9 +386,8 @@ var myGroup = [
   navigateToNextResult = {
     indexes: ["next result"],
     action: function(){
-  
-      if (indexNumbers.length > 0) {
-        if(refIndexCycle < indexNumbers.length-1) {
+
+      if(refIndexCycle < indexNumbers.length-1) {
         refIndexCycle++;
 
         var api = impress();
@@ -401,23 +402,22 @@ var myGroup = [
       }
 
       document.getElementsByClassName("header")[0].style.display = "block";
-      document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle + 1) + "/" + indexNumbers.length;
-    }
+      document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
     }
   },
 
   navigateToPreviousResult = {
     indexes: ["previous result"],
     action: function(){
-      if (indexNumbers.length > 0) {
-        if(refIndexCycle <= indexNumbers.length-1 && refIndexCycle > 0) {
+
+      if(refIndexCycle <= indexNumbers.length-1 && refIndexCycle > 0) {
         refIndexCycle--;
 
         var api = impress();
         api.init();
         api.goto(indexNumbers[refIndexCycle]);
       } else {
-        refIndexCycle = indexNumbers.length - 1;
+        refIndexCycle = indexNumbers.length-1;
 
         var api = impress();
         api.init();
@@ -425,14 +425,13 @@ var myGroup = [
       }
 
       document.getElementsByClassName("header")[0].style.display = "block";
-      document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle + 1) + "/" + indexNumbers.length;
-    }
+      document.getElementsByClassName("header")[0].innerHTML = searchTerm + " " + (refIndexCycle+1) + "/" + indexNumbers.length;
     }
   },
 
   exitResult = {
     indexes: ["that's it", "stop search", "select slide", "select result", "exit search"],
-    action: function() {
+    action: function(){
 
       document.getElementById("SearchTerm").style.display = "none";
 
@@ -447,55 +446,41 @@ var myGroup = [
 
 
   navigateToDestinations = {
-    smart: true,
-    indexes: ["go to the *"],
-    action: function(i, wildcard) {
-      console.log("this ist the Input" + recognizedWildcard);
-      var calledDestination = document.getElementById(recognizedWildcard);
-      var api = impress();
-      api.init();
-      api.goto(calledDestination);
-    }
-  },
-
-
-  addBulletpoints = {
-    smart: true,
-    indexes: ["please write down *"],
-    action: function(i, wildcard) {
-      var node = document.createElement("LI");
-      var textnode = document.createTextNode(String(recognizedContent));
-      node.appendChild(textnode);
-      node.id = String(recognizedContent);
-      document.getElementById("Ideas").appendChild(node);
-      $("#myList").animate({
-        opacity: ".5",
-        textIndent: "20px"
-      })
-    }
-  },
-
-  deleteBulletpoints = {
-    smart: true,
-    indexes: ["delete *"],
-    action: function(i, wildcard) {
-      document.getElementById(recognizedDelete).remove();
-    }
+  smart:true,
+  indexes: ["go to the *"],
+  action: function(i, wildcard){
+          console.log("this ist the Input" + recognizedWildcard);
+          var calledDestination = document.getElementById(recognizedWildcard);
+          var api = impress();
+          api.init();
+          api.goto( calledDestination );
   }
+},
+
+
+addBulletpoints = {
+  smart:true,
+  indexes: ["please write down *"],
+  action: function(i, wildcard){
+          var node = document.createElement("LI");
+          var textnode = document.createTextNode(String(recognizedContent));
+          node.appendChild(textnode);
+          node.id = String(recognizedContent);
+          document.getElementById("Ideas").appendChild(node);
+          $("#myList").animate({
+          opacity: ".5",
+          textIndent: "20px"
+        })
+  }
+},
+
+deleteBulletpoints = {
+  smart:true,
+  indexes: ["delete *"],
+  action: function(i, wildcard){
+          document.getElementById(recognizedDelete).remove();
+  }
+}
 ];
 
 artyom.addCommands(myGroup);
-
-var elem = document.documentElement;
-
-function openFullscreen() {
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.mozRequestFullScreen) { /* Firefox */
-    elem.mozRequestFullScreen();
-  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE/Edge */
-    elem.msRequestFullscreen();
-  }
-}
