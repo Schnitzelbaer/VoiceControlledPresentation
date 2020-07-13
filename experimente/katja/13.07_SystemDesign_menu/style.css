@@ -37,6 +37,14 @@ body {
   color: white;
 }
 
+a {
+  color: #3FF9A0;
+}
+
+a:hover {
+  color: white;
+}
+
 #questionQuote {
   font-family: 'Taviraj', serif;
   font-size: 70px;
