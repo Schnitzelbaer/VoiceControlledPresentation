@@ -10,6 +10,17 @@
   color: white;
 }
 
+a {
+  color: #3FF9A0;
+}
+
+a:hover {
+  color: white;
+}
+a:active {
+  color: white;
+}
+
 h1 {
   font-weight: 600;
   font-size: 2.7em;
@@ -134,8 +145,10 @@ body {
 
 .box {
   display: block;
-  width: 900px;
-  height: 600px;
+  /* width: 100vw; */
+  height: 650px;
+  width: 1000px;
+  /* height: 600px; */
   padding: 30px 50px;
   background-color: #FFFFFF;
   box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
@@ -225,39 +238,107 @@ body {
 
 input[type="checkbox"]:checked~#sidebarMenu {
   transform: translateX(0);
+  outline:none;
 }
+
 
 input[type=checkbox] {
   transition: all 0.3s;
   box-sizing: border-box;
   display: none;
+  outline:none;
 }
 
 .call2action {
   color: #3FF9A0;
+  outline:none;
 }
 
+
 .button {
-  font-size: 25px;
+  font-size: 20px;
   color: #3FF9A0;
   z-index: 30;
   background: none;
-  padding-left: 40px;
-  padding-right: 10px;
-  margin: 10;
+  margin-left: 25px;
   cursor: pointer;
   border: none;
   position: absolute;
+  margin-top: -22px;
+  outline: none;
+  padding: 18px;
 }
 
 .button:hover {
   color: white;
   transition: 0.2s ease-in;
+  outline: none;
+  background-color: #040E1A;
 }
 
 .button:active {
   color: white;
-  background: : #3FF9A0;
+  background: #3FF9A0;
+  outline: none;
+  background-color: #040E1A;
+}
+
+.button1 {
+  font-size: 20px;
+  color: #3FF9A0;
+  z-index: 30;
+  background: none;
+  margin-left: 80px;
+  cursor: pointer;
+  border: none;
+  position: absolute;
+  margin-top: -22px;
+  outline: none;
+  padding: 18px;
+}
+
+.button1:hover {
+  color: white;
+  transition: 0.2s ease-in;
+  outline: none;
+  background-color: #040E1A;
+}
+
+.button1:active {
+  color: white;
+  background: #3FF9A0;
+  outline: none;
+  background-color: #040E1A;
+}
+
+.button2 {
+  font-size: 20px;
+  color: #3FF9A0;
+  z-index: 30;
+  background: none;
+
+  position: fixed;
+  right: 10px;
+  margin-left: 80px;
+  cursor: pointer;
+  border: none;
+  margin-top: -22px;
+  outline: none;
+  padding: 18px;
+}
+
+.button2:hover {
+  color: white;
+  transition: 0.2s ease-in;
+  outline: none;
+  background-color: #040E1A;
+}
+
+.button2:active {
+  color: white;
+  background: #3FF9A0;
+  outline: none;
+  background-color: #040E1A;
 }
 
 .visualizer {
@@ -266,34 +347,51 @@ input[type=checkbox] {
   align-self: center;
 }
 
-.vertical-menu {
-  width: 220px;
+/* #mySidenav {
   height: 100%;
-  overflow-y: auto;
-  background-color: #071629;
   position: fixed;
   right: 0;
+  width: 220px;
   margin-top: 60px;
+
+  padding-bottom: 150px;
+  margin-bottom: 60px; */
+
+  /* transform: translateX(-220px); */
+  /* transition: transform 250ms ease-in-out;
+  background: #071629;
+  overflow: scroll;
   z-index: 10;
+} */
+
+.sidenav {
+  height: 100%;
+  width: 220px;
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  right: 0;
+  background-color: #071629;
+  margin-top: 60px;
+  margin-bottom: 600px;
+  overflow: scroll;
+  transition: 0.3s;
 }
 
-.vertical-menu img {
+.sidenav img {
   display: block;
   padding: 10px;
   padding-left: 15px;
   border-radius: 16px;
 }
 
-.vertical-menu a {
+.sidenav a {
   color: white;
-  font-size: 14px;
-  display: block;
-  padding: 12px;
-  padding-left: 10px;
+  text-align: center;
   text-decoration: none;
 }
 
-.vertical-menu p {
+.sidenav p {
   color: white;
   margin-top: 120px;
   font-size: 10px;
@@ -317,9 +415,6 @@ input[type=checkbox] {
   padding-top: 20px;
   overflow: hidden;
   z-index: 10;
-  /* margin-top: auto;
-  text-align: right;
-  padding-right: 200px; */
 }
 
 path {
@@ -342,6 +437,7 @@ path {
   width: 22px;
   border-radius: 15px;
   position: fixed;
+  padding-top: 2px;
 }
 
 .spinner {
@@ -353,6 +449,12 @@ path {
   background-color: #3FF9A0;
   border-radius: 15px;
 }
+
+.spinner:hover {
+  background-color: white;
+  transition: 0.2s ease-in;
+}
+
 
 .horizontal {
   transition: all 0.3s;
@@ -416,3 +518,4 @@ svg {
   .about {
     max-width: 100%;
   }
+}

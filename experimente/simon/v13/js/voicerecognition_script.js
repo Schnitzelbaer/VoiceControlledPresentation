@@ -76,9 +76,49 @@ $(document).ready(function() {
   });
 
   impress().init();
+  // doGrid();
+  // adjustOverview();
   // documentreadyfunction end
+
 });
 
+
+
+document.addEventListener("fullscreenchange", function(event) {
+  if (document.fullscreenElement) {
+    removeSidebar();
+    // fullscreenMeasurements();
+  } else {
+    showSidebar();
+    // nofullscreenMeasurements();
+  }
+});
+
+// function fullscreenMeasurements() {
+//   var y = document.getElementsByClassName("box");
+//   var i;
+//   for (i = 0; i < y.length; i++) {
+//     y[i].style.width = "100vw";
+//     y[i].style.height = "100vh";
+//   }
+// }
+
+// function nofullscreenMeasurements() {
+//   var y = document.getElementsByClassName("box");
+//   var i;
+//   for (i = 0; i < y.length; i++) {
+//     y[i].style.width = "80vw";
+//     y[i].style.height = "80vh";
+//   }
+// }
+
+function openNav() {
+  if (document.getElementById("mySidenav").style.width === "220px") {
+    document.getElementById("mySidenav").style.width = "0";
+  } else {
+    document.getElementById("mySidenav").style.width = "220px";
+  }
+}
 
 // Artyom Magic
 var artyom = new Artyom();
@@ -88,7 +128,7 @@ function startRec() {
   var elem = document.getElementById("call2action");
   elem.value = 'listening!';
   openFullscreen();
-  // elem.style.color = 'red';
+
 
   startContinuousArtyom();
   // artyom.say("I'm listening!");
@@ -147,6 +187,41 @@ function startRec() {
   }, soundAllowed, soundNotAllowed);
 
 }
+
+// $(window).resize(function() {
+//   doGrid();
+// });
+
+// function doGrid() {
+//   var allSlides = $("#impress").find("div");
+//   allSlides.not(":first").not(":last").each(function(index, element) {
+//     var id = $(this).attr('id');
+//     // console.log(id);
+//     var slideID = "#" + id;
+//     // console.log(slideID);
+
+//     var indexA = index;
+//     var widthP = $(document).width();
+//     var widthS = widthP - 500 / 5;
+//     var heightS = widthS * 0.75;
+
+//     var newX = widthS * (indexA % 5);
+//     var newY = heightS * Math.floor(indexA / 5);
+
+//     $(slideID).attr("data-x", newX);
+//     $(slideID).attr("data-y", newY);
+
+//   });
+// }
+
+// function adjustOverview() {
+//   var widthPW = $(document).width();
+//   var widthSW = widthPW - 500 / 5;
+//   var heightSW = widthSW * 0.75;
+//   $("#overview").attr("data-x", widthSW * 4 / 2);
+//   $("#overview").attr("data-y", heightSW / 2);
+// }
+
 
 artyom.ArtyomVoicesIdentifiers["en-US"].unshift('Google US English', 'Alex');
 
@@ -323,10 +398,11 @@ var myGroup = [
         console.log("actual ID = ", "#"+r.item.id)
         var idString = "#"+r.item.id;
         new HR(idString, {
-          highlight: recognizedSearch,
+          highlight: [recognizedSearch],
           backgroundColor: "#3FF9A0"
         }).hr();
       });
+      
 
       // Jumps to the first search result
       if(indexNumbers.length > 0) {
@@ -340,6 +416,9 @@ var myGroup = [
         document.getElementsByClassName("header")[0].innerHTML = "Sorry, no Search Results found :(";
         artyom.say("Sorry, no Search Results found");
       }
+
+      // Shows header after search-input
+      document.getElementById("header").style.visibility = "visible";
 
     }
   },
@@ -406,7 +485,11 @@ var myGroup = [
       refIndexCycle = 0;
       indexNumbers.length = 0;
 
+      // removes all Highlighting
       $("#impress").find("span").contents().unwrap();
+
+      // removes header
+      document.getElementById("header").style.visibility = "hidden";
     }
   },
   // Exit Search Results
@@ -465,3 +548,26 @@ function openFullscreen() {
     elem.msRequestFullscreen();
   }
 }
+
+function removeSidebar() {
+  document.getElementById("sidebarMenu").style.visibility = "hidden";
+  document.getElementById("mySidenav").style.visibility = "hidden";
+  document.getElementById("header").style.visibility = "hidden";
+  document.getElementById("call2action").style.visibility = "hidden";
+  document.getElementById("call2action1").style.visibility = "hidden";
+  document.getElementById("call2action2").style.visibility = "hidden";
+  document.getElementById("call2action3").style.visibility = "hidden";
+
+  mySidenav
+
+};
+
+function showSidebar() {
+  document.getElementById("sidebarMenu").style.visibility = "visible";
+  document.getElementById("mySidenav").style.visibility = "visible";
+  document.getElementById("header").style.visibility = "visible";
+  document.getElementById("call2action").style.visibility = "visible";
+  document.getElementById("call2action1").style.visibility = "visible";
+  document.getElementById("call2action2").style.visibility = "visible";
+  document.getElementById("call2action3").style.visibility = "visible";
+};

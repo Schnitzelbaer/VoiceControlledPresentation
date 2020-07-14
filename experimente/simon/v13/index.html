@@ -28,18 +28,21 @@
 <body>
 
   <div id="SearchTerm"></div>
-  <div class="header">Voice User Interface Presentation <i class="fa fa-angle-down"></i></div>
+  <div id="header" class="header">Voice User Interface Presentation <i class="fa fa-angle-down"></i>
+</div>
 
 
   <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
   <label for="openSidebarMenu" class="sidebarIconToggle">
-    <div class="spinner diagonal part-1"></div>
-    <div class="spinner horizontal"></div>
-    <div class="spinner diagonal part-2"></div>
-    <div>
-      <button id="call2action" class="button" value="start " onclick="startRec();"><i class="fa fa-play"></i></button>
 
-    </div>
+      <div id="call2action3" class="allspinner">
+      <div class="spinner diagonal part-1"></div>
+      <div class="spinner horizontal"></div>
+      <div class="spinner diagonal part-2"></div>
+      </div>
+      <button id="call2action" class="button" value="start " onclick="startRec();"><i class="fa fa-play"></i></button>
+      <button id="call2action1"<i class="button1"></i><a href="#overview"><i class="fa fa-th-large"></i></a></button>
+      <button id="call2action2" class="button2" onclick="openNav();"><i class="fa fa-map"></i></button>
   </label>
   <div id="sidebarMenu">
     <ul class="sidebarMenuInner">
@@ -78,105 +81,36 @@
       </li>
     </ul>
   </div>
-  <div class="vertical-menu">
+  <div id=mySidenav class="sidenav">
     <p> 1</p>
-    <img src="images/1.png" width="200px">
+    <a href="#firstslide"> <img src="images/1.png" width="200px"> </a>
     <p>2</p>
-    <img src="images/2.png" width="200px">
+    <a href="#brainstorming"> <img src="images/2.png" width="200px"> </a>
     <p>3</p>
-    <img src="images/3.png" width="200px">
+    <a href="#quote"> <img src="images/3.png" width="200px"> </a>
     <p>4</p>
-    <img src="images/4.png" width="200px">
+    <a href="#firstdefinition"> <img src="images/4.png" width="200px"> </a>
     <p>5</p>
-    <img src="images/5.png" width="200px">
+    <a href="#seconddefinition"> <img src="images/5.png" width="200px"> </a>
     <p>6</p>
-    <img src="images/6.png" width="200px">
+    <a href="#thirddefinition"> <img src="images/6.png" width="200px"> </a>
     <p>7</p>
-    <img src="images/7.png" width="200px">
+    <a href="#history"> <img src="images/7.png" width="200px"> </a>
     <p>8</p>
-    <img src="images/8.png" width="200px">
+    <a href="#whatsthis"> <img src="images/8.png" width="200px"> </a>
     <p>9</p>
-    <img src="images/9.png" width="200px">
-    <a href="#"></a>
-    <a href="#"></a>
-    <a href="#"></a>
-    <a href="#"></a>
-    <a href="#"></a>
-    <a href="#"></a>
+    <a href="#lastslide"> <img src="images/9.png" width="200px"> </a>
+
   </div>
-
-  <!-- <div id="impress">
-
-    <div id="first_slide" class="step box" data-x="-1000" data-y="0">
-      <p>Voice User Interfaces</p>
-      <p>PRESENTATION</p>
-      </br>
-      <img id="foo" src="images/ballon.jpg" width="200px">
-    </div>
-
-    <div id="brainstorming" class="step box" data-x="0" data-y="0">
-      <p id="Ideas">Name some Ideas</p>
-      <ul id="myList"> </ul>
-    </div>
-
-    <div id="quote" class="step box" data-x="1000" data-y="0">
-      <p id="questionQuote">Don’t ask a question if you won’t be able to understand the answer. </p>
-      <p> Margaret Urban | Voice User Interface Designer – Google </p>
-    </div>
-
-    <div id="first_definition" class="step box" data-x="2000" data-y="0">
-      <p>Definition: VUI</p>
-      </br>
-      <p>A Voice User Interface (VUI) enables communication between man and machine through speech-based interactions.</p>
-      <img src="images/dog.jpg" width="200px">
-    </div>
-
-    <div id="second_definition" class="step box" data-x="3000" data-y="0">
-      <p>Definition: VCD</p>
-      </br>
-      <p>A Voice Command Device (VCD) is a device that is controlled via a Voice User Interface.</p>
-      <img src="images/kitten.jpg" width="200px">
-    </div>
-
-    <div id="third_definition" class="step box" data-x="4000" data-y="0">
-      <p>Definition: Smart Speaker</p>
-      </br>
-      <p>A Smart Speaker is a speaker connected to the Internet that integrates the functions of an Intelligent Personal Assistant (IPA) via non-intrusive voice control and speech recognition.</p>
-      <img src="images/bird.jpg" width="200px">
-    </div>
-
-
-    <div id="history" class="step box" data-x="-1000" data-y="1000" background-image:"images/VUI_Image.png"> <p>History of VUI</p>
-      </br>
-      <li>1952: Automatic number recognition Audrey | Bell Labs</li>
-      <li>Shoebox was able to understand 16 words | IBM</li>
-      <li>Hidden Markov Model (HMM), with the help of which speech recognition switched from literal agreement to prediction.</li>
-    </div>
-
-    <div class="step box" data-x="0" data-y="1000">
-      <p>What's in this picture?</p>
-      <img src="images/lightbulb.jpg" width="200px">
-
-    </div>
-
-    <div id="last_slide" class="step box" data-x="4000" data-y="1000">
-      <p><b class="animation-rotate">Thank you</b> for your attention.</p>
-    </div>
-
-
-
-
-    <div id="overview" class="step" data-x="1500" data-y="500" data-scale=5>
-    </div>
 
 
   </div> -->
-  <div id="impress">
+  <div id="impress" data-max-scale="4" data-width="1000" data-height="650">
 
-    <div id="firstslide" class="step box" data-x="-1000" data-y="0">
+    <div id="firstslide" class="step box" data-x="-1200" data-y="0">
       <p>PRESENTATION</p>
       <p style="font-family:'Taviraj', serif;font-size: 80px;"><b>Voice User Interfaces</b></p>
-      <img id="foo" src="images/VUI_Image.png" width="900px" style="opacity: 0;">
+      <img id="foo" src="images/VUI_Image.png" width="100%" style="opacity: 0;">
 
 
     </div>
@@ -187,27 +121,27 @@
       <ul id="myList"> </ul>
     </div>
 
-    <div id="quote" class="step box" data-x="1000" data-y="0">
+    <div id="quote" class="step box" data-x="1200" data-y="0">
       <p id="questionQuote">"Don’t ask a question if you won’t be able to understand the answer." </p>
       </br></br> </br>
       <p> Margaret Urban | Voice User Interface Designer – Google </p>
     </div>
 
-    <div id="firstdefinition" class="step box" data-x="2000" data-y="0">
+    <div id="firstdefinition" class="step box" data-x="2400" data-y="0">
       <p style="font-family:'Taviraj', serif;font-size: 50px;"><b>Definition: VUI</b></p>
       </br>
       <p>A Voice User Interface (VUI) enables communication between man and machine through speech-based interactions.</p>
       <img src="images/VUI.png" width="200px">
     </div>
 
-    <div id="seconddefinition" class="step box" data-x="3000" data-y="0">
+    <div id="seconddefinition" class="step box" data-x="3600" data-y="0">
       <p style="font-family:'Taviraj', serif;font-size: 50px;"><b>Definition: VCD</b></p>
       </br>
       <p>A Voice Command Device (VCD) is a device that is controlled via a Voice User Interface.</p>
       <img src="images/VCD.png" width="200px">
     </div>
 
-    <div id="thirddefinition" class="step box" data-x="4000" data-y="0">
+    <div id="thirddefinition" class="step box" data-x="4800" data-y="0">
       <p style="font-family:'Taviraj', serif;font-size: 50px;"><b>Definition: Smart Speaker</b></p>
       </br>
       <p>A Smart Speaker is a speaker connected to the Internet that integrates the functions of an Intelligent Personal Assistant (IPA) via non-intrusive voice control and speech recognition.</p>
@@ -215,7 +149,7 @@
     </div>
 
 
-    <div id="history" class="step box" data-x="-1000" data-y="1000">
+    <div id="history" class="step box" data-x="-1200" data-y="850">
       <p style="font-family:'Taviraj', serif;font-size: 50px;"><b>History of VUI</b>
         </br></br></br></br>
         <li><b>*</b>1952: Automatic number recognition Audrey | Bell Labs</li></br>
@@ -225,18 +159,18 @@
         <li><b>*</b>Hidden Markov Model (HMM), with the help of which speech recognition switched from literal agreement to prediction.</li>
     </div>
 
-    <div id="whatsthis" class="step box" data-x="0" data-y="1000">
+    <div id="whatsthis" class="step box" data-x="0" data-y="850">
       <p>What's in this picture?</p></br>
       <!-- <img src="images/alexa.jpg" width="700px"> -->
       <img src="images/kitten.jpg" width="500px">
 
     </div>
 
-    <div id="lastslide" class="step box" data-x="4000" data-y="1000">
+    <div id="lastslide" class="step box" data-x="4800" data-y="850">
       <p><b class="animation-rotate">Thank you</b></br> for your attention!</p>
     </div>
 
-    <div id="overview" class="step" data-x="1500" data-y="500" data-scale=5>
+    <div id="overview" class="step" data-x="1900" data-y="750" data-scale=8>
     </div>
 
 
@@ -257,10 +191,10 @@
           </g>
         </mask>
         <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:#f1ff0a;stop-opacity:1" />
-          <stop offset="20%" style="stop-color:#FFA500;stop-opacity:1" />
-          <stop offset="90%" style="stop-color:#3FF9A0;stop-opacity:1" />
-          <stop offset="100%" style="stop-color:#050d61;stop-opacity:1" />
+          <stop offset="0%" style="stop-color:#BAFFFB;stop-opacity:1" />
+          <stop offset="20%" style="stop-color:#3FF9A0;stop-opacity:1" />
+          <stop offset="90%" style="stop-color:#091B33;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#071629;stop-opacity:1" />
         </linearGradient>
       </defs>
       <rect x="0" y="0" width="100%" height="100%" fill="url(#gradient)" mask="url(#mask)"></rect>
