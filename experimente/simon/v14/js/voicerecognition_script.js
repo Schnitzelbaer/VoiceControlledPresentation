@@ -65,7 +65,7 @@ $(document).ready(function() {
       console.log("imgFilename:", imgFilename);
       classifier.predict(pixelSource, function(err, results) {
         var filteredResults = _.filter(results, function(o) {
-          return o.confidence > 0.1
+          return o.confidence > 0.3
         });
         var slidesWithThatImg = _.find(slidesInfos, function(o) {
           return o.imgSource === imgFilename;
