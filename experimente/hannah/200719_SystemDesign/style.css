@@ -194,10 +194,12 @@ body {
 #SearchTerm {
   display: block;
   margin: auto;
-  width: 250px;
+  width: 300px;
   max-width: 100%;
-  box-shadow: none;
+  /* box-shadow: none; */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
   background-color: #3FF9A0;
+  background-color: #40EE9A;
   color: white;
   position: absolute;
   right: 0;
@@ -224,7 +226,8 @@ body {
   text-align: center;
   padding-top: 20px;
   overflow: hidden;
-  z-index: 10;
+  z-index: 12;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .footer {
@@ -238,7 +241,7 @@ body {
   text-align: left;
   height: 70px !important;
   overflow: hidden;
-  z-index: 10;
+  z-index: 12;
 }
 
 #sidebarMenu {
@@ -251,6 +254,7 @@ body {
   transform: translateX(-250px);
   transition: transform 250ms ease-in-out;
   background: #071629;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 1);
   overflow: scroll;
   z-index: 10;
 }
@@ -258,7 +262,6 @@ body {
 .sidebarMenuInner {
   margin: 0;
   padding: 0;
-  /* border-top: 1px solid rgba(255, 255, 255, 0.25); */
 }
 
 .sidebarMenuInner li {
@@ -402,13 +405,14 @@ input[type=checkbox] {
   height: 85%;
   width: 220px;
   position: fixed;
-  z-index: 5;
+  z-index: 10;
   top: 0;
   right: 0;
   background-color: #071629;
   margin-top: 60px;
   overflow: scroll;
   transition: 0.3s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 1);
 }
 
 .sidenav img {

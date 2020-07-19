@@ -60,7 +60,7 @@ $(document).ready(function() {
       var imgFilename = imgUrl.substring(imgUrl.lastIndexOf('/') + 1);
       classifier.predict(pixelSource, function(err, results) {
         var filteredResults = _.filter(results, function(o) {
-          return o.confidence > 0.1
+          return o.confidence > 0.3
         });
         var slidesWithThatImg = _.find(slidesInfos, function(o) {
           return o.imgSource === imgFilename;
@@ -250,7 +250,7 @@ var myGroup = [
 
   // command to go to the start
   firstslide = {
-    indexes: ["bring me to the start", "start from the beginning"],
+    indexes: ["first slide", "bring me to the start", "start from the beginning"],
     action: function() {
       var api = impress();
       api.init();
@@ -260,7 +260,7 @@ var myGroup = [
 
   // command to go to the end
   lastslide = {
-    indexes: ["bring me to the end", "thank you"],
+    indexes: ["last slide", "bring me to the end", "thank you"],
     action: function() {
       var api = impress();
       api.init();
