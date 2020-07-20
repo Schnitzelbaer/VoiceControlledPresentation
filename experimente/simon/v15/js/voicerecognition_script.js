@@ -6,6 +6,8 @@ var indexNumbers = [];
 
 var refIndexCycle = 0;
 
+var customScaleValue = 0.7;
+
 
 
 $(document).ready(function() {
@@ -79,6 +81,7 @@ document.addEventListener("fullscreenchange", function(event) {
     removeMenuBar();
   } else {
     showMenuBar();
+    customScaleValue = 0.7;
   }
 });
 
@@ -111,6 +114,7 @@ function startRec() {
   elem.value = 'listening!';
   openFullscreen();
 
+  customScaleValue = 1.0;
 
   startContinuousArtyom();
   $(".status").fadeTo("slow", 1);
@@ -444,6 +448,7 @@ var myGroup = [
     indexes: ["stop presentation"],
     action: function() {
       // showSidebar();
+      customScaleValue = 0.7;
       closeFullscreen();
     }
   },
